@@ -51,6 +51,25 @@ function showBriefing() {
   `;
   mount.innerHTML = '';
   mount.appendChild(card);
+
+  const footer = card.querySelector('.briefing-footer');
+  if (footer) {
+    const primaryBtn = footer.querySelector('.btn-primary');
+    const actions = document.createElement('div');
+    actions.className = 'briefing-footer-actions';
+
+    const exitBtn = document.createElement('button');
+    exitBtn.className = 'btn-secondary';
+    exitBtn.textContent = '<- EXIT';
+    exitBtn.onclick = () => { window.location.href = '/'; };
+
+    actions.appendChild(exitBtn);
+    if (primaryBtn) {
+      footer.removeChild(primaryBtn);
+      actions.appendChild(primaryBtn);
+    }
+    footer.appendChild(actions);
+  }
 }
 
 // Lesson logic
@@ -193,7 +212,7 @@ function renderQuestion() {
   aa.className = 'action-area'; aa.id = 'action-area';
   
   if (q.type === 'match') {
-    // auto-advances on complete match
+    aa.innerHTML = `<button class="btn-secondary" onclick="window.skipQuestion()">SKIP</button>`;
   } else if (q.type === 'wordtiles') {
     aa.innerHTML = `<button class="btn-secondary" onclick="window.skipQuestion()">SKIP</button>
       <button class="btn-primary" id="wt-check-btn" onclick="window.checkWordTiles()" disabled>CHECK ✓</button>`;
