@@ -1,5 +1,5 @@
 import { MODULES, getModule, getDay } from '../data/index.js';
-import { state, expandedMods, checkStreak, updateStatsData } from './state.js';
+import { state, expandedMods, checkStreak } from './state.js';
 import { Theme, Prefs } from './utils.js';
 import { injectGlobals } from './components.js';
 
@@ -155,7 +155,6 @@ function init() {
   Theme.init();
   Prefs.init();
   injectGlobals();
-  updateStatsData();
   checkStreak();
   renderSidebar();
   renderHomeModules();
