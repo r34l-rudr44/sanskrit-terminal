@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Lesson — SANSKRIT.EXE</title>
+  <link href="https://fonts.googleapis.com/css2?family=VT323&family=Share+Tech+Mono&family=Noto+Sans+Devanagari:wght@400;500;700&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="/src/css/style.css">
+</head>
+<body>
+
+<header class="topbar">
+  <div class="logo">
+    <div class="logo-icon">🪔</div>
+    <div>
+      <div class="logo-text">SANSKRIT.EXE</div>
+      <div class="logo-sub">// interactive learning terminal</div>
+    </div>
+  </div>
+  <div class="topbar-marquee" id="topbar-marquee"></div>
+  <div class="topbar-right">
+    <div class="streak-badge">🔥 <span id="streak-count">0</span>×</div>
+    <button class="icon-btn" id="sound-toggle-btn" onclick="window.toggleSound && window.toggleSound()" title="Toggle Sound">🔊</button>
+    <button class="prefs-btn" onclick="window.openPrefs && window.openPrefs()">⚙ <span class="prefs-label">PREFS</span></button>
+  </div>
+</header>
+
+<div class="app">
+  <main class="main">
+    <div class="confetti-wrap" id="confetti-wrap"></div>
+    
+    <!-- BRIEFING -->
+    <div class="screen active" id="screen-briefing">
+      <div id="briefing-mount"></div>
+    </div>
+
+    <!-- LESSON -->
+    <div class="screen" id="screen-lesson">
+      <div class="lesson-header">
+        <div class="lesson-nav">
+          <button class="back-btn" onclick="window.location.href='/'">← EXIT</button>
+          <span class="lesson-day-tag" id="lesson-day-tag"></span>
+        </div>
+        <div class="progress-wrap">
+          <div class="progress-top">
+            <span class="progress-label" id="lesson-title-sm"></span>
+            <span class="progress-count" id="progress-count">0/0</span>
+          </div>
+          <div class="progress-bar"><div class="progress-fill" id="progress-fill" style="width:0%"></div></div>
+        </div>
+      </div>
+      <div class="question-card" id="question-card"></div>
+    </div>
+
+    <!-- SCORE -->
+    <div class="screen" id="screen-score">
+      <div class="score-screen">
+        <div class="score-trophy" id="score-trophy">🏆</div>
+        <div class="score-title cursor" id="score-title">SESSION_COMPLETE</div>
+        <div class="score-sub" id="score-sub"></div>
+        <div class="score-big" id="score-big">—</div>
+        <div class="score-stats">
+          <div class="score-stat correct-stat"><span class="score-stat-val" id="sc-correct">0</span><span class="score-stat-label">CORRECT</span></div>
+          <div class="score-stat wrong-stat"><span class="score-stat-val" id="sc-wrong">0</span><span class="score-stat-label">WRONG</span></div>
+          <div class="score-stat"><span class="score-stat-val" id="sc-total">0</span><span class="score-stat-label">TOTAL</span></div>
+        </div>
+        <div class="score-actions">
+          <button class="btn-secondary" onclick="window.location.reload()">↺ RETRY</button>
+          <button class="btn-primary" onclick="window.location.href='/'">⌂ HOME</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- CERTIFICATE -->
+    <div class="screen" id="screen-cert">
+      <div class="cert-outer">
+        <div class="cert-card">
+          <div class="cert-ribbon"></div>
+          <span class="cert-label" id="cert-label">MODULE_COMPLETE</span>
+          <span class="cert-badge" id="cert-badge">🏛️</span>
+          <div class="cert-module-id" id="cert-module-id">MODULE_01</div>
+          <div class="cert-module-title" id="cert-module-title">FOUNDATIONS</div>
+          <div class="cert-module-sub" id="cert-module-sub">The Ancient Tongue</div>
+          <hr class="cert-divider">
+          <div class="cert-score-row">
+            <div class="cert-score-box" id="cert-score-box">—</div>
+            <div class="cert-stats">
+              <div class="cert-stat"><span class="cert-stat-val" id="cert-correct" style="color:var(--ok)">0</span><span class="cert-stat-label">CORRECT</span></div>
+              <div class="cert-stat"><span class="cert-stat-val" id="cert-wrong" style="color:var(--err)">0</span><span class="cert-stat-label">WRONG</span></div>
+              <div class="cert-stat"><span class="cert-stat-val" id="cert-total">0</span><span class="cert-stat-label">TOTAL_Q</span></div>
+            </div>
+          </div>
+          <div class="cert-stamp-wrap">
+            <span class="cert-stamp" id="cert-stamp">✓ CERTIFIED</span>
+          </div>
+          <div class="cert-actions">
+            <button class="cert-retry-btn" onclick="window.location.reload()">↺ RETRY TEST</button>
+            <button class="cert-home-btn" onclick="window.location.href='/'">⌂ HOME</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+</div>
+
+<script type="module" src="/src/js/lesson.js"></script>
+</body>
+</html>
