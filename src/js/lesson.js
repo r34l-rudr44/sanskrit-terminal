@@ -90,21 +90,22 @@ const KEYBOARDS = {
   ]
 };
 
-window.renderVirtualKeyboard = () => {
+function renderVirtualKeyboard() {
   const script = localStorage.getItem('sk_script') || 'deva';
   const layout = KEYBOARDS[script] || KEYBOARDS.deva;
   
   let html = `<div class="vk-wrap">
     <div class="vk-header" onclick="window.toggleKeyboard()">
       <span class="vk-title">VIRTUAL_KEYBOARD [${script.toUpperCase()}]</span>
-      <button class="vk-toggle" id="vk-toggle-btn">▼</button>
+      <button class="vk-toggle" id="vk-toggle-btn">▲</button>
     </div>
     <div class="vk-body" id="vk-body">`;
     
   layout.forEach(row => {
     html += `<div class="vk-row">`;
     row.forEach(key => {
-      html += `<button class="vk-key" onclick="window.vkPress('${key}')">${key}</button>`;
+      const escaped = key.replace(/'/g, "\\'");
+      html += `<button class="vk-key" onclick="window.vkPress('${escaped}')">${key}</button>`;
     });
     html += `</div>`;
   });
@@ -117,15 +118,15 @@ window.renderVirtualKeyboard = () => {
   </div></div>`;
   
   return html;
-};
+}
 
 window.toggleKeyboard = () => {
   const body = document.getElementById('vk-body');
   const btn = document.getElementById('vk-toggle-btn');
   if (!body) return;
-  const isHidden = body.style.display === 'none';
-  body.style.display = isHidden ? 'flex' : 'none';
-  btn.textContent = isHidden ? '▼' : '▲';
+  const isOpen = body.style.display !== 'none';
+  body.style.display = isOpen ? 'none' : 'flex';
+  btn.textContent = isOpen ? '▲' : '▼';
 };
 
 window.vkPress = (char) => {
@@ -192,7 +193,7 @@ function renderQuestion() {
   aa.className = 'action-area'; aa.id = 'action-area';
   
   if (q.type === 'match') {
-    // auto-advances
+    // auto-advances on complete match
   } else if (q.type === 'wordtiles') {
     aa.innerHTML = `<button class="btn-secondary" onclick="window.skipQuestion()">SKIP</button>
       <button class="btn-primary" id="wt-check-btn" onclick="window.checkWordTiles()" disabled>CHECK ✓</button>`;
@@ -219,17 +220,16 @@ function buildQuestion(q) {
   
   if (q.type === 'translation') {
     return `${badge}${qText}<div class="translation-wrap"><div class="translation-hint">${q.hint||''}</div>
-      <input class="answer-input" type="text" id="active-input" placeholder="Type answer..." onkeydown="if(event.key==='Enter') window.submitInputQuestion()">
-      <div class="keyboard-hint">// press ENTER or SUBMIT to check</div>
-      ${window.renderVirtualKeyboard()}
+      <input class="answer-input" type="text" id="active-input" placeholder="Type answer..." autocomplete="off" autocapitalize="off" spellcheck="false" onkeydown="if(event.key==='Enter') window.submitInputQuestion()">
+      <div class="keyboard-hint">// press ENTER or tap SUBMIT</div>
+      ${renderVirtualKeyboard()}
       </div>`;
   }
   
   if (q.type === 'fill') {
-    return `${badge}<div class="fill-sentence">${q.sentenceParts[0]}<input class="blank-input devanagari" id="active-input" type="text" onkeydown="if(event.key==='Enter') window.submitInputQuestion()">${q.sentenceParts[1]}</div>
-      <div class="keyboard-hint">// press ENTER or SUBMIT to check</div>
-      ${window.renderVirtualKeyboard()}
-      `;
+    return `${badge}<div class="fill-sentence">${q.sentenceParts[0]}<input class="blank-input devanagari" id="active-input" type="text" autocomplete="off" autocapitalize="off" spellcheck="false" onkeydown="if(event.key==='Enter') window.submitInputQuestion()">${q.sentenceParts[1]}</div>
+      <div class="keyboard-hint">// press ENTER or tap SUBMIT</div>
+      ${renderVirtualKeyboard()}`;
   }
   
   if (q.type === 'match') {
@@ -279,6 +279,8 @@ window.wtTileClick = (id) => {
   const tile = state.wtTiles[id];
   const tray = document.getElementById('wt-tray');
   const tileEl = document.getElementById('wt-tile-' + id);
+  if (!tile || !tray || !tileEl) return;
+
   if (!tile.placed) {
     tile.placed = true; state.wtTray.push(id);
     const clone = document.createElement('button');
@@ -290,7 +292,8 @@ window.wtTileClick = (id) => {
     document.getElementById('wt-tray-tile-' + id)?.remove();
     tileEl.style.visibility = 'visible';
   }
-  document.getElementById('wt-check-btn').disabled = state.wtTray.length === 0;
+  const checkBtn = document.getElementById('wt-check-btn');
+  if (checkBtn) checkBtn.disabled = state.wtTray.length === 0;
 };
 
 window.checkWordTiles = () => {
@@ -299,7 +302,8 @@ window.checkWordTiles = () => {
   const built = state.wtTray.map(id => state.wtTiles[id].word).join(' ');
   const isCorrect = built.trim() === q.answer.trim();
   state.answered = true;
-  document.getElementById('wt-tray').classList.add(isCorrect ? 'correct-tray' : 'wrong-tray');
+  const tray = document.getElementById('wt-tray');
+  if (tray) tray.classList.add(isCorrect ? 'correct-tray' : 'wrong-tray');
   recordAnswer(isCorrect, q);
 };
 
@@ -321,10 +325,12 @@ window.matchClick = (el, pairIdx, side) => {
         state.answered = true; recordAnswer(true, currentDay.questions[state.currentQ]);
       }
     } else {
-      ms.selectedLeft.el.classList.add('wrong-match'); ms.selectedRight.el.classList.add('wrong-match');
+      const leftEl = ms.selectedLeft.el;
+      const rightEl = ms.selectedRight.el;
+      leftEl.classList.add('wrong-match'); rightEl.classList.add('wrong-match');
       setTimeout(() => {
-        ms.selectedLeft?.el.classList.remove('wrong-match','selected');
-        ms.selectedRight?.el.classList.remove('wrong-match','selected');
+        leftEl.classList.remove('wrong-match','selected');
+        rightEl.classList.remove('wrong-match','selected');
       }, 600);
     }
     ms.selectedLeft = null; ms.selectedRight = null;
@@ -343,13 +349,15 @@ function recordAnswer(correct, q, skipped = false) {
   Audio.playTone(correct);
   
   const fb = document.getElementById('feedback-banner');
+  if (!fb) return;
   fb.className = 'feedback-banner active ' + (correct ? 'correct-fb' : 'wrong-fb');
   const icon  = correct ? '✓' : (skipped ? '»' : '✗');
   const title = correct ? '>> CORRECT!' : (skipped ? '>> SKIPPED' : '>> WRONG');
   const detail = correct ? (q.explanation||'') : `ANSWER: <span class="fb-correct-ans">${q.answer||''}</span> ${q.explanation ? '— '+q.explanation : ''}`;
   fb.innerHTML = `<span class="fb-icon">${icon}</span><div><div class="fb-title">${title}</div><div class="fb-detail">${detail}</div></div>`;
 
-  document.getElementById('action-area').innerHTML = `<button class="btn-primary" onclick="window.nextQuestion()">CONTINUE →</button>`;
+  const aa = document.getElementById('action-area');
+  if (aa) aa.innerHTML = `<button class="btn-primary" onclick="window.nextQuestion()">CONTINUE →</button>`;
 }
 
 window.nextQuestion = () => {
@@ -359,7 +367,7 @@ window.nextQuestion = () => {
 };
 
 function finishLesson() {
-  const pct = Math.round((state.totalCorrect / state.totalAnswered) * 100);
+  const pct = state.totalAnswered > 0 ? Math.round((state.totalCorrect / state.totalAnswered) * 100) : 0;
   
   if (!state.completedDays.includes(currentDay.id)) {
     state.completedDays.push(currentDay.id);
@@ -415,9 +423,15 @@ function init() {
   Theme.init();
   Prefs.init();
   injectGlobals();
-  document.getElementById('streak-count').textContent = state.streak;
-  document.getElementById('topbar-marquee').textContent =
-    `MODULES: ${MODULES.length}  //  STREAK: ${state.streak}×  //  अभ्यासेन न किंचित् अशक्यम् — Nothing is impossible with practice`;
+
+  const streakEl = document.getElementById('streak-count');
+  if (streakEl) streakEl.textContent = state.streak;
+
+  const marquee = document.getElementById('topbar-marquee');
+  if (marquee) {
+    marquee.textContent =
+      `MODULES: ${MODULES.length}  //  STREAK: ${state.streak}×  //  अभ्यासेन न किंचित् अशक्यम् — Nothing is impossible with practice`;
+  }
 
   const urlParams = new URLSearchParams(window.location.search);
   const modId = parseInt(urlParams.get('mod'));

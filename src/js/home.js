@@ -1,10 +1,11 @@
-import { MODULES, getModule, getDay } from '../data/index.js';
+import { MODULES, getModule } from '../data/index.js';
 import { state, expandedMods, checkStreak } from './state.js';
 import { Theme, Prefs } from './utils.js';
 import { injectGlobals } from './components.js';
 
 export function isDayLocked(modId, dayId) {
   const mod = getModule(modId);
+  if (!mod) return true;
   const day = mod.days.find(d => d.id === dayId);
   if (!day || !day.isTest) return false;
   return !mod.days.filter(d => !d.isTest).every(d => state.completedDays.includes(d.id));
@@ -92,12 +93,14 @@ export function renderHomeModules() {
 }
 
 export function updateStats() {
-  document.getElementById('stat-days').textContent      = state.completedDays.filter(id => !id.endsWith('-T')).length;
-  document.getElementById('stat-questions').textContent = state.totalQuestions;
+  const el = (id) => document.getElementById(id);
+  if (!el('stat-days')) return;
+  el('stat-days').textContent      = state.completedDays.filter(id => !id.endsWith('-T')).length;
+  el('stat-questions').textContent = state.totalQuestions;
   const acc = state.totalQuestions > 0
     ? Math.round((state.totalCorrectAll / state.totalQuestions) * 100) + '%'
     : '—';
-  document.getElementById('stat-accuracy').textContent = acc;
+  el('stat-accuracy').textContent = acc;
 }
 
 export function renderSidebar() {
@@ -151,18 +154,38 @@ export function renderSidebar() {
   });
 }
 
+function restoreSidebarState() {
+  const saved = localStorage.getItem('sk_sidebar');
+  if (saved === 'collapsed') {
+    const sb = document.getElementById('sidebar');
+    const icon = document.getElementById('sidebar-tab-icon');
+    const wrap = document.getElementById('sidebar-wrap');
+    if (sb) {
+      sb.classList.add('collapsed');
+      if (icon) icon.textContent = '▶';
+      if (wrap) wrap.style.borderRight = 'none';
+    }
+  }
+}
+
 function init() {
   Theme.init();
   Prefs.init();
   injectGlobals();
   checkStreak();
+  restoreSidebarState();
   renderSidebar();
   renderHomeModules();
   updateStats();
-  document.getElementById('streak-count').textContent = state.streak;
-  const totalQ = MODULES.reduce((a,m) => a + m.days.length * 6, 0); // Approximation
-  document.getElementById('topbar-marquee').textContent =
-    `MODULES: ${MODULES.length}  //  STREAK: ${state.streak}×  //  अभ्यासेन न किंचित् अशक्यम् — Nothing is impossible with practice`;
+
+  const streakEl = document.getElementById('streak-count');
+  if (streakEl) streakEl.textContent = state.streak;
+
+  const marquee = document.getElementById('topbar-marquee');
+  if (marquee) {
+    marquee.textContent =
+      `MODULES: ${MODULES.length}  //  STREAK: ${state.streak}×  //  अभ्यासेन न किंचित् अशक्यम् — Nothing is impossible with practice`;
+  }
 }
 
 // Bind to window for HTML events
@@ -181,9 +204,10 @@ window.toggleSidebar = () => {
   const sb   = document.getElementById('sidebar');
   const icon = document.getElementById('sidebar-tab-icon');
   const wrap = document.getElementById('sidebar-wrap');
+  if (!sb) return;
   const isCollapsed = sb.classList.toggle('collapsed');
-  icon.textContent = isCollapsed ? '▶' : '◀';
-  wrap.style.borderRight = isCollapsed ? 'none' : '';
+  if (icon) icon.textContent = isCollapsed ? '▶' : '◀';
+  if (wrap) wrap.style.borderRight = isCollapsed ? 'none' : '';
   localStorage.setItem('sk_sidebar', isCollapsed ? 'collapsed' : 'open');
 };
 

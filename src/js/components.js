@@ -194,7 +194,8 @@ export function injectGlobals() {
   }
 
   // Handle Boot Sequence for Home Only
-  if (window.location.pathname === '/' || window.location.pathname === '/index.html') {
+  const isHomePage = !window.location.pathname.includes('lesson');
+  if (isHomePage) {
     if (!localStorage.getItem('sk_booted')) {
       const htmlBoot = `
       <div class="boot-overlay" id="boot-overlay">
