@@ -59,6 +59,104 @@ window.showLesson = function() {
   renderQuestion();
 };
 
+const KEYBOARDS = {
+  deva: [
+    ['अ','आ','इ','ई','उ','ऊ','ऋ','ए','ऐ','ओ','औ'],
+    ['क','ख','ग','घ','ङ','च','छ','ज','झ','ञ'],
+    ['ट','ठ','ड','ढ','ण','त','थ','द','ध','न'],
+    ['प','फ','ब','भ','म','य','र','ल','व','श','ष','स','ह'],
+    ['्','ा','ि','ी','ु','ू','ृ','े','ै','ो','ौ','ं','ः']
+  ],
+  iast: [
+    ['a','ā','i','ī','u','ū','ṛ','ṝ','ḷ','ḹ','e','ai','o','au'],
+    ['k','kh','g','gh','ṅ','c','ch','j','jh','ñ'],
+    ['ṭ','ṭh','ḍ','ḍh','ṇ','t','th','d','dh','n'],
+    ['p','ph','b','bh','m','y','r','l','v','ś','ṣ','s','h'],
+    ['ṃ','ḥ']
+  ],
+  itrans: [
+    ['a','A','aa','i','I','ii','u','U','uu','RRi','RRI','LLi','LLI'],
+    ['k','kh','g','gh','~N','c','ch','j','jh','~n'],
+    ['T','Th','D','Dh','N','t','th','d','dh','n'],
+    ['p','ph','b','bh','m','y','r','l','v','sh','Sh','s','h'],
+    ['.m','H']
+  ],
+  hk: [
+    ['a','A','i','I','u','U','R','RR','lR','lRR','e','ai','o','au'],
+    ['k','kh','g','gh','G','c','ch','j','jh','J'],
+    ['T','Th','D','Dh','N','t','th','d','dh','n'],
+    ['p','ph','b','bh','m','y','r','l','v','z','S','s','h'],
+    ['M','H']
+  ]
+};
+
+window.renderVirtualKeyboard = () => {
+  const script = localStorage.getItem('sk_script') || 'deva';
+  const layout = KEYBOARDS[script] || KEYBOARDS.deva;
+  
+  let html = `<div class="vk-wrap">
+    <div class="vk-header" onclick="window.toggleKeyboard()">
+      <span class="vk-title">VIRTUAL_KEYBOARD [${script.toUpperCase()}]</span>
+      <button class="vk-toggle" id="vk-toggle-btn">▼</button>
+    </div>
+    <div class="vk-body" id="vk-body">`;
+    
+  layout.forEach(row => {
+    html += `<div class="vk-row">`;
+    row.forEach(key => {
+      html += `<button class="vk-key" onclick="window.vkPress('${key}')">${key}</button>`;
+    });
+    html += `</div>`;
+  });
+  
+  html += `
+    <div class="vk-row">
+      <button class="vk-key vk-space" onclick="window.vkPress(' ')">SPACE</button>
+      <button class="vk-key vk-backspace" onclick="window.vkBackspace()">⌫</button>
+    </div>
+  </div></div>`;
+  
+  return html;
+};
+
+window.toggleKeyboard = () => {
+  const body = document.getElementById('vk-body');
+  const btn = document.getElementById('vk-toggle-btn');
+  if (!body) return;
+  const isHidden = body.style.display === 'none';
+  body.style.display = isHidden ? 'flex' : 'none';
+  btn.textContent = isHidden ? '▼' : '▲';
+};
+
+window.vkPress = (char) => {
+  const inp = document.getElementById('active-input');
+  if (inp && !inp.disabled) {
+    const start = inp.selectionStart;
+    const end = inp.selectionEnd;
+    const val = inp.value;
+    inp.value = val.substring(0, start) + char + val.substring(end);
+    inp.selectionStart = inp.selectionEnd = start + char.length;
+    inp.focus();
+  }
+};
+
+window.vkBackspace = () => {
+  const inp = document.getElementById('active-input');
+  if (inp && !inp.disabled) {
+    const start = inp.selectionStart;
+    const end = inp.selectionEnd;
+    const val = inp.value;
+    if (start === end && start > 0) {
+      inp.value = val.substring(0, start - 1) + val.substring(end);
+      inp.selectionStart = inp.selectionEnd = start - 1;
+    } else if (start !== end) {
+      inp.value = val.substring(0, start) + val.substring(end);
+      inp.selectionStart = inp.selectionEnd = start;
+    }
+    inp.focus();
+  }
+};
+
 function renderQuestion() {
   const q = currentDay.questions[state.currentQ];
   if (!q) return;
@@ -98,6 +196,9 @@ function renderQuestion() {
   } else if (q.type === 'wordtiles') {
     aa.innerHTML = `<button class="btn-secondary" onclick="window.skipQuestion()">SKIP</button>
       <button class="btn-primary" id="wt-check-btn" onclick="window.checkWordTiles()" disabled>CHECK ✓</button>`;
+  } else if (q.type === 'translation' || q.type === 'fill') {
+    aa.innerHTML = `<button class="btn-secondary" onclick="window.skipQuestion()">SKIP</button>
+      <button class="btn-primary" onclick="window.submitInputQuestion()">SUBMIT ⏎</button>`;
   } else {
     aa.innerHTML = `<button class="btn-secondary" onclick="window.skipQuestion()">SKIP</button>`;
   }
@@ -118,13 +219,17 @@ function buildQuestion(q) {
   
   if (q.type === 'translation') {
     return `${badge}${qText}<div class="translation-wrap"><div class="translation-hint">${q.hint||''}</div>
-      <input class="answer-input" type="text" placeholder="Type answer..." onkeydown="if(event.key==='Enter') window.checkTranslation(this)">
-      <div class="keyboard-hint">// press ENTER to submit</div></div>`;
+      <input class="answer-input" type="text" id="active-input" placeholder="Type answer..." onkeydown="if(event.key==='Enter') window.submitInputQuestion()">
+      <div class="keyboard-hint">// press ENTER or SUBMIT to check</div>
+      ${window.renderVirtualKeyboard()}
+      </div>`;
   }
   
   if (q.type === 'fill') {
-    return `${badge}<div class="fill-sentence">${q.sentenceParts[0]}<input class="blank-input devanagari" type="text" onkeydown="if(event.key==='Enter') window.checkFill(this)">${q.sentenceParts[1]}</div>
-      <div class="keyboard-hint">// press ENTER to check</div>`;
+    return `${badge}<div class="fill-sentence">${q.sentenceParts[0]}<input class="blank-input devanagari" id="active-input" type="text" onkeydown="if(event.key==='Enter') window.submitInputQuestion()">${q.sentenceParts[1]}</div>
+      <div class="keyboard-hint">// press ENTER or SUBMIT to check</div>
+      ${window.renderVirtualKeyboard()}
+      `;
   }
   
   if (q.type === 'match') {
@@ -157,17 +262,9 @@ window.answerMCQ = (el, idx) => {
   recordAnswer(isCorrect, q);
 };
 
-window.checkTranslation = (inp) => {
-  if (state.answered) return;
-  state.answered = true;
-  const q = currentDay.questions[state.currentQ];
-  const isCorrect = inp.value.trim() === q.answer.trim();
-  inp.classList.add(isCorrect ? 'correct' : 'wrong');
-  inp.disabled = true;
-  recordAnswer(isCorrect, q);
-};
-
-window.checkFill = (inp) => {
+window.submitInputQuestion = () => {
+  const inp = document.getElementById('active-input');
+  if (!inp) return;
   if (state.answered) return;
   state.answered = true;
   const q = currentDay.questions[state.currentQ];
