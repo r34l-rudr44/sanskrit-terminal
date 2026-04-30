@@ -487,7 +487,7 @@ body.bar-collapsed{padding-bottom:14px;}
   .topbar{padding:8px 10px;gap:8px;}
   .logo-icon{width:34px;height:34px;font-size:17px;}
   .logo-text{font-size:18px;gap:4px;}
-  .logo-sub{font-size:7px;}
+  .logo-sub{font-size:7px;letter-spacing:0.4px;}
   .beta-tag{font-size:8px;padding:1px 4px;}
   .streak-badge{padding:3px 8px;font-size:15px;}
   .icon-btn{width:32px;height:32px;font-size:16px;}
