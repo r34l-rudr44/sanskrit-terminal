@@ -55,8 +55,8 @@ button{font-family:var(--font-ui);cursor:pointer;}
 .prefs-btn:active{transform:translate(3px,3px);box-shadow:none;}
 .prefs-label{display:inline;}
 @media(max-width:520px){.prefs-label{display:none;}}
-.app{display:flex;min-height:calc(100vh - 61px);}
-.sidebar-wrap{display:flex;flex-direction:row;align-items:stretch;position:relative;flex-shrink:0;}
+.app{display:flex;position:relative;min-height:calc(100vh - 61px);}
+.sidebar-wrap{display:flex;flex-direction:row;align-items:stretch;position:absolute;left:0;top:0;bottom:0;z-index:40;}
 .sidebar{width:270px;min-width:270px;padding:16px 12px;background:var(--surface);overflow-y:auto;overflow-x:hidden;position:sticky;top:61px;max-height:calc(100vh - 61px);align-self:flex-start;transition:width .24s ease,min-width .24s ease,padding .24s ease,opacity .2s ease;scrollbar-width:thin;scrollbar-color:var(--brand-dark) var(--surface);}
 .sidebar::-webkit-scrollbar{width:6px;}.sidebar::-webkit-scrollbar-track{background:var(--surface);}.sidebar::-webkit-scrollbar-thumb{background:var(--brand-dark);}
 .sidebar.collapsed{width:0;min-width:0;padding:0;opacity:0;pointer-events:none;overflow:hidden;}
@@ -183,7 +183,7 @@ body.bar-collapsed{padding-bottom:14px;}
 .stat-label{font-size:12px;color:var(--text-2);letter-spacing:1px;margin-top:4px;display:block;}
 .section-title{font-size:13px;color:var(--text-2);letter-spacing:2px;margin-bottom:12px;}
 .section-title::before{content:'// ';}
-
+.home-module-group{display:contents;}
 .module-entry{margin-bottom:16px;border:var(--border-dim);background:var(--surface);overflow:hidden;transition:border-color .15s;}
 .module-entry:hover{border-color:var(--brand-dim);}
 .module-entry.mod-complete{border-color:var(--ok-dim);}
@@ -507,6 +507,10 @@ body.bar-collapsed{padding-bottom:14px;}
   .module-entry-hdr{padding:12px 14px;gap:10px;}
   .module-entry-icon{font-size:24px;}
   .module-entry-title{font-size:18px;}
+  #home-module-list{display:flex;gap:12px;overflow-x:auto;scroll-snap-type:x mandatory;-webkit-overflow-scrolling:touch;scrollbar-width:none;}
+  #home-module-list::-webkit-scrollbar{display:none;}
+  .home-module-group{display:flex;flex:0 0 100%;min-width:100%;flex-direction:column;gap:12px;scroll-snap-align:start;}
+  .home-module-group .module-entry{margin-bottom:0;}
   .module-days-grid{grid-template-columns:repeat(auto-fill,minmax(90px,1fr));gap:6px;padding:10px 12px 14px;}
   .mod-day-card{padding:10px;}
   .mod-day-card-icon{font-size:18px;}

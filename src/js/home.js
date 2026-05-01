@@ -21,7 +21,11 @@ export function renderHomeModules() {
   if(!container) return;
   container.innerHTML = '';
 
-  MODULES.forEach(mod => {
+  for (let i = 0; i < MODULES.length; i += 3) {
+    const group = document.createElement('div');
+    group.className = 'home-module-group';
+
+    MODULES.slice(i, i + 3).forEach(mod => {
     const totalDays   = mod.days.length;
     const doneDays    = mod.days.filter(d => state.completedDays.includes(d.id)).length;
     const pct         = Math.round((doneDays / totalDays) * 100);
@@ -88,8 +92,11 @@ export function renderHomeModules() {
     body.appendChild(grid);
     entry.appendChild(hdr);
     entry.appendChild(body);
-    container.appendChild(entry);
+    group.appendChild(entry);
   });
+
+    container.appendChild(group);
+  }
 }
 
 export function updateStats() {
