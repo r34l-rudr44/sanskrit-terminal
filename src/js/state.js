@@ -16,7 +16,7 @@ export const state = {
   lastDate:             localStorage.getItem('sk_last_date') || ''
 };
 
-export const expandedMods = new Set([1]);
+export const expandedMods = new Set();
 
 export function checkStreak() {
   const today = new Date().toDateString();
