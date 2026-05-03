@@ -44,6 +44,9 @@ function showBriefing() {
   const card = document.createElement('div');
   card.className = 'briefing-card';
   card.innerHTML = `
+    <div class="briefing-topbar">
+      <button class="btn-secondary briefing-exit-btn" onclick="window.location.href='/'"><- EXIT</button>
+    </div>
     <div class="briefing-header"><div class="briefing-icon">${currentDay.icon}</div><div class="briefing-title">${data.title}</div><div class="briefing-tag">${tag}</div></div>
     <div class="briefing-body"><div class="briefing-lead">${data.lead}</div>${sectionsHTML}</div>
     <div class="briefing-footer"><span class="briefing-footer-note">${currentDay.isTest ? 'prepare yourself' : 'read before continuing'}</span>
@@ -51,25 +54,6 @@ function showBriefing() {
   `;
   mount.innerHTML = '';
   mount.appendChild(card);
-
-  const footer = card.querySelector('.briefing-footer');
-  if (footer) {
-    const primaryBtn = footer.querySelector('.btn-primary');
-    const actions = document.createElement('div');
-    actions.className = 'briefing-footer-actions';
-
-    const exitBtn = document.createElement('button');
-    exitBtn.className = 'btn-secondary';
-    exitBtn.textContent = '<- EXIT';
-    exitBtn.onclick = () => { window.location.href = '/'; };
-
-    actions.appendChild(exitBtn);
-    if (primaryBtn) {
-      footer.removeChild(primaryBtn);
-      actions.appendChild(primaryBtn);
-    }
-    footer.appendChild(actions);
-  }
 }
 
 // Lesson logic
