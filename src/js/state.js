@@ -31,7 +31,8 @@ export function checkStreak() {
 
 export function confirmClearCache() {
   ['sk_completed_v2','sk_mod_tests','sk_streak','sk_total_q','sk_total_c','sk_last_date',
-   'sk_booted','sk_theme','sk_fs','sk_script','sk_sound','sk_sidebar','sk_cookie_ack'
+   'sk_booted','sk_theme','sk_fs','sk_script','sk_sound','sk_sidebar','sk_cookie_ack',
+   'sk_lesson_progress'
   ].forEach(k => localStorage.removeItem(k));
   window.location.href = '/';
 }

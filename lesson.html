@@ -48,7 +48,7 @@
     <div class="screen" id="screen-lesson">
       <div class="lesson-header">
         <div class="lesson-nav">
-          <button class="back-btn" onclick="window.location.href='/'">← EXIT</button>
+          <button class="back-btn" onclick="window.exitLesson()">← EXIT</button>
           <span class="lesson-day-tag" id="lesson-day-tag"></span>
         </div>
         <div class="progress-wrap">
@@ -75,8 +75,8 @@
           <div class="score-stat"><span class="score-stat-val" id="sc-total">0</span><span class="score-stat-label">TOTAL</span></div>
         </div>
         <div class="score-actions">
-          <button class="btn-secondary" onclick="window.location.reload()">↺ RETRY</button>
-          <button class="btn-primary" onclick="window.location.href='/'">⌂ HOME</button>
+          <button class="btn-secondary" onclick="window.retryLesson()">↺ RETRY</button>
+          <button class="btn-primary" onclick="window.exitLesson()">⌂ HOME</button>
         </div>
       </div>
     </div>
@@ -104,8 +104,8 @@
             <span class="cert-stamp" id="cert-stamp">✓ CERTIFIED</span>
           </div>
           <div class="cert-actions">
-            <button class="cert-retry-btn" onclick="window.location.reload()">↺ RETRY TEST</button>
-            <button class="cert-home-btn" onclick="window.location.href='/'">⌂ HOME</button>
+            <button class="cert-retry-btn" onclick="window.retryLesson()">↺ RETRY TEST</button>
+            <button class="cert-home-btn" onclick="window.exitLesson()">⌂ HOME</button>
           </div>
         </div>
       </div>

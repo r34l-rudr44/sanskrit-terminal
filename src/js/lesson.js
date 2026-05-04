@@ -5,6 +5,8 @@ import { injectGlobals } from './components.js';
 
 let currentDay = null;
 let currentMod = null;
+const LESSON_PROGRESS_KEY = 'sk_lesson_progress';
+let hydratedLessonProgress = null;
 
 function showScreen(name) {
   document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
@@ -13,6 +15,90 @@ function showScreen(name) {
     target.classList.add('active');
     window.scrollTo(0, 0);
   }
+}
+
+function getActiveLessonScreen() {
+  const active = document.querySelector('.screen.active');
+  return active ? active.id.replace('screen-', '') : 'briefing';
+}
+
+function clearLessonProgress() {
+  hydratedLessonProgress = null;
+  localStorage.removeItem(LESSON_PROGRESS_KEY);
+}
+
+function loadLessonProgress(modId, dayId) {
+  try {
+    const raw = localStorage.getItem(LESSON_PROGRESS_KEY);
+    if (!raw) return null;
+    const saved = JSON.parse(raw);
+    if (!saved || saved.modId !== modId || saved.dayId !== dayId) return null;
+    return saved;
+  } catch {
+    return null;
+  }
+}
+
+function getQuestionDraftSnapshot(q) {
+  if (!q) return null;
+
+  if (q.type === 'translation' || q.type === 'fill') {
+    return {
+      type: q.type,
+      inputValue: document.getElementById('active-input')?.value || ''
+    };
+  }
+
+  if (q.type === 'wordtiles') {
+    return {
+      type: q.type,
+      wtTiles: state.wtTiles.map(tile => ({ word: tile.word, placed: !!tile.placed })),
+      wtTray: [...state.wtTray]
+    };
+  }
+
+  return null;
+}
+
+function saveLessonProgress(screen = getActiveLessonScreen()) {
+  if (!currentMod || !currentDay) return;
+
+  const progress = {
+    modId: currentMod.id,
+    dayId: currentDay.id,
+    screen,
+    currentQ: state.currentQ,
+    totalAnswered: state.totalAnswered,
+    totalCorrect: state.totalCorrect,
+    questionState: screen === 'lesson' ? getQuestionDraftSnapshot(currentDay.questions[state.currentQ]) : null
+  };
+
+  localStorage.setItem(LESSON_PROGRESS_KEY, JSON.stringify(progress));
+}
+
+function restoreWordTileUI() {
+  const tray = document.getElementById('wt-tray');
+  const placeholder = document.getElementById('wt-placeholder');
+  if (!tray) return;
+
+  if (state.wtTray.length > 0 && placeholder) placeholder.style.display = 'none';
+
+  state.wtTray.forEach(id => {
+    const tile = state.wtTiles[id];
+    const tileEl = document.getElementById('wt-tile-' + id);
+    if (!tile || !tileEl) return;
+
+    const clone = document.createElement('button');
+    clone.className = 'wt-tile in-tray';
+    clone.id = 'wt-tray-tile-' + id;
+    clone.textContent = tile.word;
+    clone.onclick = () => window.wtTileClick(id);
+    tray.appendChild(clone);
+    tileEl.style.visibility = 'hidden';
+  });
+
+  const checkBtn = document.getElementById('wt-check-btn');
+  if (checkBtn) checkBtn.disabled = state.wtTray.length === 0;
 }
 
 // Briefing logic
@@ -45,7 +131,7 @@ function showBriefing() {
   card.className = 'briefing-card';
   card.innerHTML = `
     <div class="briefing-topbar">
-      <button class="btn-secondary briefing-exit-btn" onclick="window.location.href='/'"><- EXIT</button>
+      <button class="btn-secondary briefing-exit-btn" onclick="window.exitLesson()"><- EXIT</button>
     </div>
     <div class="briefing-header"><div class="briefing-icon">${currentDay.icon}</div><div class="briefing-title">${data.title}</div><div class="briefing-tag">${tag}</div></div>
     <div class="briefing-body"><div class="briefing-lead">${data.lead}</div>${sectionsHTML}</div>
@@ -54,12 +140,23 @@ function showBriefing() {
   `;
   mount.innerHTML = '';
   mount.appendChild(card);
+  saveLessonProgress('briefing');
 }
 
 // Lesson logic
 window.showLesson = function() {
   showScreen('lesson');
   renderQuestion();
+};
+
+window.exitLesson = () => {
+  clearLessonProgress();
+  window.location.href = '/';
+};
+
+window.retryLesson = () => {
+  clearLessonProgress();
+  window.location.reload();
 };
 
 const KEYBOARDS = {
@@ -165,6 +262,7 @@ function renderQuestion() {
   const q = currentDay.questions[state.currentQ];
   if (!q) return;
   const pct = Math.round((state.currentQ / currentDay.questions.length) * 100);
+  const restoredState = hydratedLessonProgress?.currentQ === state.currentQ ? hydratedLessonProgress.questionState : null;
 
   document.getElementById('lesson-day-tag').textContent = `MOD_${currentMod.id}`;
   document.getElementById('lesson-title-sm').textContent = currentDay.title;
@@ -175,8 +273,13 @@ function renderQuestion() {
   state.wtTray = [];
   
   if (q.type === 'wordtiles') {
-    const allWords = [...q.tiles, ...(q.distractors || [])].sort(() => Math.random() - 0.5);
-    state.wtTiles = allWords.map(w => ({ word: w, placed: false }));
+    if (restoredState?.type === 'wordtiles' && Array.isArray(restoredState.wtTiles) && Array.isArray(restoredState.wtTray)) {
+      state.wtTiles = restoredState.wtTiles.map(tile => ({ word: tile.word, placed: !!tile.placed }));
+      state.wtTray = restoredState.wtTray.filter(id => Number.isInteger(id) && state.wtTiles[id]);
+    } else {
+      const allWords = [...q.tiles, ...(q.distractors || [])].sort(() => Math.random() - 0.5);
+      state.wtTiles = allWords.map(w => ({ word: w, placed: false }));
+    }
   }
   if (q.type === 'match') {
     state.matchState = { selectedLeft: null, selectedRight: null, matched: [] };
@@ -207,6 +310,19 @@ function renderQuestion() {
     aa.innerHTML = `<button class="btn-secondary" onclick="window.skipQuestion()">SKIP</button>`;
   }
   card.appendChild(aa);
+
+  if ((q.type === 'translation' || q.type === 'fill') && restoredState?.type === q.type) {
+    const inp = document.getElementById('active-input');
+    if (inp && typeof restoredState.inputValue === 'string') inp.value = restoredState.inputValue;
+    inp?.addEventListener('input', () => saveLessonProgress('lesson'));
+  }
+
+  if (q.type === 'wordtiles' && restoredState?.type === 'wordtiles') {
+    restoreWordTileUI();
+  }
+
+  hydratedLessonProgress = null;
+  saveLessonProgress('lesson');
 }
 
 function buildQuestion(q) {
@@ -297,6 +413,7 @@ window.wtTileClick = (id) => {
   }
   const checkBtn = document.getElementById('wt-check-btn');
   if (checkBtn) checkBtn.disabled = state.wtTray.length === 0;
+  saveLessonProgress('lesson');
 };
 
 window.checkWordTiles = () => {
@@ -371,6 +488,7 @@ window.nextQuestion = () => {
 
 function finishLesson() {
   const pct = state.totalAnswered > 0 ? Math.round((state.totalCorrect / state.totalAnswered) * 100) : 0;
+  clearLessonProgress();
   
   if (!state.completedDays.includes(currentDay.id)) {
     state.completedDays.push(currentDay.id);
@@ -455,6 +573,19 @@ function init() {
 
   state.currentModuleId = modId;
   state.currentDayId = dayId;
+
+  const savedProgress = loadLessonProgress(modId, dayId);
+  if (savedProgress) {
+    state.currentQ = Math.max(0, Math.min(savedProgress.currentQ || 0, currentDay.questions.length - 1));
+    state.totalAnswered = Math.max(0, savedProgress.totalAnswered || 0);
+    state.totalCorrect = Math.max(0, savedProgress.totalCorrect || 0);
+    hydratedLessonProgress = savedProgress;
+
+    if (savedProgress.screen === 'lesson') {
+      showLesson();
+      return;
+    }
+  }
 
   showBriefing();
 }
