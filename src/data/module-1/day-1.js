@@ -2,6 +2,14 @@ export const id = "1-1";
 export const title = "Basic Vocabulary";
 export const icon = "🌊";
 
+export const metadata = {
+  difficulty: "beginner",
+  estimatedMinutes: 8,
+  tags: ["vocabulary", "elements", "intro"],
+  grammarTopics: ["sov-order"],
+  vocabularyTopics: ["five elements", "greetings", "core nouns"]
+};
+
 export const briefing = {
   pre: {
     title: "Basic Sanskrit Vocabulary",

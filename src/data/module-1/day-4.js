@@ -2,6 +2,14 @@ export const id = "1-4";
 export const title = "Nature & Elements";
 export const icon = "🌿";
 
+export const metadata = {
+  difficulty: "beginner",
+  estimatedMinutes: 8,
+  tags: ["nature", "cosmos", "elements"],
+  grammarTopics: ["basic predicates"],
+  vocabularyTopics: ["earth", "sky", "moon", "elements"]
+};
+
 export const briefing = {
   pre: {
     title: "Nature & Elements // प्रकृति",

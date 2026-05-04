@@ -2,6 +2,14 @@ export const id = "2-3";
 export const title = "Colors & World";
 export const icon = "🎨";
 
+export const metadata = {
+  difficulty: "beginner",
+  estimatedMinutes: 8,
+  tags: ["colors", "adjectives", "descriptions"],
+  grammarTopics: ["adjective noun agreement"],
+  vocabularyTopics: ["colors", "descriptive adjectives"]
+};
+
 export const briefing = {
   pre: {
     title: "Colors & Descriptions // वर्ण",

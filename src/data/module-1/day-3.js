@@ -2,6 +2,14 @@ export const id = "1-3";
 export const title = "Greetings & Phrases";
 export const icon = "🙏";
 
+export const metadata = {
+  difficulty: "beginner",
+  estimatedMinutes: 8,
+  tags: ["greetings", "courtesy", "conversation"],
+  grammarTopics: ["simple expressions"],
+  vocabularyTopics: ["greetings", "politeness phrases"]
+};
+
 export const briefing = {
   pre: {
     title: "Greetings & Phrases",

@@ -2,6 +2,14 @@ export const id = "2-2";
 export const title = "Family & People";
 export const icon = "👨‍👩‍👧";
 
+export const metadata = {
+  difficulty: "beginner",
+  estimatedMinutes: 8,
+  tags: ["family", "relationships", "vocabulary"],
+  grammarTopics: ["basic noun recall"],
+  vocabularyTopics: ["family terms", "social words"]
+};
+
 export const briefing = {
   pre: {
     title: "Family & People // परिवार",

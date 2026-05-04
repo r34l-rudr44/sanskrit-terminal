@@ -53,6 +53,7 @@ Each day file should export:
 - `id`
 - `title`
 - `icon`
+- `metadata`
 - `briefing`
 - `questions`
 
@@ -62,6 +63,13 @@ Example template:
 export const id = "3-1";
 export const title = "Sample Lesson Title";
 export const icon = "📘";
+export const metadata = {
+  difficulty: "beginner",
+  estimatedMinutes: 8,
+  tags: ["vocabulary", "intro"],
+  grammarTopics: ["sov-order"],
+  vocabularyTopics: ["core nouns", "intro phrases"]
+};
 
 export const briefing = {
   pre: {
@@ -127,6 +135,13 @@ export const id = "3-T";
 export const title = "Final Test";
 export const icon = "📝";
 export const isTest = true;
+export const metadata = {
+  difficulty: "beginner",
+  estimatedMinutes: 10,
+  tags: ["assessment", "module-test"],
+  grammarTopics: ["review"],
+  vocabularyTopics: ["review"]
+};
 
 export const briefing = {
   pre: {
@@ -285,9 +300,10 @@ Optional:
 
 Rules:
 
-- The app checks `inp.value.trim() === q.answer.trim()`
-- This means the answer is exact-match after trimming whitespace
-- Case, spelling, punctuation, and script must match what you put in `answer`
+- Empty or whitespace-only submits are ignored
+- The app normalizes whitespace and common punctuation before comparing
+- If `answerRoman` exists, it is also accepted as a typed equivalent
+- Latin-script inputs are compared in a diacritic-tolerant way
 
 Example:
 
@@ -320,8 +336,7 @@ Rules:
 - `sentenceParts` must be an array with two strings:
   - text before the input
   - text after the input
-- `answerRoman` is informational only right now
-- Validation still uses only `answer`
+- `answerRoman`, when present, is accepted as an alternate typed answer
 
 Example:
 
@@ -410,8 +425,7 @@ Recommended format:
 Do not reuse IDs across files.
 
 ### 2. Keep question answers exact
-
-Several question types use strict string comparison.
+Several question types still depend on carefully authored answer strings even though typed answers now use normalization.
 
 Be careful about:
 
@@ -419,6 +433,28 @@ Be careful about:
 - Trailing punctuation
 - Spacing
 - Visually similar Unicode characters
+
+## Lesson metadata
+
+Every lesson file should export:
+
+```js
+export const metadata = {
+  difficulty: "beginner",
+  estimatedMinutes: 8,
+  tags: ["vocabulary", "intro"],
+  grammarTopics: ["sov-order"],
+  vocabularyTopics: ["core nouns", "intro phrases"]
+};
+```
+
+Field guidance:
+
+- `difficulty`: short label such as `beginner`, `easy`, `intermediate`
+- `estimatedMinutes`: realistic completion time for the lesson
+- `tags`: broad lesson labels for filtering and analytics
+- `grammarTopics`: the main grammar concepts introduced or reinforced
+- `vocabularyTopics`: the main vocabulary domains covered
 
 ### 3. Save files as UTF-8
 
@@ -477,7 +513,7 @@ For a module test:
 
 Before committing a new lesson, verify:
 
-- File exports `id`, `title`, `icon`, `briefing`, `questions`
+- File exports `id`, `title`, `icon`, `metadata`, `briefing`, `questions`
 - Test files also export `isTest = true`
 - IDs are unique
 - All `type` values are supported by `lesson.js`

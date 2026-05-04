@@ -2,6 +2,14 @@ export const id = "2-1";
 export const title = "Verbs & Actions";
 export const icon = "⚡";
 
+export const metadata = {
+  difficulty: "beginner",
+  estimatedMinutes: 8,
+  tags: ["verbs", "actions", "sentences"],
+  grammarTopics: ["present tense verbs"],
+  vocabularyTopics: ["common action verbs"]
+};
+
 export const briefing = {
   pre: {
     title: "Sanskrit Verbs // क्रियापद",

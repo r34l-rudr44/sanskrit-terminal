@@ -58,3 +58,39 @@ test('module test can be completed end-to-end', async ({ page }) => {
   await expect(page.locator('#cert-module-id')).toHaveText('MODULE_1');
   await expect(page.locator('#cert-score-box')).not.toHaveText('—');
 });
+
+test('mobile explore dropdown matches the trigger width and opens correctly', async ({ page }) => {
+  await page.setViewportSize({ width: 390, height: 844 });
+  await page.goto('/');
+
+  const exploreBtn = page.locator('#explore-btn');
+  await expect(exploreBtn).toBeVisible();
+  await exploreBtn.click();
+
+  const dropdown = page.locator('#explore-dropdown');
+  await expect(dropdown).toHaveClass(/open/);
+
+  const btnBox = await exploreBtn.boundingBox();
+  const ddBox = await dropdown.boundingBox();
+  expect(btnBox).not.toBeNull();
+  expect(ddBox).not.toBeNull();
+  expect(Math.abs(ddBox.width - btnBox.width)).toBeLessThanOrEqual(2);
+});
+
+test('desktop sidebar toggle persists collapsed state across refresh', async ({ page }) => {
+  await page.setViewportSize({ width: 1280, height: 900 });
+  await page.goto('/');
+
+  const sidebar = page.locator('#sidebar');
+  const toggle = page.locator('#hamburger-btn');
+
+  await expect(sidebar).not.toHaveClass(/collapsed/);
+  await toggle.click();
+  await expect(sidebar).toHaveClass(/collapsed/);
+
+  await page.reload();
+
+  await expect(sidebar).toHaveClass(/collapsed/);
+  await toggle.click();
+  await expect(sidebar).not.toHaveClass(/collapsed/);
+});

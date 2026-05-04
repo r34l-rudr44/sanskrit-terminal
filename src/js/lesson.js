@@ -101,6 +101,46 @@ function restoreWordTileUI() {
   if (checkBtn) checkBtn.disabled = state.wtTray.length === 0;
 }
 
+function normalizeAnswerText(value, { latinFold = false } = {}) {
+  let normalized = String(value || '')
+    .normalize(latinFold ? 'NFKD' : 'NFKC')
+    .replace(/['"'`’‘“”.,!?;:()[\]{}<>|/\\\-_=+*&^%$#@~]/g, ' ')
+    .replace(/[।॥]/g, ' ')
+    .replace(/\s+/g, ' ')
+    .trim()
+    .toLowerCase();
+
+  if (latinFold) {
+    normalized = normalized.replace(/[\u0300-\u036f]/g, '');
+  }
+
+  return normalized;
+}
+
+function buildAcceptedAnswerSet(question) {
+  const accepted = new Set();
+  const add = (value) => {
+    if (!value) return;
+    const strict = normalizeAnswerText(value);
+    const folded = normalizeAnswerText(value, { latinFold: true });
+    if (strict) accepted.add(strict);
+    if (folded) accepted.add(folded);
+  };
+
+  add(question.answer);
+  add(question.answerRoman);
+  return accepted;
+}
+
+function isAcceptedTypedAnswer(inputValue, question) {
+  const strict = normalizeAnswerText(inputValue);
+  const folded = normalizeAnswerText(inputValue, { latinFold: true });
+  if (!strict && !folded) return false;
+
+  const accepted = buildAcceptedAnswerSet(question);
+  return accepted.has(strict) || accepted.has(folded);
+}
+
 // Briefing logic
 function renderSection(s) {
   if (s.type === 'table') {
@@ -385,9 +425,13 @@ window.submitInputQuestion = () => {
   const inp = document.getElementById('active-input');
   if (!inp) return;
   if (state.answered) return;
+  if (!inp.value.trim()) {
+    inp.focus();
+    return;
+  }
   state.answered = true;
   const q = currentDay.questions[state.currentQ];
-  const isCorrect = inp.value.trim() === q.answer.trim();
+  const isCorrect = isAcceptedTypedAnswer(inp.value, q);
   inp.classList.add(isCorrect ? 'correct' : 'wrong');
   inp.disabled = true;
   recordAnswer(isCorrect, q);

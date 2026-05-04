@@ -3,6 +3,14 @@ export const title = "Final Test";
 export const icon = "📝";
 export const isTest = true;
 
+export const metadata = {
+  difficulty: "beginner",
+  estimatedMinutes: 10,
+  tags: ["assessment", "module-test", "review"],
+  grammarTopics: ["sov-order", "basic numerals", "simple expressions"],
+  vocabularyTopics: ["module 1 review"]
+};
+
 export const briefing = {
   pre: {
     title: "Module 1 Final Test",

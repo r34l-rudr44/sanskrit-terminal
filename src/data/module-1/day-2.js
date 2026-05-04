@@ -2,6 +2,14 @@ export const id = "1-2";
 export const title = "Numbers & Counting";
 export const icon = "🔢";
 
+export const metadata = {
+  difficulty: "beginner",
+  estimatedMinutes: 8,
+  tags: ["numbers", "counting", "intro"],
+  grammarTopics: ["basic numerals"],
+  vocabularyTopics: ["numbers 1-10"]
+};
+
 export const briefing = {
   pre: {
     title: "Sanskrit Numbers // संख्या",

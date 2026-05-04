@@ -7,7 +7,8 @@
     "dev": "vite",
     "build": "vite build",
     "preview": "vite preview",
-    "test:smoke": "playwright test"
+    "test:smoke": "playwright test",
+    "validate:lessons": "node scripts/validate-lessons.js"
   },
   "devDependencies": {
     "@playwright/test": "^1.59.1",
