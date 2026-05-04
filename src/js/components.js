@@ -2,6 +2,9 @@ import { confirmClearCache } from './state.js';
 import { Theme, Prefs } from './utils.js';
 
 export function injectGlobals() {
+  const preloadFooter = document.getElementById('bottom-bar-skel-wrap');
+  if (preloadFooter) preloadFooter.remove();
+
   const html = `
 <!-- BOTTOM BAR -->
 <div class="bottom-bar-wrap">
@@ -158,13 +161,33 @@ export function injectGlobals() {
     document.body.classList.toggle('bar-collapsed', isCollapsed);
   };
 
+  const syncExploreDropdown = () => {
+    const dd = document.getElementById('explore-dropdown');
+    const btn = document.getElementById('explore-btn');
+    const wrap = dd?.parentElement;
+    if (!dd || !btn || !wrap || window.innerWidth > 640) {
+      if (dd) {
+        dd.style.left = '';
+        dd.style.width = '';
+      }
+      return;
+    }
+
+    const btnRect = btn.getBoundingClientRect();
+    const wrapRect = wrap.getBoundingClientRect();
+    dd.style.left = `${btnRect.left - wrapRect.left}px`;
+    dd.style.width = `${btnRect.width}px`;
+  };
+
   window.toggleExploreDropdown = () => {
     const dd = document.getElementById('explore-dropdown');
+    syncExploreDropdown();
     dd.classList.toggle('open');
   };
   window.closeExploreDropdown = () => {
     document.getElementById('explore-dropdown').classList.remove('open');
   };
+  window.addEventListener('resize', syncExploreDropdown);
 
   window.openComingSoon = (name, icon, section, text) => {
     document.getElementById('cs-section-label').textContent = section.toUpperCase();
