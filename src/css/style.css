@@ -66,6 +66,15 @@ button{font-family:var(--font-ui);cursor:pointer;}
 .sidebar-tab:active{transform:translateX(2px);box-shadow:1px 0 0 var(--brand-dark);}
 .sidebar-title{font-size:12px;color:var(--text-3);letter-spacing:2px;margin-bottom:12px;padding:0 4px;}
 .sidebar-title::before{content:'// ';}
+.sidebar-skel-group{margin-bottom:4px;}
+.sidebar-skel-header,.sidebar-skel-label,.sidebar-skel-arrow{background:linear-gradient(90deg,var(--surface3) 0%,var(--surface4) 50%,var(--surface3) 100%);background-size:200% 100%;animation:sidebarSkelPulse 1.2s ease-in-out infinite;}
+.sidebar-skel-header{display:flex;align-items:center;gap:8px;width:100%;padding:9px 12px;border:var(--border-dim);background-color:var(--surface2);margin-bottom:2px;}
+.sidebar-skel-icon{flex-shrink:0;border:var(--border-dim);background-color:var(--surface3);}
+.sidebar-skel-icon{width:16px;height:16px;}
+.sidebar-skel-arrow{width:14px;height:10px;margin-left:auto;}
+.sidebar-skel-label{border-radius:2px;opacity:.9;}
+.sidebar-skel-label-lg{height:12px;flex:1;min-width:0;width:100%;}
+@keyframes sidebarSkelPulse{0%{background-position:200% 0}100%{background-position:-200% 0}}
 .mod-section{margin-bottom:4px;}
 .mod-section-hdr{display:flex;align-items:center;gap:8px;width:100%;padding:9px 12px;border:var(--border-dim);background:var(--surface2);font-size:13px;color:var(--text-2);cursor:pointer;text-align:left;letter-spacing:1px;transition:all .1s;margin-bottom:2px;}
 .mod-section-hdr:hover{border-color:var(--brand-dim);color:var(--brand);background:var(--surface3);}
