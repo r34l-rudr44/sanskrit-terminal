@@ -44,7 +44,7 @@ export function injectGlobals() {
         </div>
       </div>
       <div class="pref-section">
-        <div class="pref-section-title">FONT_SIZE</div>
+        <div class="pref-section-title">CONTENT_SIZE</div>
         <div class="font-size-group">
           <button class="fs-btn" id="fs-sm"  onclick="window.setFontSize('sm')"><span class="fs-sample" style="font-size:16px">अ</span><span class="fs-label">SMALL</span></button>
           <button class="fs-btn active" id="fs-md" onclick="window.setFontSize('md')"><span class="fs-sample" style="font-size:22px">अ</span><span class="fs-label">MEDIUM</span></button>
