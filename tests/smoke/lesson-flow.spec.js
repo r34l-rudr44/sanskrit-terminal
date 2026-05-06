@@ -83,6 +83,22 @@ test('skip requires confirmation before advancing', async ({ page }) => {
   await expect(page.getByRole('button', { name: /CONTINUE/i })).toBeVisible();
 });
 
+test('typed answers are accepted after transliterating roman input to Devanagari', async ({ page }) => {
+  await page.goto('/lesson.html?mod=1&day=1-1');
+
+  await page.getByRole('button', { name: /BEGIN LESSON/i }).click();
+  await page.getByRole('button', { name: /Jala/i }).click();
+  await page.getByRole('button', { name: /CONTINUE/i }).click();
+  await page.getByRole('button', { name: /Agni/i }).click();
+  await page.getByRole('button', { name: /CONTINUE/i }).click();
+
+  await expect(page.locator('.q-text')).toContainText('Ram goes to the forest');
+  await page.locator('#active-input').fill('raamaH vanaM gacchati');
+  await page.getByRole('button', { name: /SUBMIT/i }).click();
+
+  await expect(page.locator('#feedback-banner')).toHaveClass(/correct-fb/);
+});
+
 test('mobile explore dropdown matches the trigger width and opens correctly', async ({ page }) => {
   await page.setViewportSize({ width: 390, height: 844 });
   await page.goto('/');
