@@ -7,6 +7,11 @@ let currentDay = null;
 let currentMod = null;
 const LESSON_PROGRESS_KEY = 'sk_lesson_progress';
 let hydratedLessonProgress = null;
+let skipConfirmPending = false;
+
+function isMobileKeyboardMode() {
+  return window.matchMedia('(max-width: 768px) and (pointer: coarse)').matches;
+}
 
 function showScreen(name) {
   document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
@@ -20,6 +25,66 @@ function showScreen(name) {
 function getActiveLessonScreen() {
   const active = document.querySelector('.screen.active');
   return active ? active.id.replace('screen-', '') : 'briefing';
+}
+
+function syncKeyboardInput(input) {
+  if (!input) return;
+  input.dispatchEvent(new Event('input', { bubbles: true }));
+}
+
+function setKeyboardOpen(open) {
+  const wrap = document.querySelector('.vk-wrap');
+  const body = document.getElementById('vk-body');
+  const btn = document.getElementById('vk-toggle-btn');
+  if (!wrap || !body || !btn) return;
+
+  if (isMobileKeyboardMode()) {
+    wrap.classList.add('vk-mobile-dock');
+    wrap.classList.toggle('open', open);
+    document.body.classList.toggle('vk-mobile-open', open);
+    btn.textContent = open ? 'CLOSE' : 'OPEN';
+    return;
+  }
+
+  body.style.display = open ? 'flex' : 'none';
+  btn.textContent = open ? '▼' : '▲';
+}
+
+function openKeyboard() {
+  setKeyboardOpen(true);
+}
+
+function closeKeyboard() {
+  setKeyboardOpen(false);
+}
+
+function renderKeyboardHint() {
+  return isMobileKeyboardMode()
+    ? '// tap the answer field to type with the Sanskrit keyboard'
+    : '// press ENTER or tap SUBMIT';
+}
+
+function renderInputModeAttrs() {
+  if (!isMobileKeyboardMode()) return '';
+  return `readonly inputmode="none" onclick="window.activateAnswerInput(this)" onfocus="window.activateAnswerInput(this)"`;
+}
+
+function openSkipConfirm() {
+  closeKeyboard();
+  const overlay = document.getElementById('skip-confirm-overlay');
+  if (!overlay) return;
+  skipConfirmPending = true;
+  overlay.classList.add('active');
+  document.body.style.overflow = 'hidden';
+  document.getElementById('skip-confirm-accept')?.focus();
+}
+
+function closeSkipConfirm() {
+  const overlay = document.getElementById('skip-confirm-overlay');
+  if (!overlay) return;
+  skipConfirmPending = false;
+  overlay.classList.remove('active');
+  document.body.style.overflow = '';
 }
 
 function clearLessonProgress() {
@@ -298,7 +363,73 @@ window.vkBackspace = () => {
   }
 };
 
+window.toggleKeyboard = () => {
+  const wrap = document.querySelector('.vk-wrap');
+  const body = document.getElementById('vk-body');
+  const btn = document.getElementById('vk-toggle-btn');
+  if (!wrap || !body || !btn) return;
+
+  if (isMobileKeyboardMode()) {
+    const isOpen = wrap.classList.contains('open');
+    wrap.classList.add('vk-mobile-dock');
+    wrap.classList.toggle('open', !isOpen);
+    document.body.classList.toggle('vk-mobile-open', !isOpen);
+    btn.textContent = isOpen ? 'OPEN' : 'CLOSE';
+    return;
+  }
+
+  const isOpen = body.style.display !== 'none';
+  body.style.display = isOpen ? 'none' : 'flex';
+  btn.textContent = isOpen ? '▲' : '▼';
+};
+
+window.activateAnswerInput = (input) => {
+  if (!input || input.disabled || !isMobileKeyboardMode()) return;
+  input.focus({ preventScroll: true });
+  const cursor = input.value.length;
+  if (typeof input.setSelectionRange === 'function') input.setSelectionRange(cursor, cursor);
+  const wrap = document.querySelector('.vk-wrap');
+  if (wrap) {
+    wrap.classList.add('vk-mobile-dock', 'open');
+    document.body.classList.add('vk-mobile-open');
+  }
+  const btn = document.getElementById('vk-toggle-btn');
+  if (btn) btn.textContent = 'CLOSE';
+};
+
+window.vkPress = (char) => {
+  const inp = document.getElementById('active-input');
+  if (inp && !inp.disabled) {
+    const start = inp.selectionStart ?? inp.value.length;
+    const end = inp.selectionEnd ?? inp.value.length;
+    const val = inp.value;
+    inp.value = val.substring(0, start) + char + val.substring(end);
+    inp.selectionStart = inp.selectionEnd = start + char.length;
+    syncKeyboardInput(inp);
+    inp.focus({ preventScroll: isMobileKeyboardMode() });
+  }
+};
+
+window.vkBackspace = () => {
+  const inp = document.getElementById('active-input');
+  if (inp && !inp.disabled) {
+    const start = inp.selectionStart ?? inp.value.length;
+    const end = inp.selectionEnd ?? inp.value.length;
+    const val = inp.value;
+    if (start === end && start > 0) {
+      inp.value = val.substring(0, start - 1) + val.substring(end);
+      inp.selectionStart = inp.selectionEnd = start - 1;
+    } else if (start !== end) {
+      inp.value = val.substring(0, start) + val.substring(end);
+      inp.selectionStart = inp.selectionEnd = start;
+    }
+    syncKeyboardInput(inp);
+    inp.focus({ preventScroll: isMobileKeyboardMode() });
+  }
+};
+
 function renderQuestion() {
+  closeKeyboard();
   const q = currentDay.questions[state.currentQ];
   if (!q) return;
   const pct = Math.round((state.currentQ / currentDay.questions.length) * 100);
@@ -351,10 +482,17 @@ function renderQuestion() {
   }
   card.appendChild(aa);
 
-  if ((q.type === 'translation' || q.type === 'fill') && restoredState?.type === q.type) {
+  if (q.type === 'translation' || q.type === 'fill') {
     const inp = document.getElementById('active-input');
-    if (inp && typeof restoredState.inputValue === 'string') inp.value = restoredState.inputValue;
+    if (restoredState?.type === q.type && inp && typeof restoredState.inputValue === 'string') {
+      inp.value = restoredState.inputValue;
+    }
     inp?.addEventListener('input', () => saveLessonProgress('lesson'));
+
+    const wrap = document.querySelector('.vk-wrap');
+    const btn = document.getElementById('vk-toggle-btn');
+    if (wrap && isMobileKeyboardMode()) wrap.classList.add('vk-mobile-dock');
+    if (btn && isMobileKeyboardMode()) btn.textContent = 'OPEN';
   }
 
   if (q.type === 'wordtiles' && restoredState?.type === 'wordtiles') {
@@ -379,15 +517,15 @@ function buildQuestion(q) {
   
   if (q.type === 'translation') {
     return `${badge}${qText}<div class="translation-wrap"><div class="translation-hint">${q.hint||''}</div>
-      <input class="answer-input" type="text" id="active-input" placeholder="Type answer..." autocomplete="off" autocapitalize="off" spellcheck="false" onkeydown="if(event.key==='Enter') window.submitInputQuestion()">
-      <div class="keyboard-hint">// press ENTER or tap SUBMIT</div>
+      <input class="answer-input" type="text" id="active-input" placeholder="Type answer..." autocomplete="off" autocapitalize="off" spellcheck="false" onkeydown="if(event.key==='Enter') window.submitInputQuestion()" ${renderInputModeAttrs()}>
+      <div class="keyboard-hint">${renderKeyboardHint()}</div>
       ${renderVirtualKeyboard()}
       </div>`;
   }
   
   if (q.type === 'fill') {
-    return `${badge}<div class="fill-sentence">${q.sentenceParts[0]}<input class="blank-input devanagari" id="active-input" type="text" autocomplete="off" autocapitalize="off" spellcheck="false" onkeydown="if(event.key==='Enter') window.submitInputQuestion()">${q.sentenceParts[1]}</div>
-      <div class="keyboard-hint">// press ENTER or tap SUBMIT</div>
+    return `${badge}<div class="fill-sentence">${q.sentenceParts[0]}<input class="blank-input devanagari" id="active-input" type="text" autocomplete="off" autocapitalize="off" spellcheck="false" onkeydown="if(event.key==='Enter') window.submitInputQuestion()" ${renderInputModeAttrs()}>${q.sentenceParts[1]}</div>
+      <div class="keyboard-hint">${renderKeyboardHint()}</div>
       ${renderVirtualKeyboard()}`;
   }
   
@@ -395,7 +533,7 @@ function buildQuestion(q) {
     const left  = q.pairs.map((p, i) => `<button class="match-item" onclick="window.matchClick(this,${i},'left')">${p.left}</button>`).join('');
     const shuffledIdx = q.pairs.map((_,i) => i).sort(() => Math.random()-0.5);
     const right = shuffledIdx.map(i => `<button class="match-item" onclick="window.matchClick(this,${i},'right')">${q.pairs[i].right}</button>`).join('');
-    return `${badge}${qText}<div class="match-grid"><div class="match-col" id="match-left">${left}</div><div class="match-col" id="match-right">${right}</div></div>`;
+    return `${badge}${qText}<div class="match-grid"><div class="match-col match-panel" id="match-left">${left}</div><div class="match-col match-panel" id="match-right">${right}</div></div>`;
   }
   
   if (q.type === 'wordtiles') {
@@ -426,6 +564,7 @@ window.submitInputQuestion = () => {
   if (!inp) return;
   if (state.answered) return;
   if (!inp.value.trim()) {
+    if (isMobileKeyboardMode()) window.activateAnswerInput(inp);
     inp.focus();
     return;
   }
@@ -434,6 +573,7 @@ window.submitInputQuestion = () => {
   const isCorrect = isAcceptedTypedAnswer(inp.value, q);
   inp.classList.add(isCorrect ? 'correct' : 'wrong');
   inp.disabled = true;
+  closeKeyboard();
   recordAnswer(isCorrect, q);
 };
 
@@ -503,6 +643,20 @@ window.matchClick = (el, pairIdx, side) => {
 
 window.skipQuestion = () => {
   if (state.answered) return;
+  openSkipConfirm();
+};
+
+window.closeSkipConfirm = (event) => {
+  if (event && event.target && event.target.id !== 'skip-confirm-overlay') return;
+  closeSkipConfirm();
+};
+
+window.confirmSkipQuestion = () => {
+  if (!skipConfirmPending || state.answered) {
+    closeSkipConfirm();
+    return;
+  }
+  closeSkipConfirm();
   state.answered = true;
   recordAnswer(false, currentDay.questions[state.currentQ], true);
 };
@@ -617,6 +771,12 @@ function init() {
 
   state.currentModuleId = modId;
   state.currentDayId = dayId;
+
+  document.addEventListener('keydown', (event) => {
+    const overlay = document.getElementById('skip-confirm-overlay');
+    if (!overlay || !overlay.classList.contains('active')) return;
+    if (event.key === 'Escape') closeSkipConfirm();
+  });
 
   const savedProgress = loadLessonProgress(modId, dayId);
   if (savedProgress) {

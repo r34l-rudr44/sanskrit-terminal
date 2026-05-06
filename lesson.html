@@ -125,6 +125,23 @@
   </div>
 </div>
 
+<div class="lesson-confirm-overlay" id="skip-confirm-overlay" onclick="window.closeSkipConfirm(event)">
+  <div class="lesson-confirm-box">
+    <div class="lesson-confirm-top">
+      <span class="lesson-confirm-tag">SKIP_CONFIRM</span>
+      <button class="lesson-confirm-close" type="button" onclick="window.closeSkipConfirm()">✕</button>
+    </div>
+    <div class="lesson-confirm-body">
+      <div class="lesson-confirm-title">SKIP THIS QUESTION?</div>
+      <div class="lesson-confirm-text">This question will count as incorrect. Are you sure you want to continue?</div>
+      <div class="lesson-confirm-actions">
+        <button class="btn-secondary" type="button" onclick="window.closeSkipConfirm()">CANCEL</button>
+        <button class="btn-primary" id="skip-confirm-accept" type="button" onclick="window.confirmSkipQuestion()">YES, SKIP</button>
+      </div>
+    </div>
+  </div>
+</div>
+
 <script type="module" src="/src/js/lesson.js"></script>
 </body>
 </html>

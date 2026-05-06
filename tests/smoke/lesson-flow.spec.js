@@ -51,12 +51,36 @@ test('module test can be completed end-to-end', async ({ page }) => {
 
   for (let i = 0; i < 8; i++) {
     await page.getByRole('button', { name: /SKIP/i }).click();
+    await expect(page.locator('#skip-confirm-overlay')).toHaveClass(/active/);
+    await page.getByRole('button', { name: /YES, SKIP/i }).click();
     await page.getByRole('button', { name: /CONTINUE/i }).click();
   }
 
   await expect(page.locator('#screen-cert')).toHaveClass(/active/);
   await expect(page.locator('#cert-module-id')).toHaveText('MODULE_1');
   await expect(page.locator('#cert-score-box')).not.toHaveText('—');
+});
+
+test('skip requires confirmation before advancing', async ({ page }) => {
+  await page.goto('/lesson.html?mod=1&day=1-1');
+
+  await page.getByRole('button', { name: /BEGIN LESSON/i }).click();
+  await expect(page.locator('#progress-count')).toHaveText(/1\/6/);
+
+  await page.getByRole('button', { name: /SKIP/i }).click();
+  await expect(page.locator('#skip-confirm-overlay')).toHaveClass(/active/);
+  await page.getByRole('button', { name: /CANCEL/i }).click();
+
+  await expect(page.locator('#feedback-banner')).not.toHaveClass(/active/);
+  await expect(page.locator('.q-text')).toContainText('water');
+  await expect(page.locator('#skip-confirm-overlay')).not.toHaveClass(/active/);
+
+  await page.getByRole('button', { name: /SKIP/i }).click();
+  await expect(page.locator('#skip-confirm-overlay')).toHaveClass(/active/);
+  await page.getByRole('button', { name: /YES, SKIP/i }).click();
+
+  await expect(page.locator('#feedback-banner')).toHaveClass(/active/);
+  await expect(page.getByRole('button', { name: /CONTINUE/i })).toBeVisible();
 });
 
 test('mobile explore dropdown matches the trigger width and opens correctly', async ({ page }) => {

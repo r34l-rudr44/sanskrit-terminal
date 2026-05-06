@@ -424,7 +424,8 @@ Recommended format:
 
 Do not reuse IDs across files.
 
-### 2. Keep question answers exact
+### 2. Keep questio n answers exact
+
 Several question types still depend on carefully authored answer strings even though typed answers now use normalization.
 
 Be careful about:
