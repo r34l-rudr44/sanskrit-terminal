@@ -6,6 +6,7 @@ import { injectGlobals } from './components.js';
 let currentDay = null;
 let currentMod = null;
 const LESSON_PROGRESS_KEY = 'sk_lesson_progress';
+const MOBILE_INPUT_MODE_KEY = 'sk_mobile_input_mode';
 let hydratedLessonProgress = null;
 let skipConfirmPending = false;
 
@@ -60,13 +61,44 @@ function closeKeyboard() {
 
 function renderKeyboardHint() {
   return isMobileKeyboardMode()
-    ? '// tap the answer field to type with the Sanskrit keyboard'
+    ? (getMobileInputMode() === 'custom'
+        ? '// tap the answer field to type with the Sanskrit keyboard'
+        : '// use your phone keyboard or switch to Sanskrit keys')
     : '// press ENTER or tap SUBMIT';
 }
 
 function renderInputModeAttrs() {
   if (!isMobileKeyboardMode()) return '';
-  return `readonly inputmode="none" onclick="window.activateAnswerInput(this)" onfocus="window.activateAnswerInput(this)"`;
+  if (getMobileInputMode() === 'custom') {
+    return `readonly inputmode="none" onclick="window.activateAnswerInput(this)" onfocus="window.activateAnswerInput(this)"`;
+  }
+  return `inputmode="text"`;
+}
+
+function rerenderActiveInputQuestion() {
+  if (!currentDay || state.answered) return;
+  const q = currentDay.questions[state.currentQ];
+  if (!q || (q.type !== 'translation' && q.type !== 'fill')) return;
+
+  hydratedLessonProgress = {
+    currentQ: state.currentQ,
+    questionState: getQuestionDraftSnapshot(q)
+  };
+  renderQuestion();
+}
+
+function getMobileInputMode() {
+  if (!isMobileKeyboardMode()) return 'custom';
+  return localStorage.getItem(MOBILE_INPUT_MODE_KEY) || 'native';
+}
+
+function renderMobileInputSwitcher() {
+  if (!isMobileKeyboardMode()) return '';
+  const mode = getMobileInputMode();
+  return `<div class="mobile-input-switch" role="group" aria-label="Keyboard choice">
+    <button type="button" data-mode="native" class="mobile-input-mode-btn${mode === 'native' ? ' active' : ''}" onclick="window.setMobileInputMode('native')">PHONE KEYBOARD</button>
+    <button type="button" data-mode="custom" class="mobile-input-mode-btn${mode === 'custom' ? ' active' : ''}" onclick="window.setMobileInputMode('custom')">SANSKRIT KEYS</button>
+  </div>`;
 }
 
 function openSkipConfirm() {
@@ -384,7 +416,7 @@ window.toggleKeyboard = () => {
 };
 
 window.activateAnswerInput = (input) => {
-  if (!input || input.disabled || !isMobileKeyboardMode()) return;
+  if (!input || input.disabled || !isMobileKeyboardMode() || getMobileInputMode() !== 'custom') return;
   input.focus({ preventScroll: true });
   const cursor = input.value.length;
   if (typeof input.setSelectionRange === 'function') input.setSelectionRange(cursor, cursor);
@@ -395,6 +427,55 @@ window.activateAnswerInput = (input) => {
   }
   const btn = document.getElementById('vk-toggle-btn');
   if (btn) btn.textContent = 'CLOSE';
+};
+
+function applyActiveInputMode() {
+  const input = document.getElementById('active-input');
+  const wrap = document.querySelector('.vk-wrap');
+  const btn = document.getElementById('vk-toggle-btn');
+  if (!input || !isMobileKeyboardMode()) return;
+
+  const mode = getMobileInputMode();
+  if (mode === 'custom') {
+    input.setAttribute('readonly', '');
+    input.setAttribute('inputmode', 'none');
+    input.onclick = () => window.activateAnswerInput(input);
+    input.onfocus = () => window.activateAnswerInput(input);
+    if (wrap) wrap.classList.add('vk-mobile-dock');
+    if (btn) btn.textContent = wrap?.classList.contains('open') ? 'CLOSE' : 'OPEN';
+  } else {
+    input.removeAttribute('readonly');
+    input.setAttribute('inputmode', 'text');
+    input.onclick = null;
+    input.onfocus = null;
+    closeKeyboard();
+    if (btn) btn.textContent = 'OPEN';
+  }
+}
+
+window.setMobileInputMode = (mode) => {
+  if (!isMobileKeyboardMode()) return;
+  const nextMode = mode === 'custom' ? 'custom' : 'native';
+  localStorage.setItem(MOBILE_INPUT_MODE_KEY, nextMode);
+  applyActiveInputMode();
+
+  const switcher = document.querySelector('.mobile-input-switch');
+  if (switcher) {
+    switcher.querySelectorAll('.mobile-input-mode-btn').forEach((btn) => {
+      btn.classList.toggle('active', btn.dataset.mode === nextMode);
+    });
+  }
+
+  const hint = document.querySelector('.keyboard-hint');
+  if (hint) hint.textContent = renderKeyboardHint();
+
+  const input = document.getElementById('active-input');
+  if (!input || input.disabled) return;
+  if (nextMode === 'custom') {
+    window.activateAnswerInput(input);
+  } else {
+    input.focus({ preventScroll: true });
+  }
 };
 
 window.vkPress = (char) => {
@@ -488,11 +569,7 @@ function renderQuestion() {
       inp.value = restoredState.inputValue;
     }
     inp?.addEventListener('input', () => saveLessonProgress('lesson'));
-
-    const wrap = document.querySelector('.vk-wrap');
-    const btn = document.getElementById('vk-toggle-btn');
-    if (wrap && isMobileKeyboardMode()) wrap.classList.add('vk-mobile-dock');
-    if (btn && isMobileKeyboardMode()) btn.textContent = 'OPEN';
+    applyActiveInputMode();
   }
 
   if (q.type === 'wordtiles' && restoredState?.type === 'wordtiles') {
@@ -517,6 +594,7 @@ function buildQuestion(q) {
   
   if (q.type === 'translation') {
     return `${badge}${qText}<div class="translation-wrap"><div class="translation-hint">${q.hint||''}</div>
+      ${renderMobileInputSwitcher()}
       <input class="answer-input" type="text" id="active-input" placeholder="Type answer..." autocomplete="off" autocapitalize="off" spellcheck="false" onkeydown="if(event.key==='Enter') window.submitInputQuestion()" ${renderInputModeAttrs()}>
       <div class="keyboard-hint">${renderKeyboardHint()}</div>
       ${renderVirtualKeyboard()}
@@ -524,7 +602,7 @@ function buildQuestion(q) {
   }
   
   if (q.type === 'fill') {
-    return `${badge}<div class="fill-sentence">${q.sentenceParts[0]}<input class="blank-input devanagari" id="active-input" type="text" autocomplete="off" autocapitalize="off" spellcheck="false" onkeydown="if(event.key==='Enter') window.submitInputQuestion()" ${renderInputModeAttrs()}>${q.sentenceParts[1]}</div>
+    return `${badge}${renderMobileInputSwitcher()}<div class="fill-sentence">${q.sentenceParts[0]}<input class="blank-input devanagari" id="active-input" type="text" autocomplete="off" autocapitalize="off" spellcheck="false" onkeydown="if(event.key==='Enter') window.submitInputQuestion()" ${renderInputModeAttrs()}>${q.sentenceParts[1]}</div>
       <div class="keyboard-hint">${renderKeyboardHint()}</div>
       ${renderVirtualKeyboard()}`;
   }
@@ -742,6 +820,10 @@ function init() {
   Theme.init();
   Prefs.init();
   injectGlobals();
+
+  window.addEventListener('sk:script-change', () => {
+    rerenderActiveInputQuestion();
+  });
 
   const streakEl = document.getElementById('streak-count');
   if (streakEl) streakEl.textContent = state.streak;

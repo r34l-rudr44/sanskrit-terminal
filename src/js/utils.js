@@ -76,7 +76,12 @@ export const Prefs = (() => {
     ['deva','iast','itrans','hk'].forEach(s => document.getElementById('script-'+s)?.classList.toggle('active', script === s));
   }
   function setFontSize(size) { fontSize = size; localStorage.setItem('sk_fs', size); applyFontSize(); updateUI(); }
-  function setScript(s)   { script = s; localStorage.setItem('sk_script', s); updateUI(); }
+  function setScript(s)   {
+    script = s;
+    localStorage.setItem('sk_script', s);
+    updateUI();
+    window.dispatchEvent(new CustomEvent('sk:script-change', { detail: { script: s } }));
+  }
   function getScriptHint() { return SCRIPT_MAP[script] || SCRIPT_MAP.deva; }
   function init() { applyFontSize(); updateUI(); }
   return { init, setFontSize, setScript, getScriptHint, updateUI };

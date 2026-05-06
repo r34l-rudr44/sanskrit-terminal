@@ -52,7 +52,7 @@ export function injectGlobals() {
         </div>
       </div>
       <div class="pref-section">
-        <div class="pref-section-title">SCRIPT_DISPLAY</div>
+        <div class="pref-section-title">INPUT_SCRIPT</div>
         <div class="script-options">
           <button class="script-btn active" id="script-deva"   onclick="window.setScript('deva')"><span class="script-btn-name">Devanagari</span><span class="script-btn-sample">रामः गच्छति</span></button>
           <button class="script-btn"        id="script-iast"   onclick="window.setScript('iast')"><span class="script-btn-name">IAST</span><span class="script-btn-sample">rāmaḥ gacchati</span></button>
