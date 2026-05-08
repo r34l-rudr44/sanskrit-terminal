@@ -17,8 +17,18 @@ function fail(message) {
   errors.push(message);
 }
 
+const XSS_PATTERN = /<script|onerror\s*=|onclick\s*=|onload\s*=|javascript\s*:/i;
+
 function isNonEmptyString(value) {
   return typeof value === 'string' && value.trim().length > 0;
+}
+
+function hasNoXss(value, label) {
+  if (typeof value === 'string' && XSS_PATTERN.test(value)) {
+    fail(`${label} contains potentially unsafe HTML content`);
+    return false;
+  }
+  return true;
 }
 
 function ensureArray(value, label) {
@@ -51,11 +61,14 @@ function validateBriefingSection(section, label) {
 
   if (section.type === 'grammar') {
     if (!isNonEmptyString(section.label)) fail(`${label}.label must be a non-empty string`);
+    else hasNoXss(section.label, `${label}.label`);
     if (!isNonEmptyString(section.text)) fail(`${label}.text must be a non-empty string`);
+    else hasNoXss(section.text, `${label}.text`);
   }
 
-  if (section.type === 'block' && !isNonEmptyString(section.text)) {
-    fail(`${label}.text must be a non-empty string`);
+  if (section.type === 'block') {
+    if (!isNonEmptyString(section.text)) fail(`${label}.text must be a non-empty string`);
+    else hasNoXss(section.text, `${label}.text`);
   }
 }
 
@@ -71,13 +84,17 @@ function validateQuestion(question, label) {
   }
 
   if (!isNonEmptyString(question.question)) fail(`${label}.question must be a non-empty string`);
+  else hasNoXss(question.question, `${label}.question`);
   if (!isNonEmptyString(question.explanation)) fail(`${label}.explanation must be a non-empty string`);
+  else hasNoXss(question.explanation, `${label}.explanation`);
 
   switch (question.type) {
     case 'mcq': {
       if (!ensureArray(question.options, `${label}.options`)) break;
       if (!question.options.every(isNonEmptyString)) fail(`${label}.options must contain only non-empty strings`);
+      else question.options.forEach((opt, i) => hasNoXss(opt, `${label}.options[${i}]`));
       if (!isNonEmptyString(question.answer)) fail(`${label}.answer must be a non-empty string`);
+      else hasNoXss(question.answer, `${label}.answer`);
       if (!question.options.includes(question.answer)) fail(`${label}.answer must exactly match one item in options`);
       if (question.optionsDevanagari) {
         if (!ensureArray(question.optionsDevanagari, `${label}.optionsDevanagari`)) break;

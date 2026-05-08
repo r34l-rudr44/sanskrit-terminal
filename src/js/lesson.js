@@ -1,6 +1,6 @@
 import { MODULES, getModule, getDay } from '../data/index.js';
 import { state } from './state.js';
-import { Theme, Prefs, Audio, Effects } from './utils.js';
+import { Theme, Prefs, Audio, Effects, escapeHtml } from './utils.js';
 import { injectGlobals } from './components.js';
 
 let currentDay = null;
@@ -152,6 +152,10 @@ function getQuestionDraftSnapshot(q) {
       wtTiles: state.wtTiles.map(tile => ({ word: tile.word, placed: !!tile.placed })),
       wtTray: [...state.wtTray]
     };
+  }
+
+  if (q.type === 'match') {
+    return { type: 'match', matched: [...state.matchState.matched] };
   }
 
   return null;
@@ -456,17 +460,17 @@ function isAcceptedTypedAnswer(inputValue, question) {
 // Briefing logic
 function renderSection(s) {
   if (s.type === 'table') {
-    const ths = s.cols.map(c => `<th>${c}</th>`).join('');
+    const ths = s.cols.map(c => `<th>${escapeHtml(c)}</th>`).join('');
     const trs = s.rows.map(row => {
       const tds = row.map((cell, i) => {
         const cls = (i <= 1 && /[\u0900-\u097F]/.test(cell)) ? ' class="dev"' : '';
-        return `<td${cls}>${cell}</td>`;
+        return `<td${cls}>${escapeHtml(cell)}</td>`;
       }).join('');
       return `<tr>${tds}</tr>`;
     }).join('');
-    return `<div style="margin-bottom:14px"><div class="brief-grammar-title" style="margin-bottom:8px">${s.label}</div><div style="overflow-x:auto"><table class="brief-table"><thead><tr>${ths}</tr></thead><tbody>${trs}</tbody></table></div></div>`;
+    return `<div style="margin-bottom:14px"><div class="brief-grammar-title" style="margin-bottom:8px">${escapeHtml(s.label)}</div><div style="overflow-x:auto"><table class="brief-table"><thead><tr>${ths}</tr></thead><tbody>${trs}</tbody></table></div></div>`;
   }
-  if (s.type === 'grammar') return `<div class="brief-grammar"><span class="brief-grammar-title">${s.label}</span><p>${s.text}</p></div>`;
+  if (s.type === 'grammar') return `<div class="brief-grammar"><span class="brief-grammar-title">${escapeHtml(s.label)}</span><p>${s.text}</p></div>`;
   if (s.type === 'block')   return `<div class="brief-block">${s.text}</div>`;
   return '';
 }
@@ -485,7 +489,7 @@ function showBriefing() {
     <div class="briefing-topbar">
       <button class="btn-secondary briefing-exit-btn" onclick="window.exitLesson()"><- EXIT</button>
     </div>
-    <div class="briefing-header"><div class="briefing-icon">${currentDay.icon}</div><div class="briefing-title">${data.title}</div><div class="briefing-tag">${tag}</div></div>
+    <div class="briefing-header"><div class="briefing-icon">${currentDay.icon}</div><div class="briefing-title">${escapeHtml(data.title)}</div><div class="briefing-tag">${escapeHtml(tag)}</div></div>
     <div class="briefing-body"><div class="briefing-lead">${data.lead}</div>${sectionsHTML}</div>
     <div class="briefing-footer"><span class="briefing-footer-note">${currentDay.isTest ? 'prepare yourself' : 'read before continuing'}</span>
     <button class="btn-primary" onclick="window.showLesson()">${currentDay.isTest ? '► BEGIN TEST' : 'BEGIN LESSON →'}</button></div>
@@ -556,8 +560,7 @@ function renderVirtualKeyboard() {
   layout.forEach(row => {
     html += `<div class="vk-row">`;
     row.forEach(key => {
-      const escaped = key.replace(/'/g, "\\'");
-      html += `<button class="vk-key" onclick="window.vkPress('${escaped}')">${key}</button>`;
+      html += `<button class="vk-key" onclick="window.vkPress(${JSON.stringify(key)})">${escapeHtml(key)}</button>`;
     });
     html += `</div>`;
   });
@@ -571,44 +574,6 @@ function renderVirtualKeyboard() {
   
   return html;
 }
-
-window.toggleKeyboard = () => {
-  const body = document.getElementById('vk-body');
-  const btn = document.getElementById('vk-toggle-btn');
-  if (!body) return;
-  const isOpen = body.style.display !== 'none';
-  body.style.display = isOpen ? 'none' : 'flex';
-  btn.textContent = isOpen ? '▲' : '▼';
-};
-
-window.vkPress = (char) => {
-  const inp = document.getElementById('active-input');
-  if (inp && !inp.disabled) {
-    const start = inp.selectionStart;
-    const end = inp.selectionEnd;
-    const val = inp.value;
-    inp.value = val.substring(0, start) + char + val.substring(end);
-    inp.selectionStart = inp.selectionEnd = start + char.length;
-    inp.focus();
-  }
-};
-
-window.vkBackspace = () => {
-  const inp = document.getElementById('active-input');
-  if (inp && !inp.disabled) {
-    const start = inp.selectionStart;
-    const end = inp.selectionEnd;
-    const val = inp.value;
-    if (start === end && start > 0) {
-      inp.value = val.substring(0, start - 1) + val.substring(end);
-      inp.selectionStart = inp.selectionEnd = start - 1;
-    } else if (start !== end) {
-      inp.value = val.substring(0, start) + val.substring(end);
-      inp.selectionStart = inp.selectionEnd = start;
-    }
-    inp.focus();
-  }
-};
 
 window.toggleKeyboard = () => {
   const wrap = document.querySelector('.vk-wrap');
@@ -642,6 +607,9 @@ window.activateAnswerInput = (input) => {
   }
   const btn = document.getElementById('vk-toggle-btn');
   if (btn) btn.textContent = 'CLOSE';
+  // Wait for the keyboard slide-up transition (.18s) then scroll input into view
+  // so it isn't hidden behind the keyboard overlay.
+  setTimeout(() => input.scrollIntoView({ behavior: 'smooth', block: 'nearest' }), 200);
 };
 
 function applyActiveInputMode() {
@@ -749,11 +717,14 @@ function renderQuestion() {
     }
   }
   if (q.type === 'match') {
-    state.matchState = { selectedLeft: null, selectedRight: null, matched: [] };
+    const savedMatched = (restoredState?.type === 'match' && Array.isArray(restoredState.matched))
+      ? restoredState.matched.filter(Number.isInteger)
+      : [];
+    state.matchState = { selectedLeft: null, selectedRight: null, matched: savedMatched };
   }
 
   const midData = (currentDay.briefing?.mid || []).find(m => m.afterQ === state.currentQ);
-  const midHTML = midData ? `<div class="mid-briefing"><span class="mid-briefing-tag">${midData.tag || 'INFO'}</span><h4>${midData.title}</h4>${renderSection(midData.content)}</div>` : '';
+  const midHTML = midData ? `<div class="mid-briefing"><span class="mid-briefing-tag">${escapeHtml(midData.tag || 'INFO')}</span><h4>${escapeHtml(midData.title)}</h4>${renderSection(midData.content)}</div>` : '';
 
   const card = document.getElementById('question-card');
   card.innerHTML = midHTML + buildQuestion(q);
@@ -791,46 +762,53 @@ function renderQuestion() {
     restoreWordTileUI();
   }
 
+  if (q.type === 'match' && state.matchState.matched.length) {
+    state.matchState.matched.forEach(pairIdx => {
+      document.querySelector(`#match-left .match-item[data-pair="${pairIdx}"]`)?.classList.add('matched');
+      document.querySelector(`#match-right .match-item[data-pair="${pairIdx}"]`)?.classList.add('matched');
+    });
+  }
+
   hydratedLessonProgress = null;
   saveLessonProgress('lesson');
 }
 
 function buildQuestion(q) {
   const badge = `<div class="q-type-badge">${q.type.toUpperCase()}</div>`;
-  const qText = `<div class="q-text">${q.question}</div>`;
-  
+  const qText = `<div class="q-text">${escapeHtml(q.question)}</div>`;
+
   if (q.type === 'mcq') {
     const opts = q.options.map((opt, i) => {
-      const dev = q.optionsDevanagari ? `<span class="devanagari">${q.optionsDevanagari[i]}</span>` : '';
-      return `<button class="option-btn" onclick="window.answerMCQ(this, ${i})">${opt}${dev}</button>`;
+      const dev = q.optionsDevanagari ? `<span class="devanagari">${escapeHtml(q.optionsDevanagari[i])}</span>` : '';
+      return `<button class="option-btn" onclick="window.answerMCQ(this, ${i})">${escapeHtml(opt)}${dev}</button>`;
     }).join('');
     return `${badge}${qText}<div class="options-grid">${opts}</div>`;
   }
-  
+
   if (q.type === 'translation') {
-    return `${badge}${qText}<div class="translation-wrap"><div class="translation-hint">${q.hint||''}</div>
+    return `${badge}${qText}<div class="translation-wrap"><div class="translation-hint">${escapeHtml(q.hint||'')}</div>
       ${renderMobileInputSwitcher()}
       <input class="answer-input" type="text" id="active-input" placeholder="Type answer..." autocomplete="off" autocapitalize="off" spellcheck="false" onkeydown="if(event.key==='Enter') window.submitInputQuestion()" ${renderInputModeAttrs()}>
       <div class="keyboard-hint">${renderKeyboardHint()}</div>
       ${renderVirtualKeyboard()}
       </div>`;
   }
-  
+
   if (q.type === 'fill') {
-    return `${badge}${renderMobileInputSwitcher()}<div class="fill-sentence">${q.sentenceParts[0]}<input class="blank-input devanagari" id="active-input" type="text" autocomplete="off" autocapitalize="off" spellcheck="false" onkeydown="if(event.key==='Enter') window.submitInputQuestion()" ${renderInputModeAttrs()}>${q.sentenceParts[1]}</div>
+    return `${badge}${renderMobileInputSwitcher()}<div class="fill-sentence">${escapeHtml(q.sentenceParts[0])}<input class="blank-input devanagari" id="active-input" type="text" autocomplete="off" autocapitalize="off" spellcheck="false" onkeydown="if(event.key==='Enter') window.submitInputQuestion()" ${renderInputModeAttrs()}>${escapeHtml(q.sentenceParts[1])}</div>
       <div class="keyboard-hint">${renderKeyboardHint()}</div>
       ${renderVirtualKeyboard()}`;
   }
-  
+
   if (q.type === 'match') {
-    const left  = q.pairs.map((p, i) => `<button class="match-item" onclick="window.matchClick(this,${i},'left')">${p.left}</button>`).join('');
+    const left  = q.pairs.map((p, i) => `<button class="match-item" data-pair="${i}" onclick="window.matchClick(this,${i},'left')">${escapeHtml(p.left)}</button>`).join('');
     const shuffledIdx = q.pairs.map((_,i) => i).sort(() => Math.random()-0.5);
-    const right = shuffledIdx.map(i => `<button class="match-item" onclick="window.matchClick(this,${i},'right')">${q.pairs[i].right}</button>`).join('');
+    const right = shuffledIdx.map(i => `<button class="match-item" data-pair="${i}" onclick="window.matchClick(this,${i},'right')">${escapeHtml(q.pairs[i].right)}</button>`).join('');
     return `${badge}${qText}<div class="match-grid"><div class="match-col match-panel" id="match-left">${left}</div><div class="match-col match-panel" id="match-right">${right}</div></div>`;
   }
-  
+
   if (q.type === 'wordtiles') {
-    const tileHTML = state.wtTiles.map((t, i) => `<button class="wt-tile" id="wt-tile-${i}" onclick="window.wtTileClick(${i})">${t.word}</button>`).join('');
+    const tileHTML = state.wtTiles.map((t, i) => `<button class="wt-tile" id="wt-tile-${i}" onclick="window.wtTileClick(${i})">${escapeHtml(t.word)}</button>`).join('');
     return `${badge}${qText}<div id="wt-tray" class="wt-tray"><span id="wt-placeholder" class="wt-placeholder">tap words</span></div>
       <div class="wt-bank-label">WORD_BANK</div><hr class="wt-divider"><div class="wt-bank" id="wt-bank">${tileHTML}</div>`;
   }
@@ -955,8 +933,10 @@ window.confirmSkipQuestion = () => {
 };
 
 function recordAnswer(correct, q, skipped = false) {
-  state.totalAnswered++;
-  if (correct) state.totalCorrect++;
+  if (!skipped) {
+    state.totalAnswered++;
+    if (correct) state.totalCorrect++;
+  }
   Audio.playTone(correct);
   
   const fb = document.getElementById('feedback-banner');
@@ -964,7 +944,7 @@ function recordAnswer(correct, q, skipped = false) {
   fb.className = 'feedback-banner active ' + (correct ? 'correct-fb' : 'wrong-fb');
   const icon  = correct ? '✓' : (skipped ? '»' : '✗');
   const title = correct ? '>> CORRECT!' : (skipped ? '>> SKIPPED' : '>> WRONG');
-  const detail = correct ? (q.explanation||'') : `ANSWER: <span class="fb-correct-ans">${q.answer||''}</span> ${q.explanation ? '— '+q.explanation : ''}`;
+  const detail = correct ? (q.explanation||'') : `ANSWER: <span class="fb-correct-ans">${escapeHtml(q.answer||'')}</span> ${q.explanation ? '— '+q.explanation : ''}`;
   fb.innerHTML = `<span class="fb-icon">${icon}</span><div><div class="fb-title">${title}</div><div class="fb-detail">${detail}</div></div>`;
 
   const aa = document.getElementById('action-area');
@@ -989,8 +969,8 @@ function finishLesson() {
   const today = new Date().toDateString();
   if (state.lastDate !== today) {
     state.streak++; state.lastDate = today;
-    localStorage.setItem('sk_streak', state.streak);
     localStorage.setItem('sk_last_date', today);
+    localStorage.setItem('sk_streak', state.streak);
   }
   
   state.totalQuestions += state.totalAnswered;
@@ -999,7 +979,7 @@ function finishLesson() {
   localStorage.setItem('sk_total_c', state.totalCorrectAll);
 
   if (currentDay.isTest) {
-    if (!state.completedModuleTests.includes(currentMod.id)) {
+    if (pct >= 60 && !state.completedModuleTests.includes(currentMod.id)) {
       state.completedModuleTests.push(currentMod.id);
       localStorage.setItem('sk_mod_tests', JSON.stringify(state.completedModuleTests));
     }
@@ -1020,21 +1000,25 @@ function finishLesson() {
       document.getElementById('cert-stamp').className = 'cert-stamp fail-stamp';
     }
     showScreen('cert');
-    Effects.launchConfetti(pct >= 60 ? 100 : 40);
+    if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      Effects.launchConfetti(pct >= 60 ? 100 : 40);
+    }
   } else {
     document.getElementById('score-big').textContent = pct + '%';
     document.getElementById('sc-correct').textContent = state.totalCorrect;
     document.getElementById('sc-wrong').textContent = state.totalAnswered - state.totalCorrect;
     document.getElementById('sc-total').textContent = state.totalAnswered;
     showScreen('score');
-    if (pct >= 70) Effects.launchConfetti();
+    if (pct >= 70 && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      Effects.launchConfetti();
+    }
   }
 }
 
 function init() {
+  injectGlobals();
   Theme.init();
   Prefs.init();
-  injectGlobals();
 
   window.addEventListener('sk:script-change', () => {
     rerenderActiveInputQuestion();

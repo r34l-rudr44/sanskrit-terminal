@@ -1,6 +1,6 @@
 import { MODULES, getModule } from '../data/index.js';
 import { state, expandedMods, checkStreak } from './state.js';
-import { Theme, Prefs } from './utils.js';
+import { Theme, Prefs, escapeHtml } from './utils.js';
 import { injectGlobals } from './components.js';
 
 export function isDayLocked(modId, dayId) {
@@ -28,7 +28,7 @@ export function renderHomeModules() {
     MODULES.slice(i, i + 3).forEach(mod => {
     const totalDays   = mod.days.length;
     const doneDays    = mod.days.filter(d => state.completedDays.includes(d.id)).length;
-    const pct         = Math.round((doneDays / totalDays) * 100);
+    const pct         = totalDays > 0 ? Math.round((doneDays / totalDays) * 100) : 0;
     const modComplete = doneDays === totalDays;
     const isOpen      = expandedMods.has(mod.id);
 
@@ -38,11 +38,11 @@ export function renderHomeModules() {
     const hdr = document.createElement('div');
     hdr.className = 'module-entry-hdr' + (isOpen ? ' open' : '');
     hdr.innerHTML = `
-      <div class="module-entry-icon">${mod.icon}</div>
+      <div class="module-entry-icon">${escapeHtml(mod.icon)}</div>
       <div class="module-entry-info">
         <div class="module-entry-id">MODULE_${String(mod.id).padStart(2,'0')}</div>
-        <div class="module-entry-title">${mod.title}</div>
-        <div class="module-entry-sub">${mod.subtitle}</div>
+        <div class="module-entry-title">${escapeHtml(mod.title)}</div>
+        <div class="module-entry-sub">${escapeHtml(mod.subtitle)}</div>
       </div>
       <div class="module-entry-right">
         <div class="module-prog-text">${doneDays}/${totalDays} DAYS</div>
@@ -79,10 +79,10 @@ export function renderHomeModules() {
       const label = day.isTest ? 'MODULE TEST' : `DAY ${idx + 1}`;
       const badge = done ? '✓' : (locked ? '🔒' : '');
       card.innerHTML = `
-        <div class="mod-day-card-icon">${day.icon}</div>
-        <div class="mod-day-card-title">${day.title}</div>
-        <div class="mod-day-card-meta">${label}</div>
-        ${badge ? `<div class="mod-day-card-badge">${badge}</div>` : ''}`;
+        <div class="mod-day-card-icon">${escapeHtml(day.icon)}</div>
+        <div class="mod-day-card-title">${escapeHtml(day.title)}</div>
+        <div class="mod-day-card-meta">${escapeHtml(label)}</div>
+        ${badge ? `<div class="mod-day-card-badge">${escapeHtml(badge)}</div>` : ''}`;
       card.onclick = () => startLesson(mod.id, day.id);
       grid.appendChild(card);
     });
@@ -102,7 +102,13 @@ export function renderHomeModules() {
 export function updateStats() {
   const el = (id) => document.getElementById(id);
   if (!el('stat-days')) return;
-  el('stat-days').textContent      = state.completedDays.filter(id => !id.endsWith('-T')).length;
+  el('stat-days').textContent      = state.completedDays.filter(id => {
+    for (const mod of MODULES) {
+      const day = mod.days.find(d => d.id === id);
+      if (day) return !day.isTest;
+    }
+    return true;
+  }).length;
   el('stat-questions').textContent = state.totalQuestions;
   const acc = state.totalQuestions > 0
     ? Math.round((state.totalCorrectAll / state.totalQuestions) * 100) + '%'
@@ -122,8 +128,8 @@ export function renderSidebar() {
 
     const hdr = document.createElement('button');
     hdr.className = 'mod-section-hdr' + (isExpanded ? ' open' : '');
-    hdr.innerHTML = `<span class="mod-icon">${mod.icon}</span>
-      <span style="flex:1;font-size:12px;letter-spacing:1.5px;">MOD_${mod.id} — ${mod.title}</span>
+    hdr.innerHTML = `<span class="mod-icon">${escapeHtml(mod.icon)}</span>
+      <span style="flex:1;font-size:12px;letter-spacing:1.5px;">MOD_${mod.id} — ${escapeHtml(mod.title)}</span>
       ${modDone ? '<span style="color:var(--ok);font-size:13px;">✓</span>' : ''}
       <span class="mod-arrow">▶</span>`;
     hdr.onclick = () => {
@@ -145,10 +151,10 @@ export function renderSidebar() {
         + (done   ? ' completed' : '')
         + (day.isTest ? ' test-day' : '')
         + (locked ? ' locked'    : '');
-      btn.innerHTML = `<div class="day-icon">${locked ? '🔒' : day.icon}</div>
+      btn.innerHTML = `<div class="day-icon">${locked ? '🔒' : escapeHtml(day.icon)}</div>
         <div class="day-info">
-          <div class="day-name">${dayNum}</div>
-          <div class="day-meta">${day.title}</div>
+          <div class="day-name">${escapeHtml(dayNum)}</div>
+          <div class="day-meta">${escapeHtml(day.title)}</div>
         </div>
         ${done ? '<span class="day-check">✓</span>' : ''}`;
       btn.onclick = () => startLesson(mod.id, day.id);
@@ -176,9 +182,9 @@ function restoreSidebarState() {
 }
 
 function init() {
+  injectGlobals();
   Theme.init();
   Prefs.init();
-  injectGlobals();
   checkStreak();
   restoreSidebarState();
   renderSidebar();
