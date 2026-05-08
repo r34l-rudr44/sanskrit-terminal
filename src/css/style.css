@@ -121,8 +121,6 @@ button{font-family:var(--font-ui);cursor:pointer;}
 .bottom-bar-tab {position:absolute;bottom:100%;right:20px;display: flex;align-items: center;justify-content:center;width: 60px;height: 16px;background: var(--surface);border: var(--border-brand);border-bottom: none;cursor: pointer;color: var(--brand);font-size: 10px;letter-spacing: 2px;border-radius: 6px 6px 0 0;transition: background .12s, box-shadow .12s;box-shadow: 0 -3px 0 var(--brand-dark);z-index: 100;}
 .bottom-bar-tab:hover{background:var(--surface3);box-shadow:0 -4px 0 var(--brand-dark),0 0 8px var(--brand-glow);}
 .bottom-bar-tab:active{box-shadow:0 -1px 0 var(--brand-dark);}
-.bottom-bar-tab-skel,.bottom-bar-link-skel .bl-icon-skel,.bottom-bar-link-skel .bl-label-skel{background:linear-gradient(90deg,var(--surface3) 0%,var(--surface4) 50%,var(--surface3) 100%);background-size:200% 100%;animation:bottomBarSkelPulse 1.2s ease-in-out infinite;}
-.bottom-bar-tab-skel{cursor:default;color:transparent;box-shadow:0 -3px 0 var(--brand-dark);}
 .bottom-bar{display:flex;align-items:center;justify-content:center;flex-wrap:wrap;gap:0;background:var(--surface);border-top:var(--border-brand);padding:0;overflow:hidden;max-height:52px;transition:max-height .24s ease,padding .24s ease;}
 .bottom-bar.collapsed{max-height:0;border-top:none;}
 .bottom-bar-link{display:flex;align-items:center;gap:7px;padding:11px 22px;border:none;border-right:1px solid var(--border);background:transparent;color:var(--text-2);font-family:var(--font-ui);font-size:13px;letter-spacing:1.5px;cursor:pointer;transition:all .1s;white-space:nowrap;}
@@ -132,14 +130,6 @@ button{font-family:var(--font-ui);cursor:pointer;}
 .bottom-bar-link .bl-icon{font-size:14px;line-height:1;}
 .bottom-bar-link.donate-link{color:var(--ok);}
 .bottom-bar-link.donate-link:hover{background:var(--ok-bg);}
-.bottom-bar-link-skel{cursor:default;color:transparent;}
-.bottom-bar-link-skel:hover,.bottom-bar-link-skel:active{background:transparent;color:transparent;}
-.bottom-bar-link-skel .bl-icon-skel{display:inline-block;width:14px;height:14px;border-radius:2px;flex-shrink:0;}
-.bottom-bar-link-skel .bl-label-skel{display:inline-block;height:11px;border-radius:2px;opacity:.9;}
-.bl-label-skel-sm{width:54px;}
-.bl-label-skel-md{width:78px;}
-.bl-label-skel-lg{width:108px;}
-@keyframes bottomBarSkelPulse{0%{background-position:200% 0}100%{background-position:-200% 0}}
 body{padding-bottom:66px;}
 body.bar-collapsed{padding-bottom:14px;}
 #sound-toggle-btn.muted{color:var(--err);border-color:var(--err-dim);}
