@@ -129,6 +129,17 @@ export function injectGlobals() {
   };
   window.executeClearCache = () => confirmClearCache();
 
+  const streakBadge = document.querySelector('.streak-badge');
+  if (streakBadge) {
+    streakBadge.addEventListener('click', e => {
+      e.stopPropagation();
+      streakBadge.classList.add('tip-active');
+      clearTimeout(streakBadge._tipTimer);
+      streakBadge._tipTimer = setTimeout(() => streakBadge.classList.remove('tip-active'), 2500);
+    });
+    document.addEventListener('click', () => streakBadge.classList.remove('tip-active'));
+  }
+
   window.toggleBottomBar = () => {
     const bar = document.getElementById('bottom-bar');
     const isCollapsed = bar.classList.toggle('collapsed');
