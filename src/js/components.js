@@ -129,17 +129,51 @@ export function injectGlobals() {
   };
   window.executeClearCache = () => confirmClearCache();
 
-  document.addEventListener('click', e => {
-    const tip = e.target.closest('[data-tip]');
+  // Desktop: tooltips shown via CSS hover — no JS needed.
+  // Mobile: long press (500ms) shows tooltip without triggering the action.
+  let _lpTimer = null;
+  let _lpFired = false;
+
+  function dismissTips() {
     document.querySelectorAll('[data-tip].tip-active').forEach(el => {
       clearTimeout(el._tipTimer);
       el.classList.remove('tip-active');
     });
-    if (tip) {
+  }
+
+  document.addEventListener('pointerdown', e => {
+    if (e.pointerType !== 'touch') return;
+    const tip = e.target.closest('[data-tip]');
+    if (!tip) return;
+    _lpFired = false;
+    _lpTimer = setTimeout(() => {
+      _lpFired = true;
+      dismissTips();
       tip.classList.add('tip-active');
       tip._tipTimer = setTimeout(() => tip.classList.remove('tip-active'), 2500);
-    }
+    }, 500);
   });
+
+  document.addEventListener('pointermove', e => {
+    if (e.pointerType === 'touch') clearTimeout(_lpTimer);
+  });
+
+  ['pointerup', 'pointercancel'].forEach(ev =>
+    document.addEventListener(ev, e => {
+      if (e.pointerType === 'touch') clearTimeout(_lpTimer);
+    })
+  );
+
+  // Capture phase runs before inline onclick — intercept clicks that follow a long press.
+  document.addEventListener('click', e => {
+    if (_lpFired) {
+      _lpFired = false;
+      e.stopImmediatePropagation();
+      e.preventDefault();
+      return;
+    }
+    if (!e.target.closest('[data-tip]')) dismissTips();
+  }, true);
 
   window.toggleBottomBar = () => {
     const bar = document.getElementById('bottom-bar');
