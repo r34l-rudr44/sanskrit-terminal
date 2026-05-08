@@ -487,7 +487,7 @@ function showBriefing() {
   card.className = 'briefing-card';
   card.innerHTML = `
     <div class="briefing-topbar">
-      <button class="btn-secondary briefing-exit-btn" onclick="window.exitLesson()"><- EXIT</button>
+      <button class="btn-secondary briefing-exit-btn" onclick="window.exitLesson()" data-tip="Return home (progress is saved)"><- EXIT</button>
     </div>
     <div class="briefing-header"><div class="briefing-icon">${currentDay.icon}</div><div class="briefing-title">${escapeHtml(data.title)}</div><div class="briefing-tag">${escapeHtml(tag)}</div></div>
     <div class="briefing-body"><div class="briefing-lead">${data.lead}</div>${sectionsHTML}</div>
@@ -553,7 +553,7 @@ function renderVirtualKeyboard() {
   let html = `<div class="vk-wrap">
     <div class="vk-header" onclick="window.toggleKeyboard()">
       <span class="vk-title">VIRTUAL_KEYBOARD [${script.toUpperCase()}]</span>
-      <button class="vk-toggle" id="vk-toggle-btn">▲</button>
+      <button class="vk-toggle" id="vk-toggle-btn" data-tip="Toggle Sanskrit keyboard">▲</button>
     </div>
     <div class="vk-body" id="vk-body">`;
     

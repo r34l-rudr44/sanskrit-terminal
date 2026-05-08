@@ -32,8 +32,8 @@
   <div class="topbar-right">
     <div class="streak-badge" data-tip="Daily streak — complete one lesson per day to keep it going">🔥 <span id="streak-count">0</span>×</div>
     <script>document.getElementById('streak-count').textContent=parseInt(localStorage.getItem('sk_streak'),10)||0;</script>
-    <button class="icon-btn" id="sound-toggle-btn" onclick="window.toggleSound && window.toggleSound()" title="Toggle Sound">🔊</button>
-    <button class="prefs-btn" onclick="window.openPrefs && window.openPrefs()">⚙ <span class="prefs-label">PREFS</span></button>
+    <button class="icon-btn" id="sound-toggle-btn" onclick="window.toggleSound && window.toggleSound()" data-tip="Toggle sound effects">🔊</button>
+    <button class="prefs-btn" onclick="window.openPrefs && window.openPrefs()" data-tip="Preferences — theme, size &amp; script">⚙ <span class="prefs-label">PREFS</span></button>
   </div>
 </header>
 
