@@ -144,7 +144,7 @@ export function injectGlobals() {
   document.addEventListener('pointerdown', e => {
     if (e.pointerType !== 'touch') return;
     const tip = e.target.closest('[data-tip]');
-    if (!tip) return;
+    if (!tip || tip.hasAttribute('data-tip-tap')) return;
     _lpFired = false;
     _lpTimer = setTimeout(() => {
       _lpFired = true;
@@ -170,6 +170,17 @@ export function injectGlobals() {
       _lpFired = false;
       e.stopImmediatePropagation();
       e.preventDefault();
+      return;
+    }
+    // Tap-to-tip: action-free elements show tooltip on plain tap.
+    const tapTip = e.target.closest('[data-tip-tap]');
+    if (tapTip) {
+      const wasActive = tapTip.classList.contains('tip-active');
+      dismissTips();
+      if (!wasActive) {
+        tapTip.classList.add('tip-active');
+        tapTip._tipTimer = setTimeout(() => tapTip.classList.remove('tip-active'), 2500);
+      }
       return;
     }
     if (!e.target.closest('[data-tip]')) dismissTips();
