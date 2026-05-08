@@ -115,16 +115,24 @@
   </main>
 </div>
 
-<div class="bottom-bar-wrap bottom-bar-skel-wrap" id="bottom-bar-skel-wrap" aria-hidden="true">
-  <div class="bottom-bar-tab bottom-bar-tab-skel"></div>
-  <div class="bottom-bar bottom-bar-skel">
-    <div class="bottom-bar-link bottom-bar-link-skel bl-desktop"><span class="bl-icon bl-icon-skel"></span><span class="bl-label bl-label-skel bl-label-skel-md"></span></div>
-    <div class="bottom-bar-link bottom-bar-link-skel bl-desktop"><span class="bl-icon bl-icon-skel"></span><span class="bl-label bl-label-skel bl-label-skel-md"></span></div>
-    <div class="bottom-bar-link bottom-bar-link-skel bl-desktop"><span class="bl-icon bl-icon-skel"></span><span class="bl-label bl-label-skel bl-label-skel-sm"></span></div>
-    <div class="bottom-bar-link bottom-bar-link-skel bl-desktop"><span class="bl-icon bl-icon-skel"></span><span class="bl-label bl-label-skel bl-label-skel-lg"></span></div>
-    <div class="bottom-bar-link bottom-bar-link-skel bl-mobile-only"><span class="bl-icon bl-icon-skel"></span><span class="bl-label bl-label-skel bl-label-skel-sm"></span></div>
-    <div class="bottom-bar-link bottom-bar-link-skel donate-link"><span class="bl-icon bl-icon-skel"></span><span class="bl-label bl-label-skel bl-label-skel-sm"></span></div>
+<div class="bottom-bar-wrap">
+  <div class="bottom-bar-tab" id="bottom-bar-tab" onclick="window.toggleBottomBar()" title="Toggle bottom bar">
+    <span id="bottom-bar-tab-icon">▼</span>
   </div>
+  <div class="explore-dropdown" id="explore-dropdown">
+    <button class="explore-dropdown-item" onclick="window.closeExploreDropdown();window.openComingSoon('About Us','◈','about us','Learn about the team behind SANSKRIT.EXE and our mission to make ancient languages accessible — coming soon.')"><span>◈</span> ABOUT US</button>
+    <button class="explore-dropdown-item" onclick="window.closeExploreDropdown();window.openComingSoon('Our Vision','◉','our vision','Our roadmap for building the most comprehensive Sanskrit learning platform on the web — coming soon.')"><span>◉</span> OUR VISION</button>
+    <button class="explore-dropdown-item" onclick="window.closeExploreDropdown();window.openComingSoon('Blogs','◇','blogs','Deep dives into Sanskrit grammar, etymology, and the living legacy of the world\'s oldest language — coming soon.')"><span>◇</span> BLOGS</button>
+    <button class="explore-dropdown-item" onclick="window.closeExploreDropdown();window.openComingSoon('Other Products','⬡','other products','Explore our other language and education tools — coming soon.')"><span>⬡</span> OTHER PRODUCTS</button>
+  </div>
+  <footer class="bottom-bar" id="bottom-bar">
+    <button class="bottom-bar-link bl-desktop" onclick="window.openComingSoon('About Us','◈','about us','Learn about the team behind SANSKRIT.EXE and our mission to make ancient languages accessible — coming soon.')"><span class="bl-icon">◈</span><span class="bl-label">ABOUT US</span></button>
+    <button class="bottom-bar-link bl-desktop" onclick="window.openComingSoon('Our Vision','◉','our vision','Our roadmap for building the most comprehensive Sanskrit learning platform on the web — coming soon.')"><span class="bl-icon">◉</span><span class="bl-label">OUR VISION</span></button>
+    <button class="bottom-bar-link bl-desktop" onclick="window.openComingSoon('Blogs','◇','blogs','Deep dives into Sanskrit grammar, etymology, and the living legacy of the world\'s oldest language — coming soon.')"><span class="bl-icon">◇</span><span class="bl-label">BLOGS</span></button>
+    <button class="bottom-bar-link bl-desktop" onclick="window.openComingSoon('Other Products','⬡','other products','Explore our other language and education tools — coming soon.')"><span class="bl-icon">⬡</span><span class="bl-label">OTHER PRODUCTS</span></button>
+    <button class="bottom-bar-link bl-mobile-only" id="explore-btn" onclick="window.toggleExploreDropdown()"><span class="bl-icon">◈</span><span class="bl-label">EXPLORE ▾</span></button>
+    <button class="bottom-bar-link donate-link" onclick="window.openComingSoon('Donate','♥','donate','Help keep this project alive and free for everyone. Every contribution matters — coming soon.')"><span class="bl-icon">♥</span><span class="bl-label">DONATE</span></button>
+  </footer>
 </div>
 
 <div class="lesson-confirm-overlay" id="skip-confirm-overlay" onclick="window.closeSkipConfirm(event)">
