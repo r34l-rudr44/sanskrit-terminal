@@ -183,7 +183,7 @@ function restoreWordTileUI() {
   const placeholder = document.getElementById('wt-placeholder');
   if (!tray) return;
 
-  if (state.wtTray.length > 0 && placeholder) placeholder.style.display = 'none';
+  if (state.wtTray.length > 0 && placeholder) placeholder.classList.add('hidden');
 
   state.wtTray.forEach(id => {
     const tile = state.wtTiles[id];
@@ -623,6 +623,7 @@ function applyActiveInputMode() {
   if (mode === 'custom') {
     input.setAttribute('readonly', '');
     input.setAttribute('inputmode', 'none');
+    input.placeholder = 'Tap to type · SANSKRIT KEYS';
     input.onclick = () => window.activateAnswerInput(input);
     input.onfocus = () => { clearTimeout(_vkBlurTimer); window.activateAnswerInput(input); };
     input.onblur  = () => { _vkBlurTimer = setTimeout(closeKeyboard, 150); };
@@ -631,6 +632,7 @@ function applyActiveInputMode() {
   } else {
     input.removeAttribute('readonly');
     input.setAttribute('inputmode', 'text');
+    input.placeholder = 'Type answer...';
     input.onclick = null;
     input.onfocus = null;
     input.onblur  = null;
@@ -919,16 +921,19 @@ window.wtTileClick = (id) => {
   const tileEl = document.getElementById('wt-tile-' + id);
   if (!tile || !tray || !tileEl) return;
 
+  const ph = document.getElementById('wt-placeholder');
   if (!tile.placed) {
     tile.placed = true; state.wtTray.push(id);
     const clone = document.createElement('button');
     clone.className = 'wt-tile in-tray'; clone.id = 'wt-tray-tile-' + id;
     clone.textContent = tile.word; clone.onclick = () => window.wtTileClick(id);
     tray.appendChild(clone); tileEl.style.visibility = 'hidden';
+    if (ph) ph.classList.add('hidden');
   } else {
     tile.placed = false; state.wtTray = state.wtTray.filter(x => x !== id);
     document.getElementById('wt-tray-tile-' + id)?.remove();
     tileEl.style.visibility = 'visible';
+    if (ph && state.wtTray.length === 0) ph.classList.remove('hidden');
   }
   const checkBtn = document.getElementById('wt-check-btn');
   if (checkBtn) checkBtn.disabled = state.wtTray.length === 0;

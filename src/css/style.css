@@ -324,7 +324,8 @@ body.bar-collapsed{padding-bottom:14px;}
 .wt-tray.has-tiles{border-color:var(--brand);}
 .wt-tray.correct-tray{border-color:var(--ok);background:var(--ok-bg);box-shadow:var(--shadow-ok);}
 .wt-tray.wrong-tray{border-color:var(--err);background:var(--err-bg);box-shadow:var(--shadow-err);animation:shake .3s ease;}
-.wt-placeholder{font-size:14px;color:var(--text-3);letter-spacing:1px;}
+.wt-placeholder{font-size:14px;color:var(--text-3);letter-spacing:1px;transition:opacity .2s;pointer-events:none;}
+.wt-placeholder.hidden{opacity:0;}
 .wt-placeholder::before{content:'_ ';}
 .wt-bank{display:flex;flex-wrap:wrap;gap:8px;padding:12px 0 4px;}
 .wt-bank-label{font-size:12px;color:var(--text-3);letter-spacing:2px;margin-bottom:4px;}
@@ -638,6 +639,13 @@ body.vk-mobile-open .main{padding-bottom:310px;}
   .progress-bar{height:10px;}
 
   body{padding-bottom:60px;}
+}
+
+/* Landscape phones — shrink VK and topbar to reclaim vertical space */
+@media(orientation:landscape) and (max-height:500px){
+  .topbar{padding-top:5px;padding-bottom:5px;}
+  .vk-mobile-dock .vk-body{max-height:min(30vh,200px);}
+  .main{padding-top:10px;padding-bottom:10px;}
 }
 
 /* Tablets & small desktops (481px – 768px) */
