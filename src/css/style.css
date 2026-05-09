@@ -47,12 +47,6 @@ button{font-family:var(--font-ui);cursor:pointer;}
 .logo-sub{font-size:12px;color:var(--text-3);margin-top:1px;letter-spacing:1px;white-space:nowrap;}
 .topbar-right{display:flex;align-items:center;gap:8px;justify-self:end;}
 .streak-badge{display:flex;align-items:center;gap:6px;border:var(--border-brand);padding:4px 12px;font-size:18px;color:var(--brand);background:var(--surface2);box-shadow:var(--shadow-sm);white-space:nowrap;position:relative;cursor:default;}
-[data-tip]{position:relative;-webkit-touch-callout:none;}
-[data-tip]::after{content:attr(data-tip);position:absolute;top:calc(100% + 8px);left:0;background:var(--surface3);color:var(--text-2);border:var(--border-brand);padding:5px 10px;font-family:var(--font-ui);font-size:11px;letter-spacing:1px;white-space:nowrap;pointer-events:none;opacity:0;transition:opacity .15s;z-index:101;}
-@media(hover:hover){[data-tip]:hover::after{opacity:1;}}
-[data-tip].tip-active::after{opacity:1;}
-.streak-badge::after{left:auto;right:0;}
-@media(max-width:640px){[data-tip]::after{white-space:normal;max-width:200px;}.streak-badge::after{right:auto;left:0;}}
 .icon-btn{width:36px;height:36px;border:var(--border-dim);background:var(--surface2);font-size:18px;display:flex;align-items:center;justify-content:center;color:var(--text-2);transition:all .1s;}
 .icon-btn:hover{border-color:var(--brand);color:var(--brand);background:var(--surface3);box-shadow:var(--shadow-sm);}
 .icon-btn:active{transform:translate(3px,3px);box-shadow:none;}
@@ -183,7 +177,7 @@ body.bar-collapsed{padding-bottom:14px;}
 .explore-dropdown-item:last-child{border-bottom:none;}
 .explore-dropdown-item:hover{color:var(--brand);background:var(--surface2);}
 .explore-dropdown-item:active{color:var(--brand-dim);background:var(--surface3);}
-@media(max-width:640px){.bl-desktop{display:none!important;}.bl-mobile-only{display:flex!important;flex:1;justify-content:center;}.bottom-bar{justify-content:stretch;}.bottom-bar-link.donate-link{flex:1;justify-content:center;border-right:none;}}
+@media(max-width:640px){.bl-desktop{display:none!important;}.bl-mobile-only{display:flex!important;flex:1;justify-content:center;}.bottom-bar-link.donate-link{flex:1;justify-content:center;border-right:none;}}
 
 .screen{display:none;}
 .screen.active{display:block;animation:scanIn .25s ease;}

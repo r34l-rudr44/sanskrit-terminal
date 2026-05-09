@@ -194,11 +194,6 @@ function init() {
   const streakEl = document.getElementById('streak-count');
   if (streakEl) streakEl.textContent = state.streak;
 
-  const marquee = document.getElementById('topbar-marquee');
-  if (marquee) {
-    marquee.textContent =
-      `MODULES: ${MODULES.length}  //  STREAK: ${state.streak}×  //  अभ्यासेन न किंचित् अशक्यम् — Nothing is impossible with practice`;
-  }
 }
 
 // Bind to window for HTML events

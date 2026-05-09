@@ -102,8 +102,8 @@ export function injectGlobals() {
   window.setFontSize = (s) => Prefs.setFontSize(s);
   window.setScript = (s) => Prefs.setScript(s);
 
-  document.getElementById('prefs-modal').addEventListener('click', e => { 
-    if (e.target === e.currentTarget) window.closePrefs(); 
+  document.getElementById('prefs-modal')?.addEventListener('click', e => {
+    if (e.target === e.currentTarget) window.closePrefs();
   });
 
   window.openDeleteOverlay = () => {
@@ -128,63 +128,6 @@ export function injectGlobals() {
     if (document.getElementById('delete-type-input').value === 'DELETE') window.executeClearCache();
   };
   window.executeClearCache = () => confirmClearCache();
-
-  // Desktop: tooltips shown via CSS hover — no JS needed.
-  // Mobile: long press (500ms) shows tooltip without triggering the action.
-  let _lpTimer = null;
-  let _lpFired = false;
-
-  function dismissTips() {
-    document.querySelectorAll('[data-tip].tip-active').forEach(el => {
-      clearTimeout(el._tipTimer);
-      el.classList.remove('tip-active');
-    });
-  }
-
-  document.addEventListener('pointerdown', e => {
-    if (e.pointerType !== 'touch') return;
-    const tip = e.target.closest('[data-tip]');
-    if (!tip || tip.hasAttribute('data-tip-tap')) return;
-    _lpFired = false;
-    _lpTimer = setTimeout(() => {
-      _lpFired = true;
-      dismissTips();
-      tip.classList.add('tip-active');
-      tip._tipTimer = setTimeout(() => tip.classList.remove('tip-active'), 2500);
-    }, 500);
-  });
-
-  document.addEventListener('pointermove', e => {
-    if (e.pointerType === 'touch') clearTimeout(_lpTimer);
-  });
-
-  ['pointerup', 'pointercancel'].forEach(ev =>
-    document.addEventListener(ev, e => {
-      if (e.pointerType === 'touch') clearTimeout(_lpTimer);
-    })
-  );
-
-  // Capture phase runs before inline onclick — intercept clicks that follow a long press.
-  document.addEventListener('click', e => {
-    if (_lpFired) {
-      _lpFired = false;
-      e.stopImmediatePropagation();
-      e.preventDefault();
-      return;
-    }
-    // Tap-to-tip: action-free elements show tooltip on plain tap.
-    const tapTip = e.target.closest('[data-tip-tap]');
-    if (tapTip) {
-      const wasActive = tapTip.classList.contains('tip-active');
-      dismissTips();
-      if (!wasActive) {
-        tapTip.classList.add('tip-active');
-        tapTip._tipTimer = setTimeout(() => tapTip.classList.remove('tip-active'), 2500);
-      }
-      return;
-    }
-    if (!e.target.closest('[data-tip]')) dismissTips();
-  }, true);
 
   window.toggleBottomBar = () => {
     const bar = document.getElementById('bottom-bar');
