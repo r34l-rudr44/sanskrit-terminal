@@ -570,7 +570,7 @@ function renderVirtualKeyboard() {
   layout.forEach(row => {
     html += `<div class="vk-row">`;
     row.forEach(key => {
-      html += `<button class="vk-key" onclick="window.vkPress(${JSON.stringify(key)})">${escapeHtml(key)}</button>`;
+      html += `<button class="vk-key" onclick="window.vkPress(${JSON.stringify(key).replace(/"/g, '&quot;')})">${escapeHtml(key)}</button>`;
     });
     html += `</div>`;
   });
