@@ -494,15 +494,17 @@ function showBriefing() {
   const card = document.createElement('div');
   card.className = 'briefing-card';
   card.innerHTML = `
-    <div class="briefing-topbar">
-      <button class="back-btn" onclick="window.exitLesson()">← EXIT</button>
-    </div>
     <div class="briefing-header"><div class="briefing-icon">${currentDay.icon}</div><div class="briefing-title">${escapeHtml(data.title)}</div><div class="briefing-tag">${escapeHtml(tag)}</div></div>
     <div class="briefing-body"><div class="briefing-lead">${data.lead}</div>${sectionsHTML}</div>
     <div class="briefing-footer"><span class="briefing-footer-note">${currentDay.isTest ? 'prepare yourself' : 'read before continuing'}</span>
     <button class="btn-primary" onclick="window.showLesson()">${currentDay.isTest ? '► BEGIN TEST' : 'BEGIN LESSON →'}</button></div>
   `;
   mount.innerHTML = '';
+  const exitBtn = document.createElement('button');
+  exitBtn.className = 'back-btn';
+  exitBtn.textContent = '← EXIT';
+  exitBtn.onclick = window.exitLesson;
+  mount.appendChild(exitBtn);
   mount.appendChild(card);
   saveLessonProgress('briefing');
 }
