@@ -938,6 +938,7 @@ function recordAnswer(correct, q, skipped = false) {
     if (correct) state.totalCorrect++;
   }
   Audio.playTone(correct);
+  if (navigator.vibrate) navigator.vibrate(correct ? 50 : [50, 30, 50]);
   
   const fb = document.getElementById('feedback-banner');
   if (!fb) return;

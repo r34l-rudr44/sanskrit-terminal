@@ -27,7 +27,7 @@ body{font-family:var(--font-ui);background:var(--bg);color:var(--text);min-heigh
 body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:9999;background:repeating-linear-gradient(to bottom,transparent 0px,transparent 3px,rgba(0,0,0,var(--scanline-opacity)) 3px,rgba(0,0,0,var(--scanline-opacity)) 4px);}
 [data-theme="light"] body::after{content:'';position:fixed;inset:0;pointer-events:none;z-index:9998;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");opacity:0.5;}
 .devanagari{font-family:var(--font-dev);}
-button{font-family:var(--font-ui);cursor:pointer;}
+button{font-family:var(--font-ui);cursor:pointer;touch-action:manipulation;}
 
 @keyframes blink    {0%,100%{opacity:1}50%{opacity:0}}
 @keyframes flicker  {0%,100%{opacity:1}91%{opacity:1}93%{opacity:var(--flicker-min)}95%{opacity:1}98%{opacity:var(--flicker-min)}}
@@ -39,7 +39,7 @@ button{font-family:var(--font-ui);cursor:pointer;}
 @keyframes glowPulse{0%,100%{box-shadow:0 0 8px var(--brand-glow),var(--shadow)}50%{box-shadow:0 0 22px var(--brand-glow),var(--shadow)}}
 .cursor::after{content:'█';animation:blink 1s step-end infinite;color:var(--brand);font-size:0.8em;margin-left:3px;}
 
-.topbar{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:10px 18px;background:var(--surface);border-bottom:var(--border-brand);position:sticky;top:0;z-index:100;animation:flicker 11s infinite;}
+.topbar{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:10px 18px;padding-top:max(10px,env(safe-area-inset-top,0px));background:var(--surface);border-bottom:var(--border-brand);position:sticky;top:0;z-index:100;animation:flicker 11s infinite;}
 .logo{display:flex;align-items:center;gap:10px;}
 .logo-icon{width:40px;height:40px;border:var(--border-brand);background:var(--brand);display:flex;align-items:center;justify-content:center;font-size:20px;color:var(--bg);box-shadow:var(--shadow-sm);flex-shrink:0;}
 .logo-text{font-family:var(--font-logo);font-size:22px;color:var(--brand);letter-spacing:2px;line-height:1.2;text-shadow:0 0 12px var(--brand);display:flex;align-items:center;gap:6px;}
@@ -117,7 +117,7 @@ button{font-family:var(--font-ui);cursor:pointer;}
    a persistent side panel. Do NOT restore the sidebar here without replacing the
    carousel pattern — the two are mutually exclusive on narrow viewports. */
 @media(max-width:480px){.sidebar-wrap{display:none;}.mobile-days{display:none!important;}}
-.bottom-bar-wrap{position:fixed;bottom:0;left:0;right:0;z-index:200;display:flex;flex-direction:column;align-items:stretch;}
+.bottom-bar-wrap{position:fixed;bottom:0;left:0;right:0;z-index:200;display:flex;flex-direction:column;align-items:stretch;padding-bottom:env(safe-area-inset-bottom,0px);}
 .bottom-bar-tab {position:absolute;bottom:100%;right:20px;display: flex;align-items: center;justify-content:center;width: 60px;height: 16px;background: var(--surface);border: var(--border-brand);border-bottom: none;cursor: pointer;color: var(--brand);font-size: 10px;letter-spacing: 2px;border-radius: 6px 6px 0 0;transition: background .12s, box-shadow .12s;box-shadow: 0 -3px 0 var(--brand-dark);z-index: 100;}
 .bottom-bar-tab:hover{background:var(--surface3);box-shadow:0 -4px 0 var(--brand-dark),0 0 8px var(--brand-glow);}
 .bottom-bar-tab:active{box-shadow:0 -1px 0 var(--brand-dark);}
