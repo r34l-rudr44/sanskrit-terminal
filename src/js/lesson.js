@@ -9,7 +9,6 @@ const LESSON_PROGRESS_KEY = 'sk_lesson_progress';
 const MOBILE_INPUT_MODE_KEY = 'sk_mobile_input_mode';
 let hydratedLessonProgress = null;
 let skipConfirmPending = false;
-let _vkBlurTimer = null;
 let _vkHistoryPushed = false;
 
 function isMobileKeyboardMode() {
@@ -529,29 +528,31 @@ const KEYBOARDS = {
     ['अ','आ','इ','ई','उ','ऊ','ऋ','ए','ऐ','ओ','औ'],
     ['क','ख','ग','घ','ङ','च','छ','ज','झ','ञ'],
     ['ट','ठ','ड','ढ','ण','त','थ','द','ध','न'],
-    ['प','फ','ब','भ','म','य','र','ल','व','श','ष','स','ह'],
-    ['्','ा','ि','ी','ु','ू','ृ','े','ै','ो','ौ','ं','ः']
+    ['प','फ','ब','भ','म','य','र','ल','व'],
+    ['श','ष','स','ह','्','ा','ि','ी','ु','ू'],
+    ['ृ','े','ै','ो','ौ','ं','ः']
   ],
   iast: [
-    ['a','ā','i','ī','u','ū','ṛ','ṝ','ḷ','ḹ','e','ai','o','au'],
+    ['a','ā','i','ī','u','ū','ṛ','e','ai','o','au'],
     ['k','kh','g','gh','ṅ','c','ch','j','jh','ñ'],
     ['ṭ','ṭh','ḍ','ḍh','ṇ','t','th','d','dh','n'],
-    ['p','ph','b','bh','m','y','r','l','v','ś','ṣ','s','h'],
-    ['ṃ','ḥ']
+    ['p','ph','b','bh','m','y','r','l','v','ś'],
+    ['ṣ','s','h','ṃ','ḥ','ṝ','ḷ','ḹ']
   ],
   itrans: [
-    ['a','A','aa','i','I','ii','u','U','uu','RRi','RRI','LLi','LLI'],
+    ['a','A','i','I','u','U','RRi','RRI','LLi','LLI'],
     ['k','kh','g','gh','~N','c','ch','j','jh','~n'],
     ['T','Th','D','Dh','N','t','th','d','dh','n'],
-    ['p','ph','b','bh','m','y','r','l','v','sh','Sh','s','h'],
-    ['.m','H']
+    ['p','ph','b','bh','m','y','r','l','v','sh'],
+    ['Sh','s','h','.m','H']
   ],
   hk: [
-    ['a','A','i','I','u','U','R','RR','lR','lRR','e','ai','o','au'],
+    ['a','A','i','I','u','U','R','RR','lR','lRR'],
+    ['e','ai','o','au','M','H'],
     ['k','kh','g','gh','G','c','ch','j','jh','J'],
     ['T','Th','D','Dh','N','t','th','d','dh','n'],
-    ['p','ph','b','bh','m','y','r','l','v','z','S','s','h'],
-    ['M','H']
+    ['p','ph','b','bh','m','y','r','l','v'],
+    ['z','S','s','h']
   ]
 };
 
@@ -609,15 +610,7 @@ window.activateAnswerInput = (input) => {
   input.focus({ preventScroll: true });
   const cursor = input.value.length;
   if (typeof input.setSelectionRange === 'function') input.setSelectionRange(cursor, cursor);
-  const wrap = document.querySelector('.vk-wrap');
-  if (wrap) {
-    wrap.classList.add('vk-mobile-dock', 'open');
-    document.body.classList.add('vk-mobile-open');
-  }
-  const btn = document.getElementById('vk-toggle-btn');
-  if (btn) btn.textContent = 'CLOSE';
-  // Wait for the keyboard slide-up transition (.18s) then scroll input into view
-  // so it isn't hidden behind the keyboard overlay.
+  openKeyboard();
   setTimeout(() => input.scrollIntoView({ behavior: 'smooth', block: 'nearest' }), 200);
 };
 
@@ -633,8 +626,7 @@ function applyActiveInputMode() {
     input.setAttribute('inputmode', 'none');
     input.placeholder = 'Tap to type · SANSKRIT KEYS';
     input.onclick = () => window.activateAnswerInput(input);
-    input.onfocus = () => { clearTimeout(_vkBlurTimer); window.activateAnswerInput(input); };
-    input.onblur  = () => { _vkBlurTimer = setTimeout(closeKeyboard, 150); };
+    input.onfocus = () => window.activateAnswerInput(input);
     if (wrap) wrap.classList.add('vk-mobile-dock');
     if (btn) btn.textContent = wrap?.classList.contains('open') ? 'CLOSE' : 'OPEN';
   } else {
@@ -643,7 +635,6 @@ function applyActiveInputMode() {
     input.placeholder = 'Type answer...';
     input.onclick = null;
     input.onfocus = null;
-    input.onblur  = null;
     closeKeyboard();
     if (btn) btn.textContent = 'OPEN';
   }
@@ -675,7 +666,6 @@ window.setMobileInputMode = (mode) => {
 };
 
 window.vkPress = (char) => {
-  clearTimeout(_vkBlurTimer);
   const inp = document.getElementById('active-input');
   if (inp && !inp.disabled) {
     const start = inp.selectionStart ?? inp.value.length;
@@ -689,7 +679,6 @@ window.vkPress = (char) => {
 };
 
 window.vkBackspace = () => {
-  clearTimeout(_vkBlurTimer);
   const inp = document.getElementById('active-input');
   if (inp && !inp.disabled) {
     const start = inp.selectionStart ?? inp.value.length;
