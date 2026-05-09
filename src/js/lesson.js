@@ -495,7 +495,7 @@ function showBriefing() {
   card.className = 'briefing-card';
   card.innerHTML = `
     <div class="briefing-topbar">
-      <button class="btn-secondary briefing-exit-btn" onclick="window.exitLesson()"><- EXIT</button>
+      <button class="back-btn" onclick="window.exitLesson()">← EXIT</button>
     </div>
     <div class="briefing-header"><div class="briefing-icon">${currentDay.icon}</div><div class="briefing-title">${escapeHtml(data.title)}</div><div class="briefing-tag">${escapeHtml(tag)}</div></div>
     <div class="briefing-body"><div class="briefing-lead">${data.lead}</div>${sectionsHTML}</div>
