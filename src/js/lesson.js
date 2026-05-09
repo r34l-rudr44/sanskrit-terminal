@@ -10,6 +10,7 @@ const MOBILE_INPUT_MODE_KEY = 'sk_mobile_input_mode';
 let hydratedLessonProgress = null;
 let skipConfirmPending = false;
 let _vkBlurTimer = null;
+let _vkHistoryPushed = false;
 
 function isMobileKeyboardMode() {
   return window.matchMedia('(max-width: 768px) and (pointer: coarse)').matches;
@@ -45,6 +46,13 @@ function setKeyboardOpen(open) {
     wrap.classList.toggle('open', open);
     document.body.classList.toggle('vk-mobile-open', open);
     btn.textContent = open ? 'CLOSE' : 'OPEN';
+    if (open && !_vkHistoryPushed) {
+      _vkHistoryPushed = true;
+      history.pushState({ vkOpen: true }, '');
+    } else if (!open && _vkHistoryPushed) {
+      _vkHistoryPushed = false;
+      history.back();
+    }
     return;
   }
 
@@ -667,6 +675,7 @@ window.setMobileInputMode = (mode) => {
 };
 
 window.vkPress = (char) => {
+  clearTimeout(_vkBlurTimer);
   const inp = document.getElementById('active-input');
   if (inp && !inp.disabled) {
     const start = inp.selectionStart ?? inp.value.length;
@@ -680,6 +689,7 @@ window.vkPress = (char) => {
 };
 
 window.vkBackspace = () => {
+  clearTimeout(_vkBlurTimer);
   const inp = document.getElementById('active-input');
   if (inp && !inp.disabled) {
     const start = inp.selectionStart ?? inp.value.length;
@@ -1007,7 +1017,7 @@ function recordAnswer(correct, q, skipped = false) {
     if (correct) state.totalCorrect++;
   }
   Audio.playTone(correct);
-  if (navigator.vibrate) navigator.vibrate(correct ? 50 : [50, 30, 50]);
+  if (navigator.vibrate && !window._soundMuted) navigator.vibrate(correct ? 50 : [50, 30, 50]);
   
   const fb = document.getElementById('feedback-banner');
   if (!fb) return;
@@ -1092,6 +1102,13 @@ function init() {
 
   window.addEventListener('sk:script-change', () => {
     rerenderActiveInputQuestion();
+  });
+
+  window.addEventListener('popstate', () => {
+    if (_vkHistoryPushed) {
+      _vkHistoryPushed = false;
+      closeKeyboard();
+    }
   });
 
   const streakEl = document.getElementById('streak-count');
