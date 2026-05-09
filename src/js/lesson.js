@@ -9,6 +9,7 @@ const LESSON_PROGRESS_KEY = 'sk_lesson_progress';
 const MOBILE_INPUT_MODE_KEY = 'sk_mobile_input_mode';
 let hydratedLessonProgress = null;
 let skipConfirmPending = false;
+let _vkBlurTimer = null;
 
 function isMobileKeyboardMode() {
   return window.matchMedia('(max-width: 768px) and (pointer: coarse)').matches;
@@ -623,7 +624,8 @@ function applyActiveInputMode() {
     input.setAttribute('readonly', '');
     input.setAttribute('inputmode', 'none');
     input.onclick = () => window.activateAnswerInput(input);
-    input.onfocus = () => window.activateAnswerInput(input);
+    input.onfocus = () => { clearTimeout(_vkBlurTimer); window.activateAnswerInput(input); };
+    input.onblur  = () => { _vkBlurTimer = setTimeout(closeKeyboard, 150); };
     if (wrap) wrap.classList.add('vk-mobile-dock');
     if (btn) btn.textContent = wrap?.classList.contains('open') ? 'CLOSE' : 'OPEN';
   } else {
@@ -631,6 +633,7 @@ function applyActiveInputMode() {
     input.setAttribute('inputmode', 'text');
     input.onclick = null;
     input.onfocus = null;
+    input.onblur  = null;
     closeKeyboard();
     if (btn) btn.textContent = 'OPEN';
   }
@@ -761,6 +764,9 @@ function renderQuestion() {
   if (q.type === 'wordtiles' && restoredState?.type === 'wordtiles') {
     restoreWordTileUI();
   }
+  if (q.type === 'wordtiles') {
+    initWordTileDrag(document.getElementById('wt-bank'));
+  }
 
   if (q.type === 'match' && state.matchState.matched.length) {
     state.matchState.matched.forEach(pairIdx => {
@@ -813,6 +819,64 @@ function buildQuestion(q) {
       <div class="wt-bank-label">WORD_BANK</div><hr class="wt-divider"><div class="wt-bank" id="wt-bank">${tileHTML}</div>`;
   }
   return '';
+}
+
+function initWordTileDrag(bank) {
+  if (!bank) return;
+  let drag = null;
+  let ghost = null;
+
+  bank.addEventListener('touchstart', e => {
+    const tile = e.target.closest('.wt-tile');
+    if (!tile || tile.style.visibility === 'hidden' || state.answered) return;
+    drag = { tile, startX: e.touches[0].clientX, startY: e.touches[0].clientY, moved: false };
+  }, { passive: true });
+
+  bank.addEventListener('touchmove', e => {
+    if (!drag) return;
+    const dx = e.touches[0].clientX - drag.startX;
+    const dy = e.touches[0].clientY - drag.startY;
+    if (!drag.moved && Math.hypot(dx, dy) > 10) {
+      drag.moved = true;
+      ghost = drag.tile.cloneNode(true);
+      ghost.style.cssText = 'position:fixed;pointer-events:none;opacity:0.85;z-index:9999;margin:0;transform:translate(-50%,-50%);';
+      document.body.appendChild(ghost);
+      drag.tile.style.opacity = '0.35';
+    }
+    if (drag.moved && ghost) {
+      ghost.style.left = e.touches[0].clientX + 'px';
+      ghost.style.top  = e.touches[0].clientY + 'px';
+      e.preventDefault();
+    }
+  }, { passive: false });
+
+  bank.addEventListener('touchend', e => {
+    if (!drag) return;
+    e.preventDefault();
+    if (drag.moved) {
+      if (ghost) { ghost.remove(); ghost = null; }
+      drag.tile.style.opacity = '';
+      const t = e.changedTouches[0];
+      const tray = document.getElementById('wt-tray');
+      if (t && tray) {
+        const r = tray.getBoundingClientRect();
+        if (t.clientX >= r.left && t.clientX <= r.right && t.clientY >= r.top && t.clientY <= r.bottom) {
+          const id = parseInt(drag.tile.id.replace('wt-tile-', ''));
+          if (!isNaN(id) && !state.wtTiles[id]?.placed) window.wtTileClick(id);
+        }
+      }
+    } else {
+      const id = parseInt(drag.tile.id.replace('wt-tile-', ''));
+      if (!isNaN(id)) window.wtTileClick(id);
+    }
+    drag = null;
+  });
+
+  bank.addEventListener('touchcancel', () => {
+    if (ghost) { ghost.remove(); ghost = null; }
+    if (drag?.tile) drag.tile.style.opacity = '';
+    drag = null;
+  });
 }
 
 window.answerMCQ = (el, idx) => {
