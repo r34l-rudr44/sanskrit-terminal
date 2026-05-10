@@ -1,0 +1,89 @@
+Whichever of these can be made/sufficed/replaced using svg, please make and wire in.
+
+**Needed Assets**
+
+1. `og-image.png`
+- Size: `1200 x 630`
+- Format: PNG or JPG
+- Use for: WhatsApp, X/Twitter, LinkedIn, Facebook, most link previews
+- Keep important text/logo centered with safe padding
+- Avoid tiny text
+- File size ideally under `500 KB`
+
+2. `favicon.ico`
+- Size: multi-size ICO preferred
+- Include at least: `16x16`, `32x32`, `48x48`
+- Use for: browser tab/favicon fallback
+
+3. `favicon-32x32.png`
+- Size: `32 x 32`
+- Use for: standard browser favicon
+
+4. `favicon-16x16.png`
+- Size: `16 x 16`
+- Use for: standard browser favicon
+
+5. `apple-touch-icon.png`
+- Size: `180 x 180`
+- Use for: iPhone/iPad home screen icon
+
+6. `android-chrome-192x192.png`
+- Size: `192 x 192`
+- Use for: Android/PWA icon
+
+7. `android-chrome-512x512.png`
+- Size: `512 x 512`
+- Use for: Android/PWA splash/icon use
+
+8. `safari-pinned-tab.svg`
+- Format: SVG, single-color clean shape
+- Use for: Safari pinned tabs
+- Best if simple silhouette/logo, not text-heavy
+
+9. `site.webmanifest`
+- Reference:
+  - `192x192` icon
+  - `512x512` icon
+- Include:
+  - `name`
+  - `short_name`
+  - `theme_color`
+  - `background_color`
+  - `display`
+
+**Design Guidance**
+
+For `SANSKRIT.EXE`, a strong set would be:
+- Dark background matching `#06060A`
+- Brand accent matching `#F0A500`
+- Big central icon or wordmark
+- Minimal text on the OG image:
+  - `SANSKRIT.EXE`
+  - maybe one short line like `Learn Sanskrit Daily`
+
+**Recommended Filenames in `public/`**
+
+```text
+public/
+  og-image.png
+  favicon.ico
+  favicon-16x16.png
+  favicon-32x32.png
+  apple-touch-icon.png
+  android-chrome-192x192.png
+  android-chrome-512x512.png
+  safari-pinned-tab.svg
+  site.webmanifest
+```
+
+**Metadata To Wire Once Assets Exist**
+
+In both `index.html` and `lesson.html`, you’d want:
+- `og:image`
+- `og:image:width`
+- `og:image:height`
+- `twitter:image`
+- favicon links
+- apple touch icon link
+- manifest link
+- optional `mask-icon` for Safari

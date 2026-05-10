@@ -1,0 +1,11 @@
+{
+  "name": "SANSKRIT.EXE",
+  "short_name": "Sanskrit",
+  "theme_color": "#06060A",
+  "background_color": "#06060A",
+  "display": "standalone",
+  "icons": [
+    { "src": "/android-chrome-192x192.png", "sizes": "192x192", "type": "image/png" },
+    { "src": "/android-chrome-512x512.png", "sizes": "512x512", "type": "image/png" }
+  ]
+}

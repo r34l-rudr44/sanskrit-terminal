@@ -1,0 +1,35 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630">
+  <!-- Background -->
+  <rect width="1200" height="630" fill="#06060A"/>
+
+  <!-- Subtle grid lines (terminal feel) -->
+  <line x1="0" y1="315" x2="1200" y2="315" stroke="#14140F" stroke-width="1"/>
+  <line x1="600" y1="0" x2="600" y2="630" stroke="#14140F" stroke-width="1"/>
+
+  <!-- Border frame -->
+  <rect x="40" y="40" width="1120" height="550" fill="none" stroke="#252018" stroke-width="2"/>
+  <rect x="44" y="44" width="1112" height="542" fill="none" stroke="#3D2800" stroke-width="1"/>
+
+  <!-- Logo bolt (scaled ~8x, centered at top) -->
+  <g transform="translate(534, 80) scale(2.8)">
+    <path fill="#F0A500" d="M25.946 44.938c-.664.845-2.021.375-2.021-.698V33.937a2.26 2.26 0 0 0-2.262-2.262H10.287c-.92 0-1.456-1.04-.92-1.788l7.48-10.471c1.07-1.497 0-3.578-1.842-3.578H1.237c-.92 0-1.456-1.04-.92-1.788L10.013.474c.214-.297.556-.474.92-.474h28.894c.92 0 1.456 1.04.92 1.788l-7.48 10.471c-1.07 1.498 0 3.579 1.842 3.579h11.377c.943 0 1.473 1.088.89 1.83L25.947 44.94z"/>
+  </g>
+
+  <!-- Prompt indicator -->
+  <text x="152" y="364" font-family="monospace" font-size="36" fill="#3D2800">$</text>
+
+  <!-- Main title -->
+  <text x="600" y="400" font-family="monospace" font-size="96" fill="#F0A500" text-anchor="middle" letter-spacing="4">SANSKRIT.EXE</text>
+
+  <!-- Tagline -->
+  <text x="600" y="460" font-family="monospace" font-size="30" fill="#9A8F60" text-anchor="middle" letter-spacing="2">Learn Sanskrit Daily</text>
+
+  <!-- Bottom decoration line -->
+  <line x1="300" y1="510" x2="900" y2="510" stroke="#3D2800" stroke-width="1"/>
+
+  <!-- Corner marks -->
+  <text x="60" y="80" font-family="monospace" font-size="14" fill="#252018">+--</text>
+  <text x="1100" y="80" font-family="monospace" font-size="14" fill="#252018">--+</text>
+  <text x="60" y="575" font-family="monospace" font-size="14" fill="#252018">+--</text>
+  <text x="1100" y="575" font-family="monospace" font-size="14" fill="#252018">--+</text>
+</svg>
