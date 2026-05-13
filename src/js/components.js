@@ -256,4 +256,24 @@ export function injectGlobals() {
     }
   };
   if (localStorage.getItem('sk_sound') === 'muted') window.toggleSound();
+
+  const streakBadge = document.querySelector('.streak-badge');
+  if (streakBadge) {
+    const tip = document.createElement('div');
+    tip.className = 'streak-tip';
+    tip.textContent = 'Daily streak';
+    document.body.appendChild(tip);
+    const show = () => {
+      const r = streakBadge.getBoundingClientRect();
+      tip.style.top = (r.bottom + 6) + 'px';
+      tip.style.right = (window.innerWidth - r.right) + 'px';
+      tip.style.left = 'auto';
+      tip.classList.add('visible');
+    };
+    const hide = () => tip.classList.remove('visible');
+    streakBadge.addEventListener('mouseenter', show);
+    streakBadge.addEventListener('mouseleave', hide);
+    streakBadge.addEventListener('focus', show);
+    streakBadge.addEventListener('blur', hide);
+  }
 }
