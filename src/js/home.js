@@ -83,7 +83,11 @@ export function renderHomeModules() {
         <div class="mod-day-card-title">${escapeHtml(day.title)}</div>
         <div class="mod-day-card-meta">${escapeHtml(label)}</div>
         ${badge ? `<div class="mod-day-card-badge">${escapeHtml(badge)}</div>` : ''}`;
-      card.onclick = () => startLesson(mod.id, day.id);
+      if (locked) {
+        const remaining = mod.days.filter(d => !d.isTest && !state.completedDays.includes(d.id)).length;
+        card.dataset.tooltip = `Complete ${remaining} lesson${remaining !== 1 ? 's' : ''} to unlock`;
+      }
+      card.onclick = locked ? null : () => startLesson(mod.id, day.id);
       grid.appendChild(card);
     });
 

@@ -1003,6 +1003,7 @@ window.confirmSkipQuestion = () => {
 };
 
 function recordAnswer(correct, q, skipped = false) {
+  closeKeyboard();
   if (!skipped) {
     state.totalAnswered++;
     if (correct) state.totalCorrect++;
