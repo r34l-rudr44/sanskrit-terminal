@@ -1,3 +1,8 @@
+export function debounce(fn, ms) {
+  let t;
+  return (...args) => { clearTimeout(t); t = setTimeout(() => fn(...args), ms); };
+}
+
 export function escapeHtml(str) {
   return String(str)
     .replace(/&/g, '&amp;')
@@ -38,6 +43,7 @@ export const Effects = (() => {
     if(!wrap) return;
     wrap.innerHTML = '';
     const colors = ['#F0A500','#3DD68C','#00D4C8','#FF4D4D','#FFD700','#A78BFA'];
+    const frag = document.createDocumentFragment();
     for (let i = 0; i < count; i++) {
       const p = document.createElement('div'); p.className = 'particle';
       p.style.left = Math.random() * 100 + 'vw';
@@ -46,8 +52,9 @@ export const Effects = (() => {
       p.style.animationDelay   = Math.random() * 1 + 's';
       const size = (6 + Math.random() * 10) + 'px';
       p.style.width = p.style.height = size;
-      wrap.appendChild(p);
+      frag.appendChild(p);
     }
+    wrap.appendChild(frag);
     setTimeout(() => { wrap.innerHTML = ''; }, 5000);
   }
   return { launchConfetti };

@@ -1,6 +1,6 @@
 import { MODULES, getModule, getDay } from '../data/index.js';
 import { state } from './state.js';
-import { Theme, Prefs, Audio, Effects, escapeHtml } from './utils.js';
+import { Theme, Prefs, Audio, Effects, escapeHtml, debounce } from './utils.js';
 import { injectGlobals } from './components.js';
 
 let currentDay = null;
@@ -10,6 +10,8 @@ const MOBILE_INPUT_MODE_KEY = 'sk_mobile_input_mode';
 let hydratedLessonProgress = null;
 let skipConfirmPending = false;
 let _vkHistoryPushed = false;
+let _inputListenerAC = null;
+const _debouncedSaveProgress = debounce(() => saveLessonProgress('lesson'), 300);
 
 function isMobileKeyboardMode() {
   return window.matchMedia('(max-width: 768px) and (pointer: coarse)').matches;
@@ -760,7 +762,9 @@ function renderQuestion() {
     if (restoredState?.type === q.type && inp && typeof restoredState.inputValue === 'string') {
       inp.value = restoredState.inputValue;
     }
-    inp?.addEventListener('input', () => saveLessonProgress('lesson'));
+    if (_inputListenerAC) _inputListenerAC.abort();
+    _inputListenerAC = new AbortController();
+    inp?.addEventListener('input', _debouncedSaveProgress, { signal: _inputListenerAC.signal });
     applyActiveInputMode();
   }
 
@@ -887,13 +891,12 @@ window.answerMCQ = (el, idx) => {
   state.answered = true;
   const q = currentDay.questions[state.currentQ];
   const isCorrect = q.options[idx] === q.answer;
-  document.querySelectorAll('.option-btn').forEach(b => b.disabled = true);
+  const btns = document.querySelectorAll('.option-btn');
+  btns.forEach((b, i) => {
+    b.disabled = true;
+    if (!isCorrect && q.options[i] === q.answer) b.classList.add('correct');
+  });
   el.classList.add(isCorrect ? 'correct' : 'wrong');
-  if (!isCorrect) {
-    document.querySelectorAll('.option-btn').forEach((b, i) => {
-      if (q.options[i] === q.answer) b.classList.add('correct');
-    });
-  }
   recordAnswer(isCorrect, q);
 };
 
@@ -956,7 +959,9 @@ window.matchClick = (el, pairIdx, side) => {
   if (el.classList.contains('matched') || state.answered) return;
   const ms = state.matchState;
   
-  document.querySelectorAll(`#match-${side} .match-item`).forEach(e => e.classList.remove('selected'));
+  // Deselect only the previously selected item on this side (avoid full querySelectorAll)
+  const prev = side === 'left' ? ms.selectedLeft : ms.selectedRight;
+  if (prev) prev.el.classList.remove('selected');
   el.classList.add('selected');
   if(side === 'left') ms.selectedLeft = {el, pairIdx};
   else ms.selectedRight = {el, pairIdx};

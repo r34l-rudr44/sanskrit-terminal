@@ -1,5 +1,5 @@
 import { confirmClearCache } from './state.js';
-import { Theme, Prefs } from './utils.js';
+import { Theme, Prefs, debounce } from './utils.js';
 
 export function injectGlobals() {
   const html = `
@@ -162,7 +162,7 @@ export function injectGlobals() {
   window.closeExploreDropdown = () => {
     document.getElementById('explore-dropdown').classList.remove('open');
   };
-  window.addEventListener('resize', syncExploreDropdown);
+  window.addEventListener('resize', debounce(syncExploreDropdown, 100));
 
   window.openComingSoon = (name, icon, section, text) => {
     document.getElementById('cs-section-label').textContent = section.toUpperCase();
@@ -225,23 +225,25 @@ export function injectGlobals() {
       ];
       const body = document.getElementById('boot-body');
       let lineIdx = 0;
+      const bootTimers = [];
       function showNextLine() {
         if (lineIdx < bootLines.length) {
           const l = document.createElement('div');
           l.className = 'boot-line'; l.innerHTML = bootLines[lineIdx];
           body.appendChild(l);
-          setTimeout(() => l.classList.add('visible'), 50);
+          bootTimers.push(setTimeout(() => l.classList.add('visible'), 50));
           lineIdx++;
-          setTimeout(showNextLine, 250 + Math.random() * 350);
+          bootTimers.push(setTimeout(showNextLine, 250 + Math.random() * 350));
         } else {
-          setTimeout(() => {
+          bootTimers.push(setTimeout(() => {
             document.querySelectorAll('.boot-line').forEach(el => el.style.display = 'none');
             document.getElementById('boot-splash').style.display = 'block';
             document.getElementById('boot-enter-btn').style.display = 'block';
-          }, 800);
+          }, 800));
         }
       }
-      setTimeout(showNextLine, 500);
+      bootTimers.push(setTimeout(showNextLine, 500));
+      window.addEventListener('pagehide', () => bootTimers.forEach(clearTimeout), { once: true });
     }
   }
 
@@ -258,7 +260,8 @@ export function injectGlobals() {
   if (localStorage.getItem('sk_sound') === 'muted') window.toggleSound();
 
   const streakBadge = document.querySelector('.streak-badge');
-  if (streakBadge) {
+  if (streakBadge && !streakBadge.dataset.tipBound) {
+    streakBadge.dataset.tipBound = '1';
     const tip = document.createElement('div');
     tip.className = 'streak-tip';
     tip.textContent = 'Daily streak';

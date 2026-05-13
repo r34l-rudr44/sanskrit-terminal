@@ -3,12 +3,19 @@ import { state, expandedMods, checkStreak } from './state.js';
 import { Theme, Prefs, escapeHtml } from './utils.js';
 import { injectGlobals } from './components.js';
 
+// Precomputed map from dayId → isTest for O(1) lookup in updateStats/isDayLocked
+const dayIsTestMap = new Map();
+for (const mod of MODULES) {
+  for (const day of mod.days) dayIsTestMap.set(day.id, day.isTest);
+}
+
 export function isDayLocked(modId, dayId) {
   const mod = getModule(modId);
   if (!mod) return true;
   const day = mod.days.find(d => d.id === dayId);
   if (!day || !day.isTest) return false;
-  return !mod.days.filter(d => !d.isTest).every(d => state.completedDays.includes(d.id));
+  const completedSet = new Set(state.completedDays);
+  return !mod.days.filter(d => !d.isTest).every(d => completedSet.has(d.id));
 }
 
 export function startLesson(modId, dayId) {
@@ -21,13 +28,15 @@ export function renderHomeModules() {
   if(!container) return;
   container.innerHTML = '';
 
+  const completedSet = new Set(state.completedDays);
+
   for (let i = 0; i < MODULES.length; i += 3) {
     const group = document.createElement('div');
     group.className = 'home-module-group';
 
     MODULES.slice(i, i + 3).forEach(mod => {
     const totalDays   = mod.days.length;
-    const doneDays    = mod.days.filter(d => state.completedDays.includes(d.id)).length;
+    const doneDays    = mod.days.filter(d => completedSet.has(d.id)).length;
     const pct         = totalDays > 0 ? Math.round((doneDays / totalDays) * 100) : 0;
     const modComplete = doneDays === totalDays;
     const isOpen      = expandedMods.has(mod.id);
@@ -37,6 +46,7 @@ export function renderHomeModules() {
 
     const hdr = document.createElement('div');
     hdr.className = 'module-entry-hdr' + (isOpen ? ' open' : '');
+    hdr.dataset.mod = mod.id;
     hdr.innerHTML = `
       <div class="module-entry-icon">${escapeHtml(mod.icon)}</div>
       <div class="module-entry-info">
@@ -49,9 +59,16 @@ export function renderHomeModules() {
         <div class="module-chevron">▶</div>
       </div>`;
     hdr.onclick = () => {
-      expandedMods.has(mod.id) ? expandedMods.delete(mod.id) : expandedMods.add(mod.id);
-      renderHomeModules();
-      renderSidebar();
+      const nowOpen = !expandedMods.has(mod.id);
+      nowOpen ? expandedMods.add(mod.id) : expandedMods.delete(mod.id);
+      hdr.classList.toggle('open', nowOpen);
+      body.classList.toggle('open', nowOpen);
+      // Sync sidebar without full re-render
+      const sbHdr = document.querySelector(`.mod-section-hdr[data-mod="${mod.id}"]`);
+      if (sbHdr) {
+        sbHdr.classList.toggle('open', nowOpen);
+        sbHdr.nextElementSibling?.classList.toggle('open', nowOpen);
+      }
     };
 
     const body = document.createElement('div');
@@ -69,7 +86,7 @@ export function renderHomeModules() {
     grid.className = 'module-days-grid';
 
     mod.days.forEach((day, idx) => {
-      const done   = state.completedDays.includes(day.id);
+      const done   = completedSet.has(day.id);
       const locked = isDayLocked(mod.id, day.id);
       const card   = document.createElement('div');
       card.className = 'mod-day-card'
@@ -84,7 +101,7 @@ export function renderHomeModules() {
         <div class="mod-day-card-meta">${escapeHtml(label)}</div>
         ${badge ? `<div class="mod-day-card-badge">${escapeHtml(badge)}</div>` : ''}`;
       if (locked) {
-        const remaining = mod.days.filter(d => !d.isTest && !state.completedDays.includes(d.id)).length;
+        const remaining = mod.days.filter(d => !d.isTest && !completedSet.has(d.id)).length;
         card.dataset.tooltip = `Complete ${remaining} lesson${remaining !== 1 ? 's' : ''} to unlock`;
       }
       card.onclick = locked ? null : () => startLesson(mod.id, day.id);
@@ -106,13 +123,7 @@ export function renderHomeModules() {
 export function updateStats() {
   const el = (id) => document.getElementById(id);
   if (!el('stat-days')) return;
-  el('stat-days').textContent      = state.completedDays.filter(id => {
-    for (const mod of MODULES) {
-      const day = mod.days.find(d => d.id === id);
-      if (day) return !day.isTest;
-    }
-    return true;
-  }).length;
+  el('stat-days').textContent      = state.completedDays.filter(id => !dayIsTestMap.get(id)).length;
   el('stat-questions').textContent = state.totalQuestions;
   const acc = state.totalQuestions > 0
     ? Math.round((state.totalCorrectAll / state.totalQuestions) * 100) + '%'
@@ -125,20 +136,31 @@ export function renderSidebar() {
   if(!sb) return;
   sb.innerHTML = `<div class="sidebar-title">MODULE_DIRECTORY</div>`;
 
+  const completedSet = new Set(state.completedDays);
+
   MODULES.forEach(mod => {
     const isExpanded = expandedMods.has(mod.id);
-    const modDone = mod.days.filter(d => !d.isTest).every(d => state.completedDays.includes(d.id)) &&
-                    mod.days.filter(d => d.isTest).every(d => state.completedDays.includes(d.id));
+    const modDone = mod.days.filter(d => !d.isTest).every(d => completedSet.has(d.id)) &&
+                    mod.days.filter(d => d.isTest).every(d => completedSet.has(d.id));
 
     const hdr = document.createElement('button');
     hdr.className = 'mod-section-hdr' + (isExpanded ? ' open' : '');
+    hdr.dataset.mod = mod.id;
     hdr.innerHTML = `<span class="mod-icon">${escapeHtml(mod.icon)}</span>
       <span style="flex:1;font-size:12px;letter-spacing:1.5px;">MOD_${mod.id} — ${escapeHtml(mod.title)}</span>
       ${modDone ? '<span style="color:var(--ok);font-size:13px;">✓</span>' : ''}
       <span class="mod-arrow">▶</span>`;
     hdr.onclick = () => {
-      expandedMods.has(mod.id) ? expandedMods.delete(mod.id) : expandedMods.add(mod.id);
-      renderSidebar();
+      const nowOpen = !expandedMods.has(mod.id);
+      nowOpen ? expandedMods.add(mod.id) : expandedMods.delete(mod.id);
+      hdr.classList.toggle('open', nowOpen);
+      daysWrap.classList.toggle('open', nowOpen);
+      // Sync home module list without full re-render
+      const homeHdr = document.querySelector(`.module-entry-hdr[data-mod="${mod.id}"]`);
+      if (homeHdr) {
+        homeHdr.classList.toggle('open', nowOpen);
+        homeHdr.nextElementSibling?.classList.toggle('open', nowOpen);
+      }
     };
 
     const daysWrap = document.createElement('div');
@@ -147,7 +169,7 @@ export function renderSidebar() {
     inner.className = 'mod-days-inner';
 
     mod.days.forEach((day, idx) => {
-      const done   = state.completedDays.includes(day.id);
+      const done   = completedSet.has(day.id);
       const locked = isDayLocked(mod.id, day.id);
       const dayNum = day.isTest ? 'TEST' : `DAY_${idx + 1}`;
       const btn = document.createElement('button');
