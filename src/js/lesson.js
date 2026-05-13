@@ -718,7 +718,7 @@ function renderQuestion() {
       state.wtTiles = restoredState.wtTiles.map(tile => ({ word: tile.word, placed: !!tile.placed }));
       state.wtTray = restoredState.wtTray.filter(id => Number.isInteger(id) && state.wtTiles[id]);
     } else {
-      const allWords = [...q.tiles, ...(q.distractors || [])].sort(() => Math.random() - 0.5);
+      const allWords = [...(q.tiles || []), ...(q.distractors || [])].sort(() => Math.random() - 0.5);
       state.wtTiles = allWords.map(w => ({ word: w, placed: false }));
     }
   }
@@ -944,7 +944,7 @@ window.wtTileClick = (id) => {
 window.checkWordTiles = () => {
   if (state.answered) return;
   const q = currentDay.questions[state.currentQ];
-  const built = state.wtTray.map(id => state.wtTiles[id].word).join(' ');
+  const built = state.wtTray.map(id => state.wtTiles[id]?.word ?? '').join(' ');
   const isCorrect = built.trim() === q.answer.trim();
   state.answered = true;
   const tray = document.getElementById('wt-tray');
