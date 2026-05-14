@@ -79,6 +79,12 @@ export const Prefs = (() => {
     itrans: {placeholder:'Type in ITRANS…',          hint:'// ITRANS — e.g. raamaH vanam gacchati'},
     hk:     {placeholder:'Type in Harvard-Kyoto…',   hint:'// HK — e.g. rAmaH vanam gacchati'}
   };
+  const TAGLINE = {
+    deva:   'वाग्देव्यै नमः',
+    iast:   'vāgdevyai namaḥ',
+    itrans: 'vAgdevyai namaH',
+    hk:     'vAgdevyai namaH'
+  };
   let fontSize = localStorage.getItem('sk_fs') || 'md';
   let script   = localStorage.getItem('sk_script') || 'deva';
   
@@ -90,6 +96,8 @@ export const Prefs = (() => {
   function updateUI() {
     ['sm','md','lg'].forEach(s => document.getElementById('fs-'+s)?.classList.toggle('active', fontSize === s));
     ['deva','iast','itrans','hk'].forEach(s => document.getElementById('script-'+s)?.classList.toggle('active', script === s));
+    const tagEl = document.getElementById('logo-sub');
+    if (tagEl) tagEl.textContent = TAGLINE[script] || TAGLINE.deva;
   }
   function setFontSize(size) { fontSize = size; localStorage.setItem('sk_fs', size); applyFontSize(); updateUI(); }
   function setScript(s)   {
