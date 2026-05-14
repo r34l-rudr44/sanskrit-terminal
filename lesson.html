@@ -39,7 +39,7 @@
     <div class="logo-icon">🪔</div>
     <div>
       <div class="logo-text">SANSKRIT.EXE <span class="beta-tag">BETA</span></div>
-      <div class="logo-sub">// interactive learning terminal</div>
+      <div class="logo-sub">// master Sanskrit one lesson a day</div>
     </div>
   </div>
   <div class="topbar-right">
@@ -63,7 +63,7 @@
     <div class="screen" id="screen-lesson">
       <div class="lesson-header">
         <div class="lesson-nav">
-          <button class="back-btn" onclick="window.exitLesson()">← EXIT</button>
+          <button class="back-btn" onclick="window.confirmExit()">← BACK</button>
           <span class="lesson-day-tag" id="lesson-day-tag"></span>
         </div>
         <div class="progress-wrap">
@@ -130,7 +130,7 @@
 
 <div class="bottom-bar-wrap">
   <div class="bottom-bar-tab" id="bottom-bar-tab" onclick="window.toggleBottomBar()" title="Toggle bottom bar">
-    <span id="bottom-bar-tab-icon">▼</span>
+    <span id="bottom-bar-tab-icon">▼</span><span class="bottom-bar-tab-label">EXPLORE</span>
   </div>
   <div class="explore-dropdown" id="explore-dropdown">
     <button class="explore-dropdown-item" onclick="window.closeExploreDropdown();window.openComingSoon('About Us','◈','about us','Learn about the team behind SANSKRIT.EXE and our mission to make ancient languages accessible — coming soon.')"><span>◈</span> ABOUT US</button>
@@ -146,6 +146,23 @@
     <button class="bottom-bar-link bl-mobile-only" id="explore-btn" onclick="window.toggleExploreDropdown()"><span class="bl-icon">◈</span><span class="bl-label">EXPLORE ▾</span></button>
     <button class="bottom-bar-link donate-link" onclick="window.openComingSoon('Donate','♥','donate','Help keep this project alive and free for everyone. Every contribution matters — coming soon.')"><span class="bl-icon">♥</span><span class="bl-label">DONATE</span></button>
   </footer>
+</div>
+
+<div class="lesson-confirm-overlay" id="exit-confirm-overlay" onclick="window.closeExitConfirm(event)">
+  <div class="lesson-confirm-box">
+    <div class="lesson-confirm-top">
+      <span class="lesson-confirm-tag">EXIT_CONFIRM</span>
+      <button class="lesson-confirm-close" type="button" onclick="window.closeExitConfirm()">✕</button>
+    </div>
+    <div class="lesson-confirm-body">
+      <div class="lesson-confirm-title">EXIT LESSON?</div>
+      <div class="lesson-confirm-text">Your progress on this question will be saved. You can resume later.</div>
+      <div class="lesson-confirm-actions">
+        <button class="btn-secondary" type="button" onclick="window.closeExitConfirm()">KEEP GOING</button>
+        <button class="btn-primary" type="button" onclick="window.exitLesson()">YES, EXIT</button>
+      </div>
+    </div>
+  </div>
 </div>
 
 <div class="lesson-confirm-overlay" id="skip-confirm-overlay" onclick="window.closeSkipConfirm(event)">

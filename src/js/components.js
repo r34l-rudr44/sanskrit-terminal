@@ -188,8 +188,21 @@ export function injectGlobals() {
   };
 
   if (!localStorage.getItem('sk_cookie_ack')) {
-    setTimeout(() => document.getElementById('cookie-bar').classList.add('visible'), 1500);
+    setTimeout(() => document.getElementById('cookie-bar').classList.add('visible'), 2500);
   }
+
+  document.addEventListener('keydown', (e) => {
+    if (e.key !== 'Escape') return;
+    const prefsModal = document.getElementById('prefs-modal');
+    if (prefsModal?.classList.contains('open')) { window.closePrefs(); return; }
+    const deleteOverlay = document.getElementById('delete-overlay');
+    if (deleteOverlay?.classList.contains('active')) { window.closeDeleteOverlay(); return; }
+    const comingSoon = document.getElementById('coming-soon-overlay');
+    if (comingSoon?.classList.contains('active')) {
+      comingSoon.classList.remove('active');
+      document.body.style.overflow = '';
+    }
+  });
 
   // Handle Boot Sequence for Home Only
   const isHomePage = !window.location.pathname.includes('lesson');

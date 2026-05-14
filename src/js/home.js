@@ -56,6 +56,7 @@ export function renderHomeModules() {
       </div>
       <div class="module-entry-right">
         <div class="module-prog-text">${doneDays}/${totalDays} DAYS</div>
+        <div class="module-prog-mini"><div class="module-prog-mini-fill" style="width:${pct}%"></div></div>
         <div class="module-chevron">▶</div>
       </div>`;
     hdr.onclick = () => {
@@ -123,8 +124,13 @@ export function renderHomeModules() {
 export function updateStats() {
   const el = (id) => document.getElementById(id);
   if (!el('stat-days')) return;
-  el('stat-days').textContent      = state.completedDays.filter(id => !dayIsTestMap.get(id)).length;
-  el('stat-questions').textContent = state.totalQuestions;
+  const days = state.completedDays.filter(id => !dayIsTestMap.get(id)).length;
+  const hasData = days > 0 || state.totalQuestions > 0;
+  const cards = document.querySelectorAll('.stat-card');
+  cards.forEach(c => c.classList.toggle('stat-card--empty', !hasData));
+
+  el('stat-days').textContent      = hasData ? days : '—';
+  el('stat-questions').textContent = hasData ? state.totalQuestions : '—';
   const acc = state.totalQuestions > 0
     ? Math.round((state.totalCorrectAll / state.totalQuestions) * 100) + '%'
     : '—';
@@ -134,7 +140,7 @@ export function updateStats() {
 export function renderSidebar() {
   const sb = document.getElementById('sidebar-inner');
   if(!sb) return;
-  sb.innerHTML = `<div class="sidebar-title">MODULE_DIRECTORY</div>`;
+  sb.innerHTML = `<div class="sidebar-title">MODULES</div>`;
 
   const completedSet = new Set(state.completedDays);
 
@@ -207,6 +213,38 @@ function restoreSidebarState() {
   }
 }
 
+function updateHeroState() {
+  const heroBtnEl  = document.querySelector('.hero-btn');
+  const heroTagEl  = document.querySelector('.hero-tag');
+  if (!heroBtnEl || !heroTagEl) return;
+
+  const completedLessons = state.completedDays.filter(id => !dayIsTestMap.get(id));
+  if (completedLessons.length === 0) {
+    heroTagEl.textContent  = '> SESSION_01 // READY TO BEGIN';
+    heroBtnEl.textContent  = '▶ START LESSON_01';
+    return;
+  }
+
+  // Find next uncompleted non-test day
+  let nextDay = null;
+  for (const mod of MODULES) {
+    for (const day of mod.days) {
+      if (!day.isTest && !state.completedDays.includes(day.id)) {
+        nextDay = day; break;
+      }
+    }
+    if (nextDay) break;
+  }
+
+  if (nextDay) {
+    heroTagEl.textContent = `> CONTINUE — ${escapeHtml(nextDay.title)}`;
+    heroBtnEl.textContent = '▶ RESUME PROGRESS';
+  } else {
+    heroTagEl.textContent = '> ALL_MODULES COMPLETE';
+    heroBtnEl.textContent = '▶ REVIEW MODULES';
+  }
+}
+
 function init() {
   injectGlobals();
   Theme.init();
@@ -216,10 +254,10 @@ function init() {
   renderSidebar();
   renderHomeModules();
   updateStats();
+  updateHeroState();
 
   const streakEl = document.getElementById('streak-count');
   if (streakEl) streakEl.textContent = state.streak;
-
 }
 
 // Bind to window for HTML events

@@ -495,16 +495,19 @@ function showBriefing() {
   const sectionsHTML = data.sections.map(renderSection).join('');
   const card = document.createElement('div');
   card.className = 'briefing-card';
+  const qCount = currentDay.questions.length;
+  const estMins = Math.max(1, Math.ceil(qCount * 0.5));
   card.innerHTML = `
     <div class="briefing-header"><div class="briefing-icon">${currentDay.icon}</div><div class="briefing-title">${escapeHtml(data.title)}</div><div class="briefing-tag">${escapeHtml(tag)}</div></div>
     <div class="briefing-body"><div class="briefing-lead">${data.lead}</div>${sectionsHTML}</div>
-    <div class="briefing-footer"><span class="briefing-footer-note">${currentDay.isTest ? 'prepare yourself' : 'read before continuing'}</span>
+    <div class="briefing-footer"><span class="briefing-footer-note">${currentDay.isTest ? 'prepare yourself' : 'read before continuing'} · ${qCount} QUESTIONS · ~${estMins} MIN</span>
     <button class="btn-primary" onclick="window.showLesson()">${currentDay.isTest ? '► BEGIN TEST' : 'BEGIN LESSON →'}</button></div>
   `;
   mount.innerHTML = '';
   const exitBtn = document.createElement('button');
   exitBtn.className = 'back-btn';
-  exitBtn.textContent = '← EXIT';
+  exitBtn.textContent = '← BACK TO HOME';
+  exitBtn.setAttribute('aria-label', 'Exit lesson and return to home');
   exitBtn.onclick = window.exitLesson;
   mount.appendChild(exitBtn);
   mount.appendChild(card);
@@ -520,6 +523,24 @@ window.showLesson = function() {
 window.exitLesson = () => {
   clearLessonProgress();
   window.location.href = '/';
+};
+
+window.confirmExit = () => {
+  const activeScreen = getActiveLessonScreen();
+  if (activeScreen !== 'lesson') { window.exitLesson(); return; }
+  closeKeyboard();
+  const overlay = document.getElementById('exit-confirm-overlay');
+  if (!overlay) { window.exitLesson(); return; }
+  overlay.classList.add('active');
+  document.body.style.overflow = 'hidden';
+};
+
+window.closeExitConfirm = (event) => {
+  if (event && event.target && event.target.id !== 'exit-confirm-overlay') return;
+  const overlay = document.getElementById('exit-confirm-overlay');
+  if (!overlay) return;
+  overlay.classList.remove('active');
+  document.body.style.overflow = '';
 };
 
 window.retryLesson = () => {
@@ -600,13 +621,14 @@ window.toggleKeyboard = () => {
     wrap.classList.add('vk-mobile-dock');
     wrap.classList.toggle('open', !isOpen);
     document.body.classList.toggle('vk-mobile-open', !isOpen);
+    wrap.dataset.open = (!isOpen).toString();
     btn.textContent = isOpen ? 'OPEN' : 'CLOSE';
     return;
   }
 
   const isOpen = body.style.display !== 'none';
   body.style.display = isOpen ? 'none' : 'flex';
-  btn.textContent = isOpen ? '▲' : '▼';
+  wrap.dataset.open = (!isOpen).toString();
 };
 
 window.activateAnswerInput = (input) => {
@@ -817,13 +839,13 @@ function buildQuestion(q) {
     const left  = q.pairs.map((p, i) => `<button class="match-item" data-pair="${i}" onclick="window.matchClick(this,${i},'left')">${escapeHtml(p.left)}</button>`).join('');
     const shuffledIdx = q.pairs.map((_,i) => i).sort(() => Math.random()-0.5);
     const right = shuffledIdx.map(i => `<button class="match-item" data-pair="${i}" onclick="window.matchClick(this,${i},'right')">${escapeHtml(q.pairs[i].right)}</button>`).join('');
-    return `${badge}${qText}<div class="match-grid"><div class="match-col match-panel" id="match-left">${left}</div><div class="match-col match-panel" id="match-right">${right}</div></div>`;
+    return `${badge}${qText}<div class="match-grid"><div class="match-col"><div class="match-col-label">SANSKRIT</div><div class="match-panel" id="match-left">${left}</div></div><div class="match-col"><div class="match-col-label">MEANING</div><div class="match-panel" id="match-right">${right}</div></div></div>`;
   }
 
   if (q.type === 'wordtiles') {
     const tileHTML = state.wtTiles.map((t, i) => `<button class="wt-tile" id="wt-tile-${i}" onclick="window.wtTileClick(${i})">${escapeHtml(t.word)}</button>`).join('');
-    return `${badge}${qText}<div id="wt-tray" class="wt-tray"><span id="wt-placeholder" class="wt-placeholder">tap words</span></div>
-      <div class="wt-bank-label">WORD_BANK</div><hr class="wt-divider"><div class="wt-bank" id="wt-bank">${tileHTML}</div>`;
+    return `${badge}${qText}<div id="wt-tray" class="wt-tray"><span id="wt-placeholder" class="wt-placeholder">tap words to build your answer</span></div>
+      <div class="wt-bank-label">WORD_BANK<span class="wt-bank-hint">// tap words to build sentence</span></div><hr class="wt-divider"><div class="wt-bank" id="wt-bank">${tileHTML}</div>`;
   }
   return '';
 }
@@ -1037,19 +1059,19 @@ window.nextQuestion = () => {
 function finishLesson() {
   const pct = state.totalAnswered > 0 ? Math.round((state.totalCorrect / state.totalAnswered) * 100) : 0;
   clearLessonProgress();
-  
+
   if (!state.completedDays.includes(currentDay.id)) {
     state.completedDays.push(currentDay.id);
     localStorage.setItem('sk_completed_v2', JSON.stringify(state.completedDays));
   }
-  
+
   const today = new Date().toDateString();
   if (state.lastDate !== today) {
     state.streak++; state.lastDate = today;
     localStorage.setItem('sk_last_date', today);
     localStorage.setItem('sk_streak', state.streak);
   }
-  
+
   state.totalQuestions += state.totalAnswered;
   state.totalCorrectAll += state.totalCorrect;
   localStorage.setItem('sk_total_q', state.totalQuestions);
@@ -1068,23 +1090,75 @@ function finishLesson() {
     document.getElementById('cert-correct').textContent = state.totalCorrect;
     document.getElementById('cert-wrong').textContent = state.totalAnswered - state.totalCorrect;
     document.getElementById('cert-total').textContent = state.totalAnswered;
-    
-    if (pct >= 60) {
-      document.getElementById('cert-stamp').textContent = '✓ CERTIFIED';
-      document.getElementById('cert-stamp').className = 'cert-stamp';
+
+    const stampEl = document.getElementById('cert-stamp');
+    if (pct >= 80) {
+      stampEl.textContent = '✓ EXCELLENCE';
+      stampEl.className = 'cert-stamp';
+    } else if (pct >= 60) {
+      stampEl.textContent = '✓ CERTIFIED';
+      stampEl.className = 'cert-stamp';
     } else {
-      document.getElementById('cert-stamp').textContent = '↺ RETRY';
-      document.getElementById('cert-stamp').className = 'cert-stamp fail-stamp';
+      stampEl.textContent = '↺ TRY AGAIN';
+      stampEl.className = 'cert-stamp fail-stamp';
     }
     showScreen('cert');
     if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
       Effects.launchConfetti(pct >= 60 ? 100 : 40);
     }
   } else {
+    if (state.totalAnswered === 0) {
+      document.getElementById('score-trophy').textContent = '📖';
+      document.getElementById('score-title').textContent = 'NO QUESTIONS ANSWERED';
+      document.getElementById('score-sub').textContent = 'Something went wrong. Please try again.';
+      document.getElementById('score-big').textContent = 'N/A';
+      document.getElementById('sc-correct').textContent = '0';
+      document.getElementById('sc-wrong').textContent = '0';
+      document.getElementById('sc-total').textContent = '0';
+      document.querySelector('.score-actions').innerHTML =
+        `<button class="btn-primary" onclick="window.exitLesson()">⌂ HOME</button>`;
+      showScreen('score');
+      return;
+    }
+
+    const trophy = pct >= 80 ? '🏆' : pct >= 50 ? '⭐' : '📖';
+    document.getElementById('score-trophy').textContent = trophy;
+
+    const dayLabel = escapeHtml(currentDay.title || currentDay.id);
+    const title = pct >= 80 ? `${dayLabel} — MASTERED` : pct >= 50 ? `${dayLabel} — COMPLETE` : `${dayLabel} — REVIEW NEEDED`;
+    document.getElementById('score-title').textContent = title;
+
+    const dayNum = currentMod.days.findIndex(d => d.id === currentDay.id) + 1;
+    const subText = pct >= 80
+      ? `Module ${currentMod.id} · Day ${dayNum} — flawless execution.`
+      : pct >= 50
+      ? `Module ${currentMod.id} · Day ${dayNum} — good progress.`
+      : `Module ${currentMod.id} · Day ${dayNum} — keep practicing.`;
+    document.getElementById('score-sub').textContent = subText;
+
     document.getElementById('score-big').textContent = pct + '%';
     document.getElementById('sc-correct').textContent = state.totalCorrect;
     document.getElementById('sc-wrong').textContent = state.totalAnswered - state.totalCorrect;
     document.getElementById('sc-total').textContent = state.totalAnswered;
+
+    // Next lesson CTA
+    let nextMod = null, nextDay = null;
+    for (const mod of MODULES) {
+      for (const day of mod.days) {
+        if (!day.isTest && !state.completedDays.includes(day.id)) {
+          nextMod = mod; nextDay = day; break;
+        }
+      }
+      if (nextDay) break;
+    }
+    const nextBtn = nextDay
+      ? `<button class="btn-primary" onclick="window.location.href='/lesson.html?mod=${nextMod.id}&day=${nextDay.id}'">NEXT LESSON →</button>`
+      : `<button class="btn-primary" onclick="window.exitLesson()">⌂ HOME</button>`;
+    document.querySelector('.score-actions').innerHTML =
+      `<button class="btn-secondary" onclick="window.retryLesson()">↺ RETRY</button>
+       <button class="btn-secondary" onclick="window.exitLesson()">⌂ HOME</button>
+       ${nextBtn}`;
+
     showScreen('score');
     if (pct >= 70 && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
       Effects.launchConfetti();
@@ -1132,9 +1206,11 @@ function init() {
   state.currentDayId = dayId;
 
   document.addEventListener('keydown', (event) => {
-    const overlay = document.getElementById('skip-confirm-overlay');
-    if (!overlay || !overlay.classList.contains('active')) return;
-    if (event.key === 'Escape') closeSkipConfirm();
+    if (event.key !== 'Escape') return;
+    const exitOverlay = document.getElementById('exit-confirm-overlay');
+    if (exitOverlay?.classList.contains('active')) { window.closeExitConfirm(); return; }
+    const skipOverlay = document.getElementById('skip-confirm-overlay');
+    if (skipOverlay?.classList.contains('active')) { closeSkipConfirm(); return; }
   });
 
   const savedProgress = loadLessonProgress(modId, dayId);
