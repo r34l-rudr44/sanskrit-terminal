@@ -133,6 +133,7 @@ export function injectGlobals() {
     const bar = document.getElementById('bottom-bar');
     const isCollapsed = bar.classList.toggle('collapsed');
     document.getElementById('bottom-bar-tab-icon').textContent = isCollapsed ? '▲' : '▼';
+    document.getElementById('bottom-bar-tab-label').textContent = isCollapsed ? 'OPEN' : 'CLOSE';
     document.body.classList.toggle('bar-collapsed', isCollapsed);
   };
 
