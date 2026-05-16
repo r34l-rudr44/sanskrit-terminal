@@ -1,33 +1,34 @@
 export const id = "1-2";
-export const title = "Numbers & Counting";
-export const icon = "🔢";
+export const title = "Going — गम् धातु";
+export const icon = "🚶";
 
 export const metadata = {
   difficulty: "beginner",
   estimatedMinutes: 8,
-  tags: ["numbers", "counting", "intro"],
-  grammarTopics: ["basic numerals"],
-  vocabularyTopics: ["numbers 1-10"]
+  tags: ["verbs", "grammar", "gam"],
+  grammarTopics: ["verb-conjugation", "person"],
+  vocabularyTopics: ["gam dhatu", "going"]
 };
 
 export const briefing = {
   pre: {
-    title: "Sanskrit Numbers // संख्या",
-    lead: "Sanskrit numbers are ancestors of modern numerals. Many English words trace back through Proto-Indo-European roots.",
+    title: "The Verb गम् — To Go",
+    lead: "गम् means 'to go'. Its present-tense forms change with the person — I, You, or He/She.",
     sections: [
-      { type:"table", label:"NUMBERS 1–10", cols:["#","Devanagari","IAST","English cognate"],
-        rows:[["१","एक","Eka","unique, once"],["२","द्वि","Dvi","dual, between"],["३","त्रि","Tri","three, trio"],["४","चतुर्","Catur","quarter, four"],["५","पञ्च","Pañca","pentagon"],["६","षट्","Ṣaṭ","six"],["७","सप्त","Sapta","September"],["८","अष्ट","Aṣṭa","octave, eight"],["९","नव","Nava","nine, November"],["१०","दश","Daśa","decade, ten"]] },
-      { type:"block", text:"<strong>च</strong> (ca) is Sanskrit for 'and' — it appears after the last item. E.g. <span class='dev'>रामः सीता च</span> = Rama and Sita." }
+      { type:"table", label:"गम् — TO GO", cols:["Form","Used with","Meaning","Hindi"],
+        rows:[["गच्छामि","अहम्","I go","मैं जाता हूँ"],["गच्छसि","त्वम्","You go","तुम जाते हो"],["गच्छति","सः / सा","He/She goes","वह जाता/जाती है"]] },
+      { type:"block", text:"<strong>Sentences:</strong><br>अहं गच्छामि — मैं जाता हूँ।<br>त्वं गच्छसि — तुम जाते हो।<br>सः गच्छति — वह जाता है।<br>सा गच्छति — वह जाती है।" },
+      { type:"grammar", label:"WORD_ORDER", text:"Word order in Sanskrit is <strong>flexible</strong>. सः गच्छति and गच्छति सः both mean the same thing. Meaning is carried by each word's form, not its position in the sentence." }
     ]
   },
-  mid: [{ afterQ:3, title:"Compound Numbers", tag:"CONCEPT_UNLOCK", content:{ type:"table", label:"NUMBERS 11–15", cols:["#","Sanskrit","Breakdown"], rows:[["११","एकादश","एक (1) + दश (10)"],["१२","द्वादश","द्वि (2) + दश (10)"],["१३","त्रयोदश","त्रि (3) + दश (10)"],["१४","चतुर्दश","चतुर् (4) + दश (10)"],["१५","पञ्चदश","पञ्च (5) + दश (10)"]] } }]
+  mid: []
 };
 
 export const questions = [
-  {type:"mcq",question:"What is the Sanskrit word for number 'One' (१)?",options:["Dvi","Eka","Tri","Chatur"],optionsDevanagari:["द्वि","एक","त्रि","चतुर्"],answer:"Eka",explanation:"एक (Eka) means 'one'. It is the root of the English word 'unique' via Latin."},
-  {type:"mcq",question:"Which Sanskrit word means 'Five' (५)?",options:["Shat","Sapta","Pancha","Nava"],optionsDevanagari:["षट्","सप्त","पञ्च","नव"],answer:"Pancha",explanation:"पञ्च (Pañca) means five. It appears in Panchatantra and Panchamahabhuta."},
-  {type:"translation",question:"Type the Sanskrit word for 'Ten' (१०)",hint:"Hint: This word relates to the English word 'decade'",answer:"दश",explanation:"दश (Daśa) means ten. The English word 'decade' traces back to this via Proto-Indo-European roots."},
-  {type:"match",question:"Match the numbers with their Sanskrit names",pairs:[{left:"1 (एक)",right:"Eka"},{left:"2 (द्वि)",right:"Dvi"},{left:"3 (त्रि)",right:"Tri"},{left:"4 (चतुर्)",right:"Chatur"}],explanation:"These are the first four Sanskrit numbers: Eka, Dvi, Tri, Chatur."},
-  {type:"mcq",question:"What is दश + एक (Dasha + Eka)?",options:["Eleven","Twelve","Twenty","Nine"],answer:"Eleven",explanation:"दश (10) + एक (1) = एकादश (Ekādaśa), meaning eleven."},
-  {type:"wordtiles",question:"Arrange to form: 'Two and three make five'",tiles:["द्वि","त्रि","च","पञ्च"],distractors:["एक","दश"],answer:"द्वि त्रि च पञ्च",explanation:"द्वि (2) + त्रि (3) + च (and) + पञ्च (5). 'च' is Sanskrit for 'and'."}
+  {type:"mcq",question:"गच्छति means:",options:["I go — मैं जाता हूँ","You go — तुम जाते हो","He/She goes — वह जाता/जाती है","We go — हम जाते हैं"],answer:"He/She goes — वह जाता/जाती है",explanation:"गच्छति = He/She goes (वह जाता/जाती है). Third-person singular — used with सः and सा."},
+  {type:"mcq",question:"Which verb form pairs with अहम् (I — मैं)?",options:["गच्छति","गच्छसि","गच्छामि","गम्"],answer:"गच्छामि",explanation:"अहम् गच्छामि = I go (मैं जाता हूँ). गच्छामि is the first-person form."},
+  {type:"mcq",question:"त्वं गच्छसि means:",options:["I go — मैं जाता हूँ","He goes — वह जाता है","You go — तुम जाते हो","She goes — वह जाती है"],answer:"You go — तुम जाते हो",explanation:"त्वं गच्छसि = You go (तुम जाते हो). गच्छसि is always paired with त्वम्."},
+  {type:"match",question:"Match the pronoun to the correct verb form",pairs:[{left:"अहम् (I — मैं)",right:"गच्छामि"},{left:"त्वम् (You — तुम)",right:"गच्छसि"},{left:"सः / सा (He/She — वह)",right:"गच्छति"}],explanation:"Three persons of गम्: first — I (मैं→गच्छामि), second — You (तुम→गच्छसि), third — He/She (वह→गच्छति)."},
+  {type:"mcq",question:"सा गच्छति means:",options:["You go — तुम जाते हो","I go — मैं जाता हूँ","She goes — वह जाती है","He goes — वह जाता है"],answer:"She goes — वह जाती है",explanation:"सा गच्छति = She goes (वह जाती है). सा is feminine; गच्छति covers both masculine and feminine third person."},
+  {type:"mcq",question:"अहं गच्छामि means:",options:["I come — मैं आता हूँ","You go — तुम जाते हो","He goes — वह जाता है","I go — मैं जाता हूँ"],answer:"I go — मैं जाता हूँ",explanation:"अहं गच्छामि = I go (मैं जाता हूँ). Note: अहम् and अहं are both correct spellings."}
 ];

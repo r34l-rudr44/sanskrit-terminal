@@ -1,7 +1,6 @@
 import * as m1d1 from './module-1/day-1.js';
 import * as m1d2 from './module-1/day-2.js';
 import * as m1d3 from './module-1/day-3.js';
-import * as m1d4 from './module-1/day-4.js';
 import * as m1test from './module-1/test.js';
 
 import * as m2d1 from './module-2/day-1.js';
@@ -13,10 +12,10 @@ export const MODULES = [
   {
     id: 1,
     title: "FOUNDATIONS",
-    subtitle: "The Ancient Tongue",
+    subtitle: "Pronouns, Verbs & Places",
     icon: "🪔",
-    description: "Master the basics: core vocabulary, numbers, greetings, and the natural world.",
-    days: [m1d1, m1d2, m1d3, m1d4, m1test]
+    description: "Learn Sanskrit pronouns, the verb 'to go', and location words to form your first real sentences.",
+    days: [m1d1, m1d2, m1d3, m1test]
   },
   {
     id: 2,

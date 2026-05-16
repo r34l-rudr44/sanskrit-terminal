@@ -1,34 +1,33 @@
 export const id = "1-1";
-export const title = "Basic Vocabulary";
-export const icon = "🌊";
+export const title = "Pronouns";
+export const icon = "👤";
 
 export const metadata = {
   difficulty: "beginner",
-  estimatedMinutes: 8,
-  tags: ["vocabulary", "elements", "intro"],
-  grammarTopics: ["sov-order"],
-  vocabularyTopics: ["five elements", "greetings", "core nouns"]
+  estimatedMinutes: 7,
+  tags: ["pronouns", "grammar", "intro"],
+  grammarTopics: ["pronouns", "gender"],
+  vocabularyTopics: ["personal pronouns"]
 };
 
 export const briefing = {
   pre: {
-    title: "Basic Sanskrit Vocabulary",
-    lead: "Sanskrit is one of the oldest languages still in active use. Before we begin, load these core words into memory.",
+    title: "Pronouns — सर्वनामानि",
+    lead: "Sanskrit has three persons and three genders. These five pronouns are your entry point to every sentence.",
     sections: [
-      { type:"table", label:"THE FIVE ELEMENTS // पञ्चमहाभूत", cols:["Devanagari","IAST","Meaning"],
-        rows:[["जल","Jala","Water 💧"],["अग्नि","Agni","Fire 🔥"],["वायु","Vāyu","Wind 🌬"],["पृथ्वी","Pṛthvī","Earth 🌍"],["आकाश","Ākāśa","Sky / Ether ✨"]] },
-      { type:"grammar", label:"WORD_ORDER", text:"Sanskrit typically follows <strong>Subject → Object → Verb</strong> (SOV) order. Example: <span class='dev'>रामः वनं गच्छति</span> = Rāmaḥ (Ram) + Vanam (forest) + Gacchati (goes)." },
-      { type:"block", text:"<strong>नमस्ते</strong> (Namaste) literally means <em>'I bow to you'</em> — नमः (I bow) + ते (to you). It acknowledges the divine in the other person." }
+      { type:"table", label:"PRONOUNS // सर्वनामानि", cols:["Devanagari","Meaning","Hindi"],
+        rows:[["सः","He","वह (पु.)"],["सा","She","वह (स्त्री.)"],["तत्","It","वो"],["त्वम्","You","तुम"],["अहम्","I","मैं"]] },
+      { type:"grammar", label:"GENDER_NOTE", text:"<strong>सः</strong> is masculine, <strong>सा</strong> is feminine, <strong>तत्</strong> is neuter. <strong>त्वम्</strong> and <strong>अहम्</strong> refer to persons and cover all genders. Alternate spellings: त्वं, अहं." }
     ]
   },
-  mid: [{ afterQ:2, title:"Sentence Structure Hint", tag:"GRAMMAR_CHECKPOINT", content:{ type:"grammar", label:"SOV ORDER", text:"Remember: <strong>Subject + Object + Verb</strong>. <span class='dev'>रामः</span> is the subject (nominative case, ends in -ः)." } }]
+  mid: []
 };
 
 export const questions = [
-  {type:"mcq",question:"What is the Sanskrit word for 'water'?",options:["Agni","Jala","Vayu","Prithvi"],optionsDevanagari:["अग्नि","जल","वायु","पृथ्वी"],answer:"Jala",explanation:"जल (Jala) means water — one of the five classical elements (Panchamahabhuta)."},
-  {type:"mcq",question:"Which Sanskrit word means 'fire'?",options:["Jala","Prithvi","Agni","Akasha"],optionsDevanagari:["जल","पृथ्वी","अग्नि","आकाश"],answer:"Agni",explanation:"अग्नि (Agni) is fire — also the name of the fire deity in the Rigveda."},
-  {type:"translation",question:"Type the Sanskrit sentence for: 'Ram goes to the forest'",hint:"Use: रामः (Rama) + वनम् (forest) + गच्छति (goes)",answer:"रामः वनं गच्छति",explanation:"रामः = Ram (subject), वनं = forest (object), गच्छति = goes (verb). Sanskrit follows SOV order."},
-  {type:"mcq",question:"What does 'नमस्ते' (Namaste) literally mean?",options:["Hello friend","I bow to you","Good morning","Peace be with you"],answer:"I bow to you",explanation:"नमस्ते = नमः (I bow) + ते (to you). It acknowledges the divine in the other person."},
-  {type:"fill",question:"Fill in the blank: 'Sun' in Sanskrit is ______",sentenceParts:["'Sun' in Sanskrit is ",""],answer:"सूर्य",answerRoman:"Surya",explanation:"सूर्य (Sūrya) is the Sanskrit word for the Sun, and also the name of the solar deity."},
-  {type:"wordtiles",question:"Arrange the words to form: 'The boy drinks water'",tiles:["बालकः","जलं","पिबति"],distractors:["गच्छति","वनम्"],answer:"बालकः जलं पिबति",explanation:"बालकः = boy, जलं = water, पिबति = drinks. Subject–Object–Verb order."}
+  {type:"mcq",question:"What does सः mean?",options:["He — वह","She — वह (स्त्री.)","It — वो","You — तुम"],answer:"He — वह",explanation:"सः = He (वह). The masculine third-person pronoun."},
+  {type:"mcq",question:"Which Sanskrit word means 'I — मैं'?",options:["सः","सा","त्वम्","अहम्"],answer:"अहम्",explanation:"अहम् = I (मैं). Also written अहं. First-person singular."},
+  {type:"mcq",question:"तत् refers to:",options:["He — वह (पु.)","She — वह (स्त्री.)","It — वो","You — तुम"],answer:"It — वो",explanation:"तत् = It (वो). The neuter pronoun, used for things that are neither masculine nor feminine."},
+  {type:"match",question:"Match the Sanskrit pronouns to their meanings",pairs:[{left:"सः",right:"He — वह"},{left:"सा",right:"She — वह"},{left:"अहम्",right:"I — मैं"},{left:"त्वम्",right:"You — तुम"}],explanation:"सः = He (वह), सा = She (वह), अहम् = I (मैं), त्वम् = You (तुम)."},
+  {type:"mcq",question:"त्वम् translates to:",options:["I — मैं","He — वह","She — वह","You — तुम"],answer:"You — तुम",explanation:"त्वम् = You (तुम). Second-person singular. Also written त्वं."},
+  {type:"mcq",question:"Which pronoun is feminine?",options:["सः","तत्","त्वम्","सा"],answer:"सा",explanation:"सा = She (वह स्त्री.). सः is masculine — He (वह), तत् is neuter — It (वो)."}
 ];
