@@ -1,0 +1,1011 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover"/>
+  <meta name="description" content="A deep dive into the rules governing Anusvāra (अनुस्वार) in Sanskrit, drawn from Pāṇini's Ashtādhyāyī — the world's oldest formal grammar."/>
+  <meta name="application-name" content="SANSKRIT.EXE"/>
+  <meta name="theme-color" content="#06060A"/>
+  <meta property="og:title" content="अनुस्वारप्रकरण — The Dot That Changes Everything | SANSKRIT.EXE Blog"/>
+  <meta property="og:description" content="Three rules from Pāṇini's Ashtādhyāyī that govern the usage of Anusvāra in Sanskrit. Grammar as precision engineering."/>
+  <meta property="og:type" content="article"/>
+  <meta property="og:site_name" content="SANSKRIT.EXE"/>
+  <meta property="og:locale" content="en_US"/>
+  <meta name="twitter:card" content="summary_large_image"/>
+  <meta name="twitter:title" content="अनुस्वारप्रकरण — The Dot That Changes Everything"/>
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg"/>
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png"/>
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"/>
+  <link rel="shortcut icon" href="/favicon.ico"/>
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"/>
+  <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#F0A500"/>
+  <link rel="manifest" href="/site.webmanifest"/>
+  <title>अनुस्वारप्रकरण — The Dot That Changes Everything | SANSKRIT.EXE</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" crossorigin>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="dns-prefetch" href="https://fonts.googleapis.com">
+  <link rel="dns-prefetch" href="https://fonts.gstatic.com">
+  <link href="https://fonts.googleapis.com/css2?family=VT323&family=Share+Tech+Mono&family=Noto+Sans+Devanagari:wght@400;700&display=swap" rel="stylesheet"/>
+  <script>(function(){var t=localStorage.getItem('sk_theme');if(t==='light'||t==='dark')document.documentElement.setAttribute('data-theme',t);})();</script>
+  <link rel="stylesheet" href="/src/css/style.css">
+  <style>
+    /* ── Blog-specific layout ── */
+    .blog-wrap {
+      max-width: 720px;
+      margin: 0 auto;
+      padding: 32px 20px 60px;
+    }
+
+    /* Breadcrumb */
+    .blog-breadcrumb {
+      font-size: 12px;
+      color: var(--text-3);
+      letter-spacing: 1.5px;
+      margin-bottom: 28px;
+    }
+    .blog-breadcrumb a {
+      color: var(--brand-dim);
+      text-decoration: none;
+      transition: color .1s;
+    }
+    .blog-breadcrumb a:hover { color: var(--brand); }
+    .blog-breadcrumb span { color: var(--text-3); margin: 0 6px; }
+
+    /* Hero */
+    .blog-hero {
+      border: var(--border-brand);
+      background: var(--surface2);
+      padding: 32px 28px 28px;
+      margin-bottom: 32px;
+      box-shadow: var(--shadow);
+      position: relative;
+      overflow: hidden;
+    }
+    .blog-hero::before {
+      content: 'ं';
+      position: absolute;
+      right: 24px;
+      top: 50%;
+      transform: translateY(-50%);
+      font-family: var(--font-dev);
+      font-size: 180px;
+      color: var(--brand-glow);
+      line-height: 1;
+      pointer-events: none;
+      text-shadow: 0 0 60px var(--brand-glow);
+    }
+    [data-theme="light"] .blog-hero::before { color: rgba(107,58,0,0.08); text-shadow: none; }
+    .blog-tag-row {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 12px;
+      flex-wrap: wrap;
+    }
+    .blog-category {
+      font-size: 11px;
+      color: var(--brand);
+      letter-spacing: 2px;
+      background: var(--brand-dark);
+      padding: 3px 10px;
+      border: 1px solid var(--brand-dim);
+    }
+    .blog-tag {
+      font-size: 11px;
+      color: var(--text-3);
+      letter-spacing: 1px;
+      background: var(--surface3);
+      padding: 3px 8px;
+      border: 1px solid var(--border);
+    }
+    .blog-title {
+      font-family: var(--font-logo);
+      font-size: 40px;
+      color: var(--brand);
+      line-height: 1.15;
+      margin-bottom: 6px;
+      text-shadow: 0 0 18px var(--brand);
+      animation: flicker 9s infinite;
+    }
+    .blog-subtitle {
+      font-size: 17px;
+      color: var(--text-2);
+      line-height: 1.6;
+      margin-bottom: 20px;
+      max-width: 480px;
+    }
+    .blog-meta {
+      display: flex;
+      gap: 20px;
+      flex-wrap: wrap;
+      font-size: 12px;
+      color: var(--text-3);
+      letter-spacing: 1px;
+      border-top: 1px solid var(--border);
+      padding-top: 14px;
+    }
+    .blog-meta-item { display: flex; align-items: center; gap: 6px; }
+    .blog-meta-item::before { content: '//'; color: var(--brand-dim); }
+
+    /* Body prose */
+    .blog-body { line-height: 1.85; }
+    .blog-body p {
+      font-size: 15px;
+      color: var(--text-2);
+      margin-bottom: 18px;
+    }
+    .blog-body strong { color: var(--text); }
+    .blog-body em { color: var(--cyan); font-style: normal; }
+
+    /* Section headers */
+    .blog-section {
+      margin-top: 40px;
+      margin-bottom: 20px;
+    }
+    .blog-section-tag {
+      font-size: 11px;
+      color: var(--text-3);
+      letter-spacing: 2px;
+      margin-bottom: 6px;
+    }
+    .blog-section-tag::before { content: '> '; color: var(--brand-dim); }
+    .blog-section-title {
+      font-family: var(--font-logo);
+      font-size: 28px;
+      color: var(--brand);
+      letter-spacing: 2px;
+      text-shadow: 0 0 10px var(--brand);
+      line-height: 1.2;
+    }
+
+    /* Shloka / verse block */
+    .shloka-block {
+      border-left: 4px solid var(--brand);
+      background: var(--surface);
+      padding: 18px 22px;
+      margin: 24px 0;
+      position: relative;
+    }
+    .shloka-block::before {
+      content: '॥';
+      position: absolute;
+      top: 12px;
+      right: 16px;
+      font-family: var(--font-dev);
+      font-size: 22px;
+      color: var(--brand-dim);
+    }
+    .shloka-line {
+      font-family: var(--font-dev);
+      font-size: 18px;
+      color: var(--brand);
+      line-height: 1.8;
+      display: block;
+    }
+    .shloka-trans {
+      font-size: 13px;
+      color: var(--text-3);
+      letter-spacing: 0.5px;
+      margin-top: 10px;
+      display: block;
+      font-style: italic;
+    }
+
+    /* Definition box */
+    .def-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      margin: 20px 0;
+    }
+    @media(max-width:560px){ .def-grid { grid-template-columns: 1fr; } }
+    .def-card {
+      border: var(--border-dim);
+      background: var(--surface);
+      padding: 14px 16px;
+      box-shadow: var(--shadow-sm);
+    }
+    .def-term {
+      font-family: var(--font-dev);
+      font-size: 22px;
+      color: var(--brand);
+      display: block;
+      margin-bottom: 4px;
+    }
+    .def-roman {
+      font-size: 12px;
+      color: var(--cyan);
+      letter-spacing: 1px;
+      display: block;
+      margin-bottom: 8px;
+    }
+    .def-body {
+      font-size: 13px;
+      color: var(--text-2);
+      line-height: 1.6;
+    }
+    .def-letters {
+      font-family: var(--font-dev);
+      font-size: 14px;
+      color: var(--text);
+      margin-top: 6px;
+      line-height: 1.8;
+      display: block;
+    }
+
+    /* Rule card */
+    .rule-card {
+      border: var(--border-brand);
+      background: var(--surface);
+      margin: 28px 0;
+      box-shadow: var(--shadow);
+      overflow: hidden;
+    }
+    .rule-header {
+      background: var(--brand-dark);
+      border-bottom: var(--border-brand);
+      padding: 10px 18px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+    .rule-id {
+      font-size: 11px;
+      color: var(--brand);
+      letter-spacing: 2px;
+    }
+    .rule-sutra-rom {
+      font-size: 13px;
+      color: var(--text-2);
+      letter-spacing: 0.5px;
+    }
+    .rule-body { padding: 18px 20px; }
+    .rule-sutra-dev {
+      font-family: var(--font-dev);
+      font-size: 24px;
+      color: var(--brand);
+      display: block;
+      margin-bottom: 10px;
+      text-shadow: 0 0 8px var(--brand);
+    }
+    .rule-desc {
+      font-size: 14px;
+      color: var(--text-2);
+      line-height: 1.75;
+      margin-bottom: 0;
+    }
+
+    /* Example table */
+    .example-block {
+      background: var(--surface2);
+      border: var(--border-dim);
+      margin: 16px 0;
+      overflow: hidden;
+    }
+    .example-header {
+      font-size: 11px;
+      color: var(--text-3);
+      letter-spacing: 2px;
+      padding: 6px 14px;
+      background: var(--surface3);
+      border-bottom: 1px solid var(--border);
+    }
+    .example-header::before { content: '$ '; color: var(--brand-dim); }
+    .example-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 14px;
+    }
+    .example-table tr { border-bottom: 1px solid var(--border); }
+    .example-table tr:last-child { border-bottom: none; }
+    .example-table td {
+      padding: 10px 14px;
+      color: var(--text-2);
+      vertical-align: top;
+    }
+    .example-table td:first-child { color: var(--text-3); font-size: 12px; letter-spacing: 1px; white-space: nowrap; width: 80px; }
+    .example-table .dev { font-family: var(--font-dev); font-size: 17px; color: var(--text); }
+    .example-table .arrow { color: var(--brand-dim); font-size: 14px; }
+    .example-table .result { font-family: var(--font-dev); font-size: 17px; color: var(--ok); }
+    .example-table .note { font-size: 12px; color: var(--text-3); letter-spacing: 0.5px; }
+
+    /* Corollary block */
+    .corollary {
+      border-left: 3px solid var(--cyan);
+      background: var(--surface);
+      padding: 14px 18px;
+      margin: 14px 0;
+    }
+    .corollary-label {
+      font-size: 11px;
+      color: var(--cyan);
+      letter-spacing: 2px;
+      margin-bottom: 6px;
+      display: block;
+    }
+    .corollary-label::before { content: '↳ '; }
+    .corollary-text {
+      font-size: 14px;
+      color: var(--text-2);
+      line-height: 1.7;
+    }
+
+    /* Varga table */
+    .varga-wrap { margin: 20px 0; overflow-x: auto; }
+    .varga-table {
+      border-collapse: collapse;
+      min-width: 480px;
+      font-size: 13px;
+    }
+    .varga-table th {
+      font-size: 11px;
+      color: var(--brand);
+      letter-spacing: 1.5px;
+      background: var(--surface3);
+      border: 1px solid var(--border);
+      padding: 8px 14px;
+      text-align: left;
+      font-weight: normal;
+    }
+    .varga-table td {
+      border: 1px solid var(--border);
+      padding: 10px 14px;
+      color: var(--text-2);
+      background: var(--surface);
+    }
+    .varga-table td.varga-name {
+      font-family: var(--font-dev);
+      font-size: 18px;
+      color: var(--brand);
+      background: var(--surface2);
+      width: 80px;
+      text-align: center;
+    }
+    .varga-table td.varga-letters {
+      font-family: var(--font-dev);
+      font-size: 18px;
+      color: var(--text);
+      letter-spacing: 4px;
+    }
+    .varga-table td.varga-nasal {
+      font-family: var(--font-dev);
+      font-size: 18px;
+      color: var(--ok);
+      width: 60px;
+      text-align: center;
+    }
+
+    /* Step-by-step process box */
+    .process-box {
+      border: var(--border-dim);
+      background: var(--surface);
+      padding: 18px 20px;
+      margin: 16px 0;
+    }
+    .process-box-title {
+      font-size: 11px;
+      color: var(--text-3);
+      letter-spacing: 2px;
+      margin-bottom: 14px;
+    }
+    .process-box-title::before { content: '// '; }
+    .process-step {
+      display: flex;
+      gap: 14px;
+      margin-bottom: 12px;
+      align-items: flex-start;
+    }
+    .process-step:last-child { margin-bottom: 0; }
+    .step-num {
+      width: 24px;
+      height: 24px;
+      background: var(--brand-dark);
+      border: 1px solid var(--brand-dim);
+      color: var(--brand);
+      font-size: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+    .step-text {
+      font-size: 14px;
+      color: var(--text-2);
+      line-height: 1.6;
+      padding-top: 2px;
+    }
+    .step-text .dev { font-family: var(--font-dev); font-size: 16px; color: var(--brand); }
+
+    /* Pull quote */
+    .pull-quote {
+      border: var(--border-brand);
+      background: var(--brand-dark);
+      padding: 20px 24px;
+      margin: 28px 0;
+      text-align: center;
+      box-shadow: var(--shadow);
+    }
+    .pull-quote-text {
+      font-family: var(--font-logo);
+      font-size: 22px;
+      color: var(--brand);
+      letter-spacing: 1px;
+      line-height: 1.5;
+      text-shadow: 0 0 10px var(--brand);
+    }
+    .pull-quote-src {
+      font-size: 12px;
+      color: var(--text-3);
+      letter-spacing: 1.5px;
+      margin-top: 10px;
+      display: block;
+    }
+
+    /* Summary chip row */
+    .summary-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin: 24px 0;
+    }
+    .summary-chip {
+      border: var(--border-brand);
+      background: var(--brand-dark);
+      padding: 8px 16px;
+      font-size: 13px;
+      color: var(--brand);
+      letter-spacing: 1px;
+    }
+    .summary-chip .chip-rule {
+      font-family: var(--font-dev);
+      font-size: 16px;
+      display: block;
+      margin-bottom: 2px;
+    }
+    .summary-chip .chip-desc {
+      font-size: 11px;
+      color: var(--text-3);
+      letter-spacing: 0.5px;
+    }
+
+    /* Footer card */
+    .blog-footer-card {
+      border: var(--border-dim);
+      background: var(--surface2);
+      padding: 20px 22px;
+      margin-top: 48px;
+      display: flex;
+      align-items: flex-start;
+      gap: 16px;
+    }
+    .blog-footer-icon {
+      font-size: 32px;
+      flex-shrink: 0;
+    }
+    .blog-footer-title {
+      font-size: 14px;
+      color: var(--text);
+      letter-spacing: 1px;
+      margin-bottom: 6px;
+    }
+    .blog-footer-body {
+      font-size: 13px;
+      color: var(--text-2);
+      line-height: 1.6;
+    }
+    .blog-footer-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      margin-top: 14px;
+      padding: 8px 20px;
+      background: var(--brand);
+      color: var(--bg);
+      border: var(--border-brand);
+      font-family: var(--font-ui);
+      font-size: 14px;
+      letter-spacing: 1px;
+      box-shadow: var(--shadow-sm);
+      cursor: pointer;
+      text-decoration: none;
+      transition: all .1s;
+    }
+    .blog-footer-btn:hover { opacity: 0.88; }
+    .blog-footer-btn:active { transform: translate(3px,3px); box-shadow: none; }
+
+    /* Responsive */
+    @media(max-width:480px) {
+      .blog-title { font-size: 30px; }
+      .rule-header { flex-direction: column; gap: 4px; }
+    }
+  </style>
+</head>
+<body>
+
+<header class="topbar">
+  <div class="logo">
+    <div class="logo-icon">🪔</div>
+    <div>
+      <div class="logo-text">SANSKRIT.EXE <span class="beta-tag">BETA</span></div>
+      <div class="logo-sub" id="logo-sub">वाग्देव्यै नमः</div>
+    </div>
+  </div>
+  <div class="topbar-right">
+    <div class="streak-badge" tabindex="0">🔥 <span id="streak-count">0</span>×</div>
+    <button class="icon-btn" id="sound-toggle-btn">🔊</button>
+    <button class="prefs-btn" onclick="window.openPrefs && window.openPrefs()">⚙ <span class="prefs-label">PREFS</span></button>
+  </div>
+</header>
+<script>document.getElementById('streak-count').textContent=parseInt(localStorage.getItem('sk_streak'),10)||0;</script>
+
+<div class="blog-wrap">
+
+  <nav class="blog-breadcrumb">
+    <a href="/">HOME</a>
+    <span>›</span>
+    <a href="#">BLOGS</a>
+    <span>›</span>
+    अनुस्वारप्रकरण
+  </nav>
+
+  <!-- HERO -->
+  <div class="blog-hero">
+    <div class="blog-tag-row">
+      <span class="blog-category">GRAMMAR</span>
+      <span class="blog-tag">PHONOLOGY</span>
+      <span class="blog-tag">ASHTADHYAYI</span>
+      <span class="blog-tag">PANINI</span>
+    </div>
+    <div class="blog-title cursor">अनुस्वारप्रकरण</div>
+    <div class="blog-subtitle">The Dot That Changes Everything — three sūtra-s from Pāṇini that govern the humble bindu (ं)</div>
+    <div class="blog-meta">
+      <div class="blog-meta-item">GRAMMAR · DEEP DIVE</div>
+      <div class="blog-meta-item">10 MIN READ</div>
+      <div class="blog-meta-item">BEGINNER–INTERMEDIATE</div>
+    </div>
+  </div>
+
+  <!-- INVOCATION -->
+  <div class="blog-body">
+
+    <div class="shloka-block">
+      <span class="shloka-line">येनाक्षरसमाम्नायमधिगम्य महेश्वरात् ।</span>
+      <span class="shloka-line">कृत्स्नं व्याकरणं प्रोक्तं तस्मै पाणिनये नमः ॥</span>
+      <span class="shloka-trans">Salutations to Pāṇini, who, having learnt the alphabet from Maheśvara himself, expounded the complete science of grammar.</span>
+    </div>
+
+    <div class="shloka-block">
+      <span class="shloka-line">वाक्यकारं वररुचिं भाष्यकारं पतञ्जलिम् ।</span>
+      <span class="shloka-line">पाणिनिं सूत्रकारं च प्रणतोऽस्मि मुनित्रयम् ॥</span>
+      <span class="shloka-trans">I bow to the triad of sages — Vararuci the author of the Vākyapādīya, Patañjali the author of the Mahābhāṣya, and Pāṇini the author of the Sūtra-s.</span>
+    </div>
+
+    <p>
+      Sanskrit is often described as <em>the most precisely constructed language in human history</em>. That precision did not arrive by accident — it was engineered over millennia and codified by Pāṇini in his <strong>Ashtādhyāyī</strong> (<em>अष्टाध्यायी</em>), a grammar of roughly 4,000 sūtra-s composed around the 4th century BCE. Each sūtra is a surgical rule: minimal in words, maximum in scope.
+    </p>
+
+    <p>
+      Today we zoom into one small but consequential mark — the <strong>Anusvāra</strong> (<em>अनुस्वार</em>), also called the <em>Bindu</em> (बिन्दु, "drop"). Written as a dot above a letter (<strong>ं</strong>), it is a nasal resonance that appears constantly in Sanskrit text yet is often misunderstood. Three rules from the Ashtādhyāyī tell the complete story.
+    </p>
+
+    <!-- PREREQUISITES -->
+    <div class="blog-section">
+      <div class="blog-section-tag">PREREQUISITES</div>
+      <div class="blog-section-title">Two Categories You Must Know</div>
+    </div>
+
+    <p>
+      Before the rules make sense, Pāṇini's notation system requires two definitions — both are <em>pratyāhāra-s</em>, compressed labels for entire sets of sounds.
+    </p>
+
+    <div class="def-grid">
+      <div class="def-card">
+        <span class="def-term">अच्</span>
+        <span class="def-roman">ac</span>
+        <div class="def-body">
+          The collective name for all <strong>vowels</strong> (स्वर) in Sanskrit.
+          <span class="def-letters">
+            अ आ  इ ई  उ ऊ  ऋ ॠ  ऌ ॡ  ए ऐ  ओ औ
+          </span>
+        </div>
+      </div>
+      <div class="def-card">
+        <span class="def-term">हल्</span>
+        <span class="def-roman">hal</span>
+        <div class="def-body">
+          The collective name for all <strong>consonants</strong> (व्यञ्जन) in Sanskrit.
+          <span class="def-letters">
+            ह य व र ल  ञ म ङ ण न  झ भ घ ढ ध  ज ब ग ड द  ख फ छ ठ थ  च ट त क प  श ष स
+          </span>
+        </div>
+      </div>
+    </div>
+
+    <p>
+      The shorthand is elegant: when a grammarian writes <em>ac</em>, every vowel is implied; when they write <em>hal</em>, every consonant is implied. With this, a rule like <strong>"म् before hal"</strong> covers thirty-three consonants in two syllables.
+    </p>
+
+    <!-- RULE 1 -->
+    <div class="blog-section">
+      <div class="blog-section-tag">SŪTRA 1 · ASHTĀDHYĀYĪ 8.3.23</div>
+      <div class="blog-section-title">When म् Becomes a Dot</div>
+    </div>
+
+    <div class="rule-card">
+      <div class="rule-header">
+        <span class="rule-id">RULE_01</span>
+        <span class="rule-sutra-rom">mo'nusvāraḥ</span>
+      </div>
+      <div class="rule-body">
+        <span class="rule-sutra-dev">मोऽनुस्वारः</span>
+        <p class="rule-desc">
+          When the consonant <strong>म्</strong> (<em>m</em>) is followed by any <em>hal</em> letter (any consonant), it transforms into an Anusvāra.
+        </p>
+      </div>
+    </div>
+
+    <p>
+      This is the entry point. Sanskrit words frequently end in <strong>म्</strong> — verbs, pronouns, nouns in the accusative case. Whenever such a word is followed by another word beginning with a consonant, the terminal <strong>म्</strong> sheds its hard closure and becomes the floating nasal resonance: <strong>ं</strong>.
+    </p>
+
+    <div class="example-block">
+      <div class="example-header">RULE_01 · EXAMPLES</div>
+      <table class="example-table">
+        <tr>
+          <td>INPUT</td>
+          <td class="dev">फलम् खादामि</td>
+          <td class="arrow">→</td>
+          <td class="result">फलं खादामि</td>
+          <td class="note">"I eat the fruit."</td>
+        </tr>
+        <tr>
+          <td>INPUT</td>
+          <td class="dev">अहम् स्मरामि</td>
+          <td class="arrow">→</td>
+          <td class="result">अहं स्मरामि</td>
+          <td class="note">"I remember."</td>
+        </tr>
+        <tr>
+          <td>INPUT</td>
+          <td class="dev">रामम् नमति</td>
+          <td class="arrow">→</td>
+          <td class="result">रामं नमति</td>
+          <td class="note">"He bows to Rāma."</td>
+        </tr>
+      </table>
+    </div>
+
+    <div class="corollary">
+      <span class="corollary-label">COROLLARY A — म् before a vowel</span>
+      <p class="corollary-text">
+        When <strong>म्</strong> is followed by an <em>ac</em> (vowel), Rule 1 does <em>not</em> apply. The <strong>म्</strong> stays as-is, though sandhi may merge the sounds:
+        <br><br>
+        <span style="font-family:var(--font-dev);font-size:17px;color:var(--text);">अहम् अस्मि</span> → unchanged, or written together as <span style="font-family:var(--font-dev);font-size:17px;color:var(--text);">अहमस्मि</span> ("I am")
+        <br>
+        <span style="font-family:var(--font-dev);font-size:17px;color:var(--text);">त्वम् इच्छसि</span> → unchanged, or <span style="font-family:var(--font-dev);font-size:17px;color:var(--text);">त्वमिच्छसि</span> ("You desire")
+      </p>
+    </div>
+
+    <div class="corollary">
+      <span class="corollary-label">COROLLARY B — म् at the end of an utterance</span>
+      <p class="corollary-text">
+        When <strong>म्</strong> ends a sentence or paragraph with nothing following it, there is no trigger — no transformation happens.
+        <br><br>
+        <span style="font-family:var(--font-dev);font-size:17px;color:var(--text);">विघ्नेशोऽहम्</span> — "I am Vighnesa" (stands alone, anusvāra does not apply)
+      </p>
+    </div>
+
+    <pull-quote class="pull-quote">
+      <div class="pull-quote-text">"The dot is not decoration — it is a phonetic consequence of grammar in motion."</div>
+      <span class="pull-quote-src">// ON THE ANUSVĀRA</span>
+    </pull-quote>
+
+    <!-- RULE 2 -->
+    <div class="blog-section">
+      <div class="blog-section-tag">SŪTRA 2 · ASHTĀDHYĀYĪ 8.4.58</div>
+      <div class="blog-section-title">The Dot Finds Its Family</div>
+    </div>
+
+    <div class="rule-card">
+      <div class="rule-header">
+        <span class="rule-id">RULE_02</span>
+        <span class="rule-sutra-rom">anusvārasya yayi parasvarṇaḥ</span>
+      </div>
+      <div class="rule-body">
+        <span class="rule-sutra-dev">अनुस्वारस्य ययि परसवर्णः</span>
+        <p class="rule-desc">
+          <em>Applied after Rule 1.</em> When an Anusvāra is followed by a <em>vargīya vyañjana</em> (a consonant belonging to one of the five primary rows), the Anusvāra is replaced by the nasal consonant of that row.
+        </p>
+      </div>
+    </div>
+
+    <p>
+      To understand this rule, we must understand Sanskrit's systematic consonant classification — the <strong>Varga</strong> system.
+    </p>
+
+    <div class="varga-wrap">
+      <table class="varga-table">
+        <thead>
+          <tr>
+            <th>VARGA</th>
+            <th>LETTERS (1–4)</th>
+            <th>5TH = NASAL</th>
+            <th>PLACE OF ARTICULATION</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="varga-name">क-वर्ग</td>
+            <td class="varga-letters">क  ख  ग  घ</td>
+            <td class="varga-nasal">ङ्</td>
+            <td style="font-size:13px;color:var(--text-3);">Velar (throat)</td>
+          </tr>
+          <tr>
+            <td class="varga-name">च-वर्ग</td>
+            <td class="varga-letters">च  छ  ज  झ</td>
+            <td class="varga-nasal">ञ्</td>
+            <td style="font-size:13px;color:var(--text-3);">Palatal</td>
+          </tr>
+          <tr>
+            <td class="varga-name">ट-वर्ग</td>
+            <td class="varga-letters">ट  ठ  ड  ढ</td>
+            <td class="varga-nasal">ण्</td>
+            <td style="font-size:13px;color:var(--text-3);">Retroflex</td>
+          </tr>
+          <tr>
+            <td class="varga-name">त-वर्ग</td>
+            <td class="varga-letters">त  थ  द  ध</td>
+            <td class="varga-nasal">न्</td>
+            <td style="font-size:13px;color:var(--text-3);">Dental</td>
+          </tr>
+          <tr>
+            <td class="varga-name">प-वर्ग</td>
+            <td class="varga-letters">प  फ  ब  भ</td>
+            <td class="varga-nasal">म्</td>
+            <td style="font-size:13px;color:var(--text-3);">Labial (lips)</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <p>
+      The fifth letter of each varga is a nasal. The rule's logic is phonetic harmony: when a nasal sound (the anusvāra) precedes a consonant, it assimilates to the <em>same place of articulation</em> as that consonant. Your mouth, in effect, starts preparing for the next sound.
+    </p>
+
+    <div class="process-box">
+      <div class="process-box-title">THREE-STEP RESOLUTION</div>
+      <div class="process-step">
+        <div class="step-num">1</div>
+        <div class="step-text">Identify the consonant that <em>follows</em> the anusvāra.</div>
+      </div>
+      <div class="process-step">
+        <div class="step-num">2</div>
+        <div class="step-text">Identify which <em>varga</em> that consonant belongs to.</div>
+      </div>
+      <div class="process-step">
+        <div class="step-num">3</div>
+        <div class="step-text">Replace the anusvāra with the <em>nasal (5th letter) of that varga</em>.</div>
+      </div>
+    </div>
+
+    <div class="example-block">
+      <div class="example-header">RULE_02 · EXAMPLES</div>
+      <table class="example-table">
+        <tr>
+          <td>दंत →</td>
+          <td><span class="dev">त</span> is त-वर्ग · nasal = <span class="dev" style="color:var(--ok)">न्</span></td>
+          <td class="arrow">→</td>
+          <td class="result">दन्त</td>
+          <td class="note">"tooth"</td>
+        </tr>
+        <tr>
+          <td>गंगा →</td>
+          <td><span class="dev">ग</span> is क-वर्ग · nasal = <span class="dev" style="color:var(--ok)">ङ्</span></td>
+          <td class="arrow">→</td>
+          <td class="result">गङ्गा</td>
+          <td class="note">"Ganges"</td>
+        </tr>
+        <tr>
+          <td>व्यंजन →</td>
+          <td><span class="dev">ज</span> is च-वर्ग · nasal = <span class="dev" style="color:var(--ok)">ञ्</span></td>
+          <td class="arrow">→</td>
+          <td class="result">व्यञ्जन</td>
+          <td class="note">"consonant"</td>
+        </tr>
+        <tr>
+          <td>घंटा →</td>
+          <td><span class="dev">ट</span> is ट-वर्ग · nasal = <span class="dev" style="color:var(--ok)">ण्</span></td>
+          <td class="arrow">→</td>
+          <td class="result">घण्टा</td>
+          <td class="note">"bell"</td>
+        </tr>
+        <tr>
+          <td>चंपा →</td>
+          <td><span class="dev">प</span> is प-वर्ग · nasal = <span class="dev" style="color:var(--ok)">म्</span></td>
+          <td class="arrow">→</td>
+          <td class="result">चम्पा</td>
+          <td class="note">"champak flower"</td>
+        </tr>
+      </table>
+    </div>
+
+    <p>
+      Watch the chain of rules interact on a full sentence:
+      <br><br>
+      <span style="font-family:var(--font-dev);font-size:17px;color:var(--text-2);">अहम् पश्यामि</span>
+      &nbsp;→&nbsp; <strong>Rule 1</strong> (म् before प्) →&nbsp;
+      <span style="font-family:var(--font-dev);font-size:17px;color:var(--text-2);">अहं पश्यामि</span>
+      &nbsp;→&nbsp; <strong>Rule 2</strong> (ं before प्, प-वर्ग nasal is म्) →&nbsp;
+      <span style="font-family:var(--font-dev);font-size:17px;color:var(--ok);">अहम् पश्यामि</span>
+    </p>
+    <p>
+      It circles back to the original form — the grammar is demonstrating that the anusvāra in <em>sandhi</em> is phonetically equivalent to the original <strong>म्</strong> when the nasal resolves. Both written forms are valid.
+    </p>
+
+    <div class="corollary">
+      <span class="corollary-label">COROLLARY — Non-vargīya consonants</span>
+      <p class="corollary-text">
+        Rule 2 applies <em>only</em> to the 25 vargīya consonants. The remaining consonants — <strong>र, श, ष, स, ह</strong> — have no corresponding nasal, so the anusvāra is unchanged before them.
+        <br><br>
+        <span style="font-family:var(--font-dev);font-size:17px;color:var(--text);">सिंह</span> remains <span style="font-family:var(--font-dev);font-size:17px;color:var(--text);">सिंह</span> (not *सिन्ह) &nbsp;·&nbsp;
+        <span style="font-family:var(--font-dev);font-size:17px;color:var(--text);">वंश</span> remains <span style="font-family:var(--font-dev);font-size:17px;color:var(--text);">वंश</span> (not *वन्श)
+        <br><br>
+        A special note on <strong>य, ल, व</strong> — while not vargīya, these <em>do</em> technically cause a change per a related sūtra. For practical purposes, however, forms like <span style="font-family:var(--font-dev);font-size:17px;color:var(--text);">संयुक्त</span> and <span style="font-family:var(--font-dev);font-size:17px;color:var(--text);">संवाद</span> are accepted as-is in standard usage.
+      </p>
+    </div>
+
+    <!-- RULE 3 -->
+    <div class="blog-section">
+      <div class="blog-section-tag">SŪTRA 3 · ASHTĀDHYĀYĪ 8.4.59</div>
+      <div class="blog-section-title">Freedom at the Word's Edge</div>
+    </div>
+
+    <div class="rule-card">
+      <div class="rule-header">
+        <span class="rule-id">RULE_03</span>
+        <span class="rule-sutra-rom">vā padāntasya</span>
+      </div>
+      <div class="rule-body">
+        <span class="rule-sutra-dev">वा पदान्तस्य</span>
+        <p class="rule-desc">
+          When an Anusvāra stands at the end of a <em>pada</em> (word), the conversion to the nasal specified by Rule 2 is <strong>optional</strong> (<em>vā</em> = "either way").
+        </p>
+      </div>
+    </div>
+
+    <p>
+      Pāṇini is remarkably practical here. Rule 3 is really Rule 2's <em>pressure valve</em> — it acknowledges that at word boundaries, phonetic assimilation is desirable but not compulsory. Both the anusvāra form and the full-nasal form are grammatically correct.
+    </p>
+
+    <div class="example-block">
+      <div class="example-header">RULE_03 · BOTH FORMS VALID</div>
+      <table class="example-table">
+        <tr>
+          <td>OPTION A</td>
+          <td class="dev">अहं पश्यामि</td>
+          <td class="note">(anusvāra retained) ✓</td>
+        </tr>
+        <tr>
+          <td>OPTION B</td>
+          <td class="dev">अहम् पश्यामि</td>
+          <td class="note">(nasal resolved) ✓</td>
+        </tr>
+        <tr>
+          <td>OPTION A</td>
+          <td class="dev">रामं नमति</td>
+          <td class="note">(anusvāra retained) ✓</td>
+        </tr>
+        <tr>
+          <td>OPTION B</td>
+          <td class="dev">रामन्नमति</td>
+          <td class="note">(nasal resolved, words merge) ✓</td>
+        </tr>
+      </table>
+    </div>
+
+    <p>
+      This optionality explains the stylistic variation you see across Sanskrit manuscripts, inscriptions, and modern printed texts — different editors and traditions have exercised this optionality differently. Neither is "wrong."
+    </p>
+
+    <!-- SUMMARY -->
+    <div class="blog-section">
+      <div class="blog-section-tag">SUMMARY</div>
+      <div class="blog-section-title">Three Rules, One Dot</div>
+    </div>
+
+    <div class="summary-row">
+      <div class="summary-chip">
+        <span class="chip-rule">मोऽनुस्वारः</span>
+        <span class="chip-desc">म् + hal → anusvāra (mandatory)</span>
+      </div>
+      <div class="summary-chip">
+        <span class="chip-rule">ययि परसवर्णः</span>
+        <span class="chip-desc">anusvāra + vargīya → varga nasal (mandatory)</span>
+      </div>
+      <div class="summary-chip">
+        <span class="chip-rule">वा पदान्तस्य</span>
+        <span class="chip-desc">at word-end: nasal conversion is optional</span>
+      </div>
+    </div>
+
+    <p>
+      The Anusvāra is not an aesthetic flourish. It is a live grammatical process — the aftermath of Rule 1, and the input to Rule 2. Understanding it unlocks why <span style="font-family:var(--font-dev);font-size:16px">दन्त</span> and <span style="font-family:var(--font-dev);font-size:16px">दंत</span> are both found in literature, why <span style="font-family:var(--font-dev);font-size:16px">गङ्गा</span> is the "classical" spelling, and why your grammar textbook writes <span style="font-family:var(--font-dev);font-size:16px">व्यञ्जन</span> the way it does.
+    </p>
+
+    <p>
+      Pāṇini, in roughly six syllables per sūtra, compressed a phonological system so precise that it would take linguists two millennia to fully appreciate. Three sūtra-s. One bindu. The dot that changes everything.
+    </p>
+
+    <!-- FOOTER CTA -->
+    <div class="blog-footer-card">
+      <div class="blog-footer-icon">📜</div>
+      <div>
+        <div class="blog-footer-title">READY TO PRACTISE?</div>
+        <div class="blog-footer-body">
+          The SANSKRIT.EXE lessons cover sandhi, anusvāra, vibhakti, and more — one guided session per day. Apply what you've read here in an interactive setting.
+        </div>
+        <a class="blog-footer-btn" href="/">▶ START LEARNING</a>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<div class="bottom-bar-wrap">
+  <div class="bottom-bar-tab" id="bottom-bar-tab" onclick="window.toggleBottomBar()" title="Toggle bottom bar">
+    <span id="bottom-bar-tab-icon">▼</span><span id="bottom-bar-tab-label" class="bottom-bar-tab-label">CLOSE</span>
+  </div>
+  <div class="explore-dropdown" id="explore-dropdown">
+    <button class="explore-dropdown-item" onclick="window.closeExploreDropdown();window.openComingSoon('About Us','◈','about us','Learn about the team behind SANSKRIT.EXE and our mission to make ancient languages accessible — coming soon.')"><span>◈</span> ABOUT US</button>
+    <button class="explore-dropdown-item" onclick="window.closeExploreDropdown();window.openComingSoon('Our Vision','◉','our vision','Our roadmap for building the most comprehensive Sanskrit learning platform on the web — coming soon.')"><span>◉</span> OUR VISION</button>
+    <button class="explore-dropdown-item" onclick="window.closeExploreDropdown();window.openComingSoon('Blogs','◇','blogs','Deep dives into Sanskrit grammar, etymology, and the living legacy of the world\'s oldest language — coming soon.')"><span>◇</span> BLOGS</button>
+    <button class="explore-dropdown-item" onclick="window.closeExploreDropdown();window.openComingSoon('Other Products','⬡','other products','Explore our other language and education tools — coming soon.')"><span>⬡</span> OTHER PRODUCTS</button>
+  </div>
+  <footer class="bottom-bar" id="bottom-bar">
+    <button class="bottom-bar-link bl-desktop" onclick="window.openComingSoon('About Us','◈','about us','Learn about the team behind SANSKRIT.EXE and our mission to make ancient languages accessible — coming soon.')"><span class="bl-icon">◈</span><span class="bl-label">ABOUT US</span></button>
+    <button class="bottom-bar-link bl-desktop" onclick="window.openComingSoon('Our Vision','◉','our vision','Our roadmap for building the most comprehensive Sanskrit learning platform on the web — coming soon.')"><span class="bl-icon">◉</span><span class="bl-label">OUR VISION</span></button>
+    <button class="bottom-bar-link bl-desktop" onclick="window.openComingSoon('Blogs','◇','blogs','Deep dives into Sanskrit grammar, etymology, and the living legacy of the world\'s oldest language — coming soon.')"><span class="bl-icon">◇</span><span class="bl-label">BLOGS</span></button>
+    <button class="bottom-bar-link bl-desktop" onclick="window.openComingSoon('Other Products','⬡','other products','Explore our other language and education tools — coming soon.')"><span class="bl-icon">⬡</span><span class="bl-label">OTHER PRODUCTS</span></button>
+    <button class="bottom-bar-link bl-mobile-only" id="explore-btn" onclick="window.toggleExploreDropdown()"><span class="bl-icon">◈</span><span class="bl-label">EXPLORE ▾</span></button>
+    <button class="bottom-bar-link donate-link" onclick="window.openComingSoon('Donate','♥','donate','Help keep this project alive and free for everyone. Every contribution matters — coming soon.')"><span class="bl-icon">♥</span><span class="bl-label">DONATE</span></button>
+  </footer>
+</div>
+
+<script>
+  // bottom bar toggle (same as main app)
+  (function(){
+    var bb=document.getElementById('bottom-bar');
+    var tab=document.getElementById('bottom-bar-tab');
+    var tabIcon=document.getElementById('bottom-bar-tab-icon');
+    var tabLabel=document.getElementById('bottom-bar-tab-label');
+    var ed=document.getElementById('explore-dropdown');
+    var collapsed=localStorage.getItem('sk_bar')==='0';
+    function apply(){
+      if(collapsed){bb.classList.add('collapsed');document.body.classList.add('bar-collapsed');tabIcon.textContent='▲';tabLabel.textContent='OPEN';}
+      else{bb.classList.remove('collapsed');document.body.classList.remove('bar-collapsed');tabIcon.textContent='▼';tabLabel.textContent='CLOSE';}
+    }
+    apply();
+    window.toggleBottomBar=function(){collapsed=!collapsed;localStorage.setItem('sk_bar',collapsed?'0':'1');apply();};
+    window.toggleExploreDropdown=function(){ed.classList.toggle('open');};
+    window.closeExploreDropdown=function(){ed.classList.remove('open');};
+    window.openComingSoon=function(title,icon,section,text){
+      var o=document.getElementById('cs-overlay');
+      if(!o){
+        o=document.createElement('div');o.id='cs-overlay';o.className='coming-soon-overlay';
+        o.innerHTML='<div class="coming-soon-box"><div class="cs-top" id="cs-top"></div><span class="cs-icon" id="cs-icon"></span><div class="cs-title cursor" id="cs-title"></div><div class="cs-section" id="cs-section"></div><div class="cs-text" id="cs-text"></div><button class="cs-close-btn" onclick="document.getElementById(\'cs-overlay\').classList.remove(\'active\')">✕ CLOSE</button></div>';
+        document.body.appendChild(o);
+        o.addEventListener('click',function(e){if(e.target===o)o.classList.remove('active');});
+      }
+      document.getElementById('cs-top').textContent=section.toUpperCase();
+      document.getElementById('cs-icon').textContent=icon;
+      document.getElementById('cs-title').textContent=title.toUpperCase();
+      document.getElementById('cs-section').textContent='// '+section.toUpperCase();
+      document.getElementById('cs-text').textContent=text;
+      o.classList.add('active');
+    };
+  })();
+</script>
+</body>
+</html>
