@@ -13,16 +13,16 @@ import * as m2test from './module-2/test.js';
 export const MODULES = [
   {
     id: 1,
-    title: "FOUNDATIONS",
-    subtitle: "Pronouns, Verbs & Places",
+    title: "TOOLKIT",
+    subtitle: "Pronouns, Verbs & Questions",
     icon: "🪔",
     description: "Learn Sanskrit pronouns, the verb 'to go', location words, negation, and question patterns to form your first real sentences.",
     days: [m1d1, m1d2, m1d3, m1d4, m1d5, m1test]
   },
   {
     id: 2,
-    title: "THE LIVING LANGUAGE",
-    subtitle: "Places, Questions & Negation",
+    title: "PRACTICE",
+    subtitle: "Nouns, Places & Sentences",
     icon: "📜",
     description: "Learn Sanskrit destination nouns, question patterns with किम्/कुत्र/कः, and negate with न to form rich real-world sentences.",
     days: [m2d1, m2d2, m2d3, m2test]
