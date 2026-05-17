@@ -13,12 +13,17 @@ let _vkHistoryPushed = false;
 let _inputListenerAC = null;
 const _debouncedSaveProgress = debounce(() => saveLessonProgress('lesson'), 300);
 
-function isMobileKeyboardMode() {
-  return window.matchMedia('(max-width: 768px) and (pointer: coarse)').matches;
-}
+const _mobileKbMQ = window.matchMedia('(max-width: 768px) and (pointer: coarse)');
+let _isMobileKb = _mobileKbMQ.matches;
+_mobileKbMQ.addEventListener('change', e => { _isMobileKb = e.matches; });
+function isMobileKeyboardMode() { return _isMobileKb; }
+
+let _screens = null;
+const DOM = {};
 
 function showScreen(name) {
-  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+  if (!_screens) _screens = Array.from(document.querySelectorAll('.screen'));
+  _screens.forEach(s => s.classList.remove('active'));
   const target = document.getElementById('screen-' + name);
   if (target) {
     target.classList.add('active');
@@ -729,14 +734,14 @@ function renderQuestion() {
   const pct = Math.round((state.currentQ / currentDay.questions.length) * 100);
   const restoredState = hydratedLessonProgress?.currentQ === state.currentQ ? hydratedLessonProgress.questionState : null;
 
-  document.getElementById('lesson-day-tag').textContent = `MOD_${currentMod.id}`;
-  document.getElementById('lesson-title-sm').textContent = currentDay.title;
-  document.getElementById('progress-count').textContent  = `${state.currentQ + 1}/${currentDay.questions.length}`;
-  document.getElementById('progress-fill').style.width   = pct + '%';
+  DOM.dayTag.textContent        = `MOD_${currentMod.id}`;
+  DOM.titleSm.textContent       = currentDay.title;
+  DOM.progressCount.textContent = `${state.currentQ + 1}/${currentDay.questions.length}`;
+  DOM.progressFill.style.width  = pct + '%';
 
   state.answered = false;
   state.wtTray = [];
-  
+
   if (q.type === 'wordtiles') {
     if (restoredState?.type === 'wordtiles' && Array.isArray(restoredState.wtTiles) && Array.isArray(restoredState.wtTray)) {
       state.wtTiles = restoredState.wtTiles.map(tile => ({ word: tile.word, placed: !!tile.placed }));
@@ -756,7 +761,7 @@ function renderQuestion() {
   const midData = (currentDay.briefing?.mid || []).find(m => m.afterQ === state.currentQ);
   const midHTML = midData ? `<div class="mid-briefing"><span class="mid-briefing-tag">${escapeHtml(midData.tag || 'INFO')}</span><h4>${escapeHtml(midData.title)}</h4>${renderSection(midData.content)}</div>` : '';
 
-  const card = document.getElementById('question-card');
+  const card = DOM.qCard;
   card.innerHTML = midHTML + buildQuestion(q);
 
   const fb = document.createElement('div');
@@ -854,6 +859,8 @@ function initWordTileDrag(bank) {
   if (!bank) return;
   let drag = null;
   let ghost = null;
+  let _rafId = null;
+  let _tx = 0, _ty = 0;
 
   bank.addEventListener('touchstart', e => {
     const tile = e.target.closest('.wt-tile');
@@ -868,20 +875,31 @@ function initWordTileDrag(bank) {
     if (!drag.moved && Math.hypot(dx, dy) > 10) {
       drag.moved = true;
       ghost = drag.tile.cloneNode(true);
-      ghost.style.cssText = 'position:fixed;pointer-events:none;opacity:0.85;z-index:9999;margin:0;transform:translate(-50%,-50%);';
+      ghost.style.cssText = 'position:fixed;pointer-events:none;opacity:0.85;z-index:9999;top:0;left:0;margin:0;will-change:transform;';
       document.body.appendChild(ghost);
       drag.tile.style.opacity = '0.35';
     }
     if (drag.moved && ghost) {
-      ghost.style.left = e.touches[0].clientX + 'px';
-      ghost.style.top  = e.touches[0].clientY + 'px';
+      _tx = e.touches[0].clientX;
+      _ty = e.touches[0].clientY;
       e.preventDefault();
+      if (!_rafId) {
+        _rafId = requestAnimationFrame(() => {
+          if (ghost) {
+            const hw = ghost.offsetWidth / 2;
+            const hh = ghost.offsetHeight / 2;
+            ghost.style.transform = `translate(${_tx - hw}px,${_ty - hh}px)`;
+          }
+          _rafId = null;
+        });
+      }
     }
   }, { passive: false });
 
   bank.addEventListener('touchend', e => {
     if (!drag) return;
     e.preventDefault();
+    if (_rafId) { cancelAnimationFrame(_rafId); _rafId = null; }
     if (drag.moved) {
       if (ghost) { ghost.remove(); ghost = null; }
       drag.tile.style.opacity = '';
@@ -902,6 +920,7 @@ function initWordTileDrag(bank) {
   });
 
   bank.addEventListener('touchcancel', () => {
+    if (_rafId) { cancelAnimationFrame(_rafId); _rafId = null; }
     if (ghost) { ghost.remove(); ghost = null; }
     if (drag?.tile) drag.tile.style.opacity = '';
     drag = null;
@@ -1031,10 +1050,8 @@ window.confirmSkipQuestion = () => {
 
 function recordAnswer(correct, q, skipped = false) {
   closeKeyboard();
-  if (!skipped) {
-    state.totalAnswered++;
-    if (correct) state.totalCorrect++;
-  }
+  state.totalAnswered++;
+  if (!skipped && correct) state.totalCorrect++;
   Audio.playTone(correct);
   if (navigator.vibrate && !window._soundMuted) navigator.vibrate(correct ? 50 : [50, 30, 50]);
   
@@ -1107,20 +1124,6 @@ function finishLesson() {
       Effects.launchConfetti(pct >= 60 ? 100 : 40);
     }
   } else {
-    if (state.totalAnswered === 0) {
-      document.getElementById('score-trophy').textContent = '📖';
-      document.getElementById('score-title').textContent = 'NO QUESTIONS ANSWERED';
-      document.getElementById('score-sub').textContent = 'Something went wrong. Please try again.';
-      document.getElementById('score-big').textContent = 'N/A';
-      document.getElementById('sc-correct').textContent = '0';
-      document.getElementById('sc-wrong').textContent = '0';
-      document.getElementById('sc-total').textContent = '0';
-      document.querySelector('.score-actions').innerHTML =
-        `<button class="btn-primary" onclick="window.exitLesson()">⌂ HOME</button>`;
-      showScreen('score');
-      return;
-    }
-
     const trophy = pct >= 80 ? '🏆' : pct >= 50 ? '⭐' : '📖';
     document.getElementById('score-trophy').textContent = trophy;
 
@@ -1170,6 +1173,11 @@ function init() {
   injectGlobals();
   Theme.init();
   Prefs.init();
+  DOM.progressFill  = document.getElementById('progress-fill');
+  DOM.progressCount = document.getElementById('progress-count');
+  DOM.dayTag        = document.getElementById('lesson-day-tag');
+  DOM.titleSm       = document.getElementById('lesson-title-sm');
+  DOM.qCard         = document.getElementById('question-card');
 
   window.addEventListener('sk:script-change', () => {
     rerenderActiveInputQuestion();
