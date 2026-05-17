@@ -477,6 +477,42 @@ The pre-lesson briefing should prepare the learner, not overwhelm them.
 
 `isTest` days should come last in a module’s `days` array.
 
+### 8. Sanskrit sentences end with dandā `।`, not a full stop
+
+The Sanskrit sentence-ending punctuation is `।` (pūrṇa virāma / dandā), not `.` (full stop). Use `।` whenever a complete Sanskrit sentence appears in a briefing text field, explanation, or question.
+
+```
+// Wrong
+अहं गच्छामि. — I go.
+
+// Correct
+अहं गच्छामि। — I go.
+```
+
+This applies to every full sentence — even inside HTML strings in `text:` fields:
+
+```js
+// Wrong
+text: "अहं गच्छामि — I go.<br>सः गच्छति — He goes."
+
+// Correct
+text: "अहं गच्छामि। — I go.<br>सः गच्छति। — He goes."
+```
+
+### 9. Sanskrit word order is very flexible
+
+Sanskrit conveys grammatical roles through word endings, not word position. This means almost any word order is valid. Do not describe or imply a single "correct" word order in question text, hints, or explanations.
+
+For `wordtiles` questions, the `answer` field must be an exact string (the app compares it literally), so you must pick one canonical order — but the explanation should never frame it as the only valid arrangement. Note the specific constraint being taught instead (for example, न must come directly before the verb it negates).
+
+```js
+// Wrong explanation — implies rigid order
+explanation: "Word order: pronoun → place → न → verb."
+
+// Correct — teaches the actual constraint
+explanation: "अहं तत्र न गच्छामि = I do not go there. Place न directly before the verb to negate."
+```
+
 ## Raw Sanskrit content -> code workflow
 
 When converting raw curriculum notes into app data, use this order:
@@ -522,6 +558,8 @@ Before committing a new lesson, verify:
 - `fill.sentenceParts` has exactly two strings
 - `match.pairs` is an array of `{ left, right }`
 - `wordtiles.answer` matches the intended tile order exactly
+- `wordtiles` explanations do not imply rigid word order — note the real constraint (particle placement etc.) instead
+- All Sanskrit sentences in briefing `text:` fields end with `।`, not `.`
 - All questions have `explanation`
 - The file is imported in `src/data/index.js`
 - The day/test is included in the correct module `days` array
@@ -542,6 +580,8 @@ Constraints:
 - translation/fill/wordtiles answers must be exact strings
 - briefing sections may only use: table, grammar, block
 - Preserve Devanagari in UTF-8
+- Sanskrit sentences end with । (dandā), never with . (full stop)
+- Do not describe or imply a single correct word order; Sanskrit is very flexible
 
 Target:
 - Module: <number>

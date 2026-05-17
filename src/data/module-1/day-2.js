@@ -17,7 +17,7 @@ export const briefing = {
     sections: [
       { type:"table", label:"गम् — TO GO", cols:["Form","Used with","Meaning","Hindi"],
         rows:[["गच्छामि","अहम्","I go","मैं जाता हूँ"],["गच्छसि","त्वम्","You go","तुम जाते हो"],["गच्छति","सः / सा","He/She goes","वह जाता/जाती है"]] },
-      { type:"block", text:"<strong>Sentences:</strong><br>अहं गच्छामि — मैं जाता हूँ।<br>त्वं गच्छसि — तुम जाते हो।<br>सः गच्छति — वह जाता है।<br>सा गच्छति — वह जाती है।" },
+      { type:"block", text:"<strong>Sentences:</strong><br>अहं गच्छामि। — मैं जाता हूँ।<br>त्वं गच्छसि। — तुम जाते हो।<br>सः गच्छति। — वह जाता है।<br>सा गच्छति। — वह जाती है।" },
       { type:"grammar", label:"WORD_ORDER", text:"Word order in Sanskrit is <strong>flexible</strong>. सः गच्छति and गच्छति सः both mean the same thing. Meaning is carried by each word's form, not its position in the sentence." }
     ]
   },

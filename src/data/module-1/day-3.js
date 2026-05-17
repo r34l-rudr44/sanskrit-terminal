@@ -17,9 +17,9 @@ export const briefing = {
     sections: [
       { type:"table", label:"LOCATION WORDS // स्थानवाचक", cols:["Devanagari","Hindi","Meaning"],
         rows:[["कुत्र","कहाँ","Where?"],["यत्र","जहाँ","Where (relative)"],["अत्र","यहाँ","Here"],["तत्र","वहाँ","There"],["सर्वत्र","सब स्थान पर","Everywhere"],["अन्यत्र","कहीं और","Somewhere else"],["एकत्र","एक स्थान पर","At one place"]] },
-      { type:"block", text:"<strong>Sentences:</strong><br>त्वं कुत्र गच्छसि — Where do you go? (तुम कहाँ जाते हो?)<br>सः कुत्र गच्छति — Where does he go? (वह कहाँ जाता है?)<br>अहं तत्र गच्छामि — I go there. (मैं वहाँ जाता हूँ।)<br>यत्र सः गच्छति तत्र अहम् — Where he goes, there I go too. (जहाँ वह जाता है वहाँ मैं।)<br>अहं सर्वत्र गच्छामि — I go everywhere. (मैं सब स्थान पर जाता हूँ।)<br>त्वं सर्वत्र गच्छसि — You go everywhere. (तुम सब स्थान पर जाते हो।)<br>किं सः गच्छति — Does he go? (क्या वह जाता है?)" },
+      { type:"block", text:"<strong>Sentences:</strong><br>त्वं कुत्र गच्छसि। — Where do you go? (तुम कहाँ जाते हो?)<br>सः कुत्र गच्छति। — Where does he go? (वह कहाँ जाता है?)<br>अहं तत्र गच्छामि। — I go there. (मैं वहाँ जाता हूँ।)<br>यत्र सः गच्छति तत्र अहम्। — Where he goes, there I go too. (जहाँ वह जाता है वहाँ मैं।)<br>अहं सर्वत्र गच्छामि। — I go everywhere. (मैं सब स्थान पर जाता हूँ।)<br>त्वं सर्वत्र गच्छसि। — You go everywhere. (तुम सब स्थान पर जाते हो।)<br>किं सः गच्छति। — Does he go? (क्या वह जाता है?)" },
       { type:"grammar", label:"CORRELATIVES", text:"<strong>यत्र...तत्र</strong> is a correlative pair: 'where...there'. Like English 'wherever he goes, there I go too.' The कु- prefix forms questions (कुत्र = where?), the य- prefix forms relative clauses (यत्र = where), the त- prefix gives the answer (तत्र = there)." },
-      { type:"grammar", label:"QUESTIONS WITH किम्", text:"<strong>किम्</strong> (kim) placed at the start of a sentence turns it into a yes/no question — like English 'Does...?'<br>किं सः गच्छति — Does he go? (क्या वह जाता है?)<br>It can also appear at the end: सः गच्छति किम् — He goes, doesn't he?" }
+      { type:"grammar", label:"QUESTIONS WITH किम्", text:"<strong>किम्</strong> (kim) placed at the start of a sentence turns it into a yes/no question — like English 'Does...?'<br>किं सः गच्छति। — Does he go? (क्या वह जाता है?)<br>It can also appear at the end: सः गच्छति किम्। — He goes, doesn't he?" }
     ]
   },
   mid: []

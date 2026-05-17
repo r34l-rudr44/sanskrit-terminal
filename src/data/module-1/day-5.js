@@ -17,9 +17,9 @@ export const briefing = {
     sections: [
       { type:"table", label:"QUESTION WORDS // प्रश्नवाचक", cols:["Devanagari","Hindi","Meaning"],
         rows:[["कः","कौन","Who? (masculine subject)"],["किम्","क्या","What? / Does?"],["कुत्र","कहाँ","Where?"],["अस्ति","है","Is"],["नास्ति","नहीं है","Is not"]] },
-      { type:"grammar", label:"KAH // कः", text:"<strong>कः</strong> asks 'Who?' when the subject is masculine.<br>कः तत्र गच्छति — Who goes there? (कौन वहाँ जाता है?)<br>कः सर्वत्र गच्छति — Who goes everywhere? (कौन सब स्थान पर जाता है?)" },
-      { type:"grammar", label:"EXISTENCE // अस्ति", text:"<strong>अस्ति</strong> means 'is'. Combine it with कः and तत्र:<br>कः तत्र <strong>अस्ति</strong> — Who is there? (कौन वहाँ है?)<br>Add किम् to ask yes/no: कः तत्र अस्ति <strong>किम्</strong> — Is someone there? (क्या वहाँ कोई है?)" },
-      { type:"block", text:"<strong>Sentences with negation:</strong><br>तत्र कः न गच्छति — Who does not go there? (वहाँ कौन नहीं जाता?)<br>कः सर्वत्र न गच्छति — Who does not go everywhere? (कौन सब स्थान पर नहीं जाता?)" }
+      { type:"grammar", label:"KAH // कः", text:"<strong>कः</strong> asks 'Who?' when the subject is masculine.<br>कः तत्र गच्छति। — Who goes there? (कौन वहाँ जाता है?)<br>कः सर्वत्र गच्छति। — Who goes everywhere? (कौन सब स्थान पर जाता है?)" },
+      { type:"grammar", label:"EXISTENCE // अस्ति", text:"<strong>अस्ति</strong> means 'is'. Combine it with कः and तत्र:<br>कः तत्र <strong>अस्ति</strong>। — Who is there? (कौन वहाँ है?)<br>Add किम् to ask yes/no: कः तत्र अस्ति <strong>किम्</strong>। — Is someone there? (क्या वहाँ कोई है?)" },
+      { type:"block", text:"<strong>Sentences with negation:</strong><br>तत्र कः न गच्छति। — Who does not go there? (वहाँ कौन नहीं जाता?)<br>कः सर्वत्र न गच्छति। — Who does not go everywhere? (कौन सब स्थान पर नहीं जाता?)" }
     ]
   },
   mid: []
