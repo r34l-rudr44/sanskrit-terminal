@@ -109,9 +109,12 @@ export function renderHomeModules() {
       grid.appendChild(card);
     });
 
-    body.appendChild(progWrap);
-    body.appendChild(desc);
-    body.appendChild(grid);
+    const bodyInner = document.createElement('div');
+    bodyInner.className = 'module-body-inner';
+    bodyInner.appendChild(progWrap);
+    bodyInner.appendChild(desc);
+    bodyInner.appendChild(grid);
+    body.appendChild(bodyInner);
     entry.appendChild(hdr);
     entry.appendChild(body);
     group.appendChild(entry);
