@@ -98,6 +98,9 @@ export const Prefs = (() => {
     ['deva','iast','itrans','hk'].forEach(s => document.getElementById('script-'+s)?.classList.toggle('active', script === s));
     const tagEl = document.getElementById('logo-sub');
     if (tagEl) tagEl.textContent = TAGLINE[script] || TAGLINE.deva;
+    const theme = document.documentElement.getAttribute('data-theme') || localStorage.getItem('sk_theme') || 'dark';
+    document.getElementById('theme-dark')?.classList.toggle('active', theme === 'dark');
+    document.getElementById('theme-light')?.classList.toggle('active', theme === 'light');
   }
   function setFontSize(size) { fontSize = size; localStorage.setItem('sk_fs', size); applyFontSize(); updateUI(); }
   function setScript(s)   {
