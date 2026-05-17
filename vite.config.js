@@ -2,7 +2,6 @@ import { resolve } from 'path';
 import { fileURLToPath } from 'url';
 import { dirname } from 'path';
 import { defineConfig } from 'vite';
-import viteCompression from 'vite-plugin-compression';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
@@ -19,8 +18,6 @@ export default defineConfig({
         });
       },
     },
-    viteCompression({ algorithm: 'brotliCompress', ext: '.br', threshold: 1024 }),
-    viteCompression({ algorithm: 'gzip', ext: '.gz', threshold: 1024 }),
   ],
   build: {
     minify: 'oxc',
