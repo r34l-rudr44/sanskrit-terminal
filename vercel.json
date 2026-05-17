@@ -1,7 +1,6 @@
 {
-  "routes": [
-    { "src": "/blog/?", "dest": "/blog.html" },
-    { "src": "/blog/anusvara/?", "dest": "/blog-anusvara.html" }
+  "rewrites": [
+    { "source": "/blog/anusvara", "destination": "/blog-anusvara.html" }
   ],
   "headers": [
     {
