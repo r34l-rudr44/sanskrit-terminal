@@ -7,14 +7,14 @@ export const metadata = {
   difficulty: "beginner",
   estimatedMinutes: 10,
   tags: ["assessment", "module-test", "review"],
-  grammarTopics: ["pronouns", "verb-conjugation", "location-adverbs"],
+  grammarTopics: ["pronouns", "verb-conjugation", "location-adverbs", "negation", "existence-verb", "question-words"],
   vocabularyTopics: ["module 1 review"]
 };
 
 export const briefing = {
   pre: {
     title: "Module 1 Final Test",
-    lead: "You've covered pronouns, the verb गम् (to go), and location words. This test combines all three lessons.",
+    lead: "You've covered pronouns, गम् verb, location words, negation, and कः questions. This test brings it all together.",
     sections: [
       { type:"block", text:"This review covers <strong>pronouns</strong>, <strong>गम् verb forms</strong>, and <strong>location words</strong>. Take your time. Good luck — शुभकामना!" },
       { type:"grammar", label:"TEST_RULES", text:"Answer each question carefully. Skips count as wrong. Score <strong>60%+</strong> to unlock your certificate." }
@@ -31,6 +31,6 @@ export const questions = [
   {type:"mcq",question:"सः कुत्र गच्छति means:",options:["Where does he go? — वह कहाँ जाता है?","He goes here — वह यहाँ जाता है","I go there — मैं वहाँ जाता हूँ","You go where? — तुम कहाँ जाते हो?"],answer:"Where does he go? — वह कहाँ जाता है?",explanation:"सः कुत्र गच्छति = Where does he go? (वह कहाँ जाता है?) — सः (he) + कुत्र (where?) + गच्छति (goes)."},
   {type:"match",question:"Match the location words to their meanings",pairs:[{left:"कुत्र",right:"Where? — कहाँ"},{left:"तत्र",right:"There — वहाँ"},{left:"यत्र",right:"Where — जहाँ"},{left:"सर्वत्र",right:"Everywhere — सब स्थान पर"},{left:"अन्यत्र",right:"Somewhere else — कहीं और"}],explanation:"कुत्र = कहाँ, तत्र = वहाँ, यत्र = जहाँ, सर्वत्र = सब स्थान पर, अन्यत्र = कहीं और."},
   {type:"mcq",question:"अहं सर्वत्र गच्छामि means:",options:["I go somewhere — मैं कहीं जाता हूँ","I go here — मैं यहाँ जाता हूँ","I go everywhere — मैं सब स्थान पर जाता हूँ","You go everywhere — तुम सब स्थान पर जाते हो"],answer:"I go everywhere — मैं सब स्थान पर जाता हूँ",explanation:"अहं सर्वत्र गच्छामि = I go everywhere (मैं सब स्थान पर जाता हूँ)."},
-  {type:"mcq",question:"तत् refers to which category?",options:["Masculine — He (वह पु.)","Feminine — She (वह स्त्री.)","Neuter — It (वो)","First person — I (मैं)"],answer:"Neuter — It (वो)",explanation:"तत् = It (वो) — the neuter pronoun. सः = He (masculine), सा = She (feminine)."},
-  {type:"mcq",question:"किं सः गच्छति means:",options:["Where does he go? — वह कहाँ जाता है?","He goes everywhere — वह सब स्थान पर जाता है","Does he go? — क्या वह जाता है?","He does not go — वह नहीं जाता"],answer:"Does he go? — क्या वह जाता है?",explanation:"किम् at the start of a sentence turns it into a yes/no question. किं सः गच्छति = Does he go? (क्या वह जाता है?) — the same pattern works with any pronoun and verb."}
+  {type:"mcq",question:"अहं न गच्छामि means:",options:["I go everywhere","I do not go — मैं नहीं जाता","He does not go","You do not go"],answer:"I do not go — मैं नहीं जाता",explanation:"न before a verb negates it. अहं न गच्छामि = I do not go (मैं नहीं जाता हूँ)."},
+  {type:"mcq",question:"कः तत्र अस्ति means:",options:["He is here","Who is there? — कौन वहाँ है?","Where does he go?","Is someone here?"],answer:"Who is there? — कौन वहाँ है?",explanation:"कः = who, तत्र = there, अस्ति = is. कः तत्र अस्ति = Who is there? (कौन वहाँ है?)"}
 ];

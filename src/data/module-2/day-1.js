@@ -1,33 +1,36 @@
 export const id = "2-1";
-export const title = "Verbs & Actions";
-export const icon = "⚡";
+export const title = "Places — गन्तव्यानि";
+export const icon = "🏘️";
 
 export const metadata = {
   difficulty: "beginner",
-  estimatedMinutes: 8,
-  tags: ["verbs", "actions", "sentences"],
-  grammarTopics: ["present tense verbs"],
-  vocabularyTopics: ["common action verbs"]
+  estimatedMinutes: 9,
+  tags: ["places", "vocabulary", "accusative", "sentences"],
+  grammarTopics: ["accusative-case", "destination-nouns"],
+  vocabularyTopics: ["places", "destinations"]
 };
 
 export const briefing = {
   pre: {
-    title: "Sanskrit Verbs // क्रियापद",
-    lead: "Verbs are the engine of Sanskrit. They change form based on person, number, and tense. Today we learn the most common action words.",
+    title: "Places & Destinations — गन्तव्यानि",
+    lead: "You know how to go (गच्छामि). Now learn where to go. These six place words are the destinations of everyday life.",
     sections: [
-      { type:"table", label:"COMMON VERBS (Present tense, 3rd person singular)", cols:["Devanagari","IAST","Meaning"],
-        rows:[["गच्छति","gacchati","goes / walks"],["पिबति","pibati","drinks"],["खादति","khādati","eats"],["पठति","paṭhati","reads / studies"],["वदति","vadati","speaks / says"],["ददाति","dadāti","gives"]] },
-      { type:"grammar", label:"VERB_ENDINGS", text:"In Sanskrit, verb endings encode the subject. <strong>-ति</strong> (-ti) indicates third person singular present tense. रामः <span class='dev'>गच्छति</span> = Ram goes." }
+      { type:"table", label:"DESTINATIONS // गन्तव्यानि", cols:["Devanagari","Hindi","Meaning"],
+        rows:[["गृहम्","घर","Home"],["नगरम्","नगर","City / Town"],["ग्रामम्","गाँव","Village"],["आपणम्","बाज़ार","Market"],["पाठशालाम्","पाठशाला","School"],["उद्यानम्","बाग","Garden / Park"]] },
+      { type:"grammar", label:"ACCUSATIVE // कर्मकारक", text:"The <strong>-म्</strong> ending marks the destination (accusative case). It answers 'where to?'<br>अहं <strong>गृहं</strong> गच्छामि — I go <strong>home</strong>.<br>सः <strong>ग्रामं</strong> गच्छति — He goes <strong>to the village</strong>.<br>(The final म् softens to ं in connected speech.)" },
+      { type:"block", text:"<strong>Sentences:</strong><br>त्वं कुत्र गच्छसि — Where do you go? (तुम कहाँ जाते हो?)<br>अहं गृहं गच्छामि — I go home. (मैं घर जाता हूँ।)<br>सः कुत्र गच्छति — Where does he go? (वह कहाँ जाता है?)<br>सः ग्रामं गच्छति — He goes to the village. (वह गाँव जाता है।)" }
     ]
   },
   mid: []
 };
 
 export const questions = [
-  {type:"mcq",question:"What does गच्छति (gacchati) mean?",options:["Eats","Goes / walks","Reads","Speaks"],answer:"Goes / walks",explanation:"गच्छति is the present tense 3rd person singular of √गम् (gam) — to go."},
-  {type:"mcq",question:"Which verb means 'reads / studies'?",options:["खादति","पिबति","पठति","वदति"],answer:"पठति",explanation:"पठति (paṭhati) — from root √पठ् (paṭh), to read or study."},
-  {type:"mcq",question:"What does खादति (khādati) mean?",options:["Drinks","Goes","Eats","Gives"],answer:"Eats",explanation:"खादति (khādati) — from root √खाद् (khād), to eat or chew."},
-  {type:"translation",question:"Type the Sanskrit verb meaning 'drinks'",hint:"Hint: The boy _____ water (पिबति / pibati)",answer:"पिबति",explanation:"पिबति (pibati) — from root √पा (pā), to drink. Cognate with Latin 'bibit'."},
-  {type:"mcq",question:"वदति (vadati) means?",options:["Runs","Speaks / says","Sleeps","Writes"],answer:"Speaks / says",explanation:"वदति — from root √वद् (vad), to speak. Cognate with Latin 'vox' (voice)."},
-  {type:"wordtiles",question:"Arrange: 'The student reads'",tiles:["छात्रः","पठति"],distractors:["खादति","पिबति"],answer:"छात्रः पठति",explanation:"छात्रः = student (subject), पठति = reads (verb). In Sanskrit, subject alone + verb is a complete sentence."}
+  {type:"mcq",question:"गृहम् means:",options:["Village","Market","Home — घर","School"],answer:"Home — घर",explanation:"गृहम् = Home (घर). Cognate with English 'hovel' and Greek 'choira' — all from the same Indo-European root."},
+  {type:"match",question:"Match the place words to their meanings",pairs:[{left:"गृहम्",right:"Home — घर"},{left:"नगरम्",right:"City — नगर"},{left:"ग्रामम्",right:"Village — गाँव"},{left:"आपणम्",right:"Market — बाज़ार"}],explanation:"गृहम् = घर, नगरम् = नगर, ग्रामम् = गाँव, आपणम् = बाज़ार."},
+  {type:"mcq",question:"अहं गृहं गच्छामि means:",options:["I go to the market","I go home — मैं घर जाता हूँ","He goes home","You go to school"],answer:"I go home — मैं घर जाता हूँ",explanation:"अहं गृहं गच्छामि = I go home (मैं घर जाता हूँ). The -म् ending of गृहम् softens to -ं to show destination."},
+  {type:"fill",question:"Complete: सः ___ गच्छति (He goes to the village)",sentenceParts:["सः "," गच्छति"],answer:"ग्रामं",answerRoman:"grAmam",explanation:"सः ग्रामं गच्छति = He goes to the village (वह गाँव जाता है). ग्रामम् → ग्रामं in connected speech."},
+  {type:"match",question:"Match more place words",pairs:[{left:"पाठशालाम्",right:"School — पाठशाला"},{left:"उद्यानम्",right:"Garden / Park — बाग"},{left:"नगरम्",right:"City — नगर"},{left:"ग्रामम्",right:"Village — गाँव"}],explanation:"पाठशालाम् = पाठशाला (school), उद्यानम् = बाग (garden), नगरम् = नगर (city), ग्रामम् = गाँव (village)."},
+  {type:"mcq",question:"त्वं पाठशालां गच्छसि किम् means:",options:["You go to school","Do you go to school? — क्या तुम पाठशाला जाते हो?","Does he go to school?","Where do you go?"],answer:"Do you go to school? — क्या तुम पाठशाला जाते हो?",explanation:"त्वं पाठशालां गच्छसि किम् = Do you go to school? (क्या तुम पाठशाला जाते हो?) — किम् at the end makes it a yes/no question."},
+  {type:"wordtiles",question:"Build the sentence: 'He goes to the village'",tiles:["सः","ग्रामं","गच्छति"],distractors:["तत्र","अहं"],answer:"सः ग्रामं गच्छति",explanation:"सः ग्रामं गच्छति = He goes to the village. Subject (सः) + destination (ग्रामं) + verb (गच्छति)."},
+  {type:"mcq",question:"The -म् ending in गृहम् indicates:",options:["Subject of the sentence","The verb","Destination / goal of going — गन्तव्य","Plural form"],answer:"Destination / goal of going — गन्तव्य",explanation:"The accusative case (-म् ending) marks the destination or object. अहं गृहं गच्छामि — गृहम् is where I am going, not where I am."}
 ];
