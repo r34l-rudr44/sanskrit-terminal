@@ -206,7 +206,7 @@ export function injectGlobals() {
   });
 
   // Handle Boot Sequence for Home Only
-  const isHomePage = !window.location.pathname.includes('lesson');
+  const isHomePage = window.location.pathname === '/' || window.location.pathname === '/index.html';
   if (isHomePage) {
     if (!localStorage.getItem('sk_booted')) {
       const htmlBoot = `
