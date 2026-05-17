@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover"/>
+  <meta name="description" content="Deep dives into Sanskrit grammar, etymology, and the living legacy of the world's oldest language — SANSKRIT.EXE Blog."/>
+  <meta name="application-name" content="SANSKRIT.EXE"/>
+  <meta name="theme-color" content="#06060A"/>
+  <meta property="og:title" content="Blogs — SANSKRIT.EXE"/>
+  <meta property="og:description" content="Deep dives into Sanskrit grammar, etymology, and the living legacy of the world's oldest language."/>
+  <meta property="og:type" content="website"/>
+  <meta property="og:site_name" content="SANSKRIT.EXE"/>
+  <meta property="og:locale" content="en_US"/>
+  <meta name="twitter:card" content="summary_large_image"/>
+  <meta name="twitter:title" content="Blogs — SANSKRIT.EXE"/>
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg"/>
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png"/>
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"/>
+  <link rel="shortcut icon" href="/favicon.ico"/>
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"/>
+  <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#F0A500"/>
+  <link rel="manifest" href="/site.webmanifest"/>
+  <title>Blogs — SANSKRIT.EXE</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" crossorigin>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="dns-prefetch" href="https://fonts.googleapis.com">
+  <link rel="dns-prefetch" href="https://fonts.gstatic.com">
+  <link href="https://fonts.googleapis.com/css2?family=VT323&family=Share+Tech+Mono&family=Noto+Sans+Devanagari:wght@400&display=swap" rel="stylesheet"/>
+  <script>(function(){var t=localStorage.getItem('sk_theme');if(t==='light'||t==='dark')document.documentElement.setAttribute('data-theme',t);})();</script>
+  <link rel="stylesheet" href="/src/css/style.css">
+  <style>
+    .blog-index-wrap {
+      max-width: 720px;
+      margin: 0 auto;
+      padding: 32px 20px 60px;
+    }
+    .bi-breadcrumb {
+      font-size: 12px;
+      color: var(--text-3);
+      letter-spacing: 1.5px;
+      margin-bottom: 28px;
+    }
+    .bi-breadcrumb a {
+      color: var(--brand-dim);
+      text-decoration: none;
+      transition: color .1s;
+    }
+    .bi-breadcrumb a:hover { color: var(--brand); }
+    .bi-breadcrumb span { color: var(--text-3); margin: 0 6px; }
+    .bi-tag {
+      font-size: 12px;
+      color: var(--text-3);
+      letter-spacing: 2px;
+      margin-bottom: 8px;
+    }
+    .bi-tag::before { content: '// '; color: var(--brand-dim); }
+    .bi-title {
+      font-family: var(--font-logo);
+      font-size: 40px;
+      color: var(--brand);
+      letter-spacing: 3px;
+      text-shadow: 0 0 18px var(--brand);
+      animation: flicker 9s infinite;
+      margin-bottom: 8px;
+    }
+    .bi-sub {
+      font-size: 15px;
+      color: var(--text-2);
+      line-height: 1.65;
+      max-width: 500px;
+      margin-bottom: 36px;
+    }
+    .bi-list-label {
+      font-size: 11px;
+      color: var(--text-3);
+      letter-spacing: 2px;
+      margin-bottom: 14px;
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 8px;
+    }
+    .bi-list-label::before { content: '> '; color: var(--brand-dim); }
+
+    /* Article card */
+    .bi-card {
+      border: var(--border-brand);
+      background: var(--surface2);
+      box-shadow: var(--shadow);
+      margin-bottom: 16px;
+      transition: background .12s, box-shadow .12s;
+      position: relative;
+      overflow: hidden;
+    }
+    .bi-card::before {
+      content: 'ं';
+      position: absolute;
+      right: 20px;
+      top: 50%;
+      transform: translateY(-50%);
+      font-family: var(--font-dev);
+      font-size: 110px;
+      color: var(--brand-glow);
+      line-height: 1;
+      pointer-events: none;
+    }
+    [data-theme="light"] .bi-card::before { color: rgba(107,58,0,0.07); }
+    .bi-card:hover { background: var(--surface3); box-shadow: 6px 6px 0 var(--brand-dark); }
+    .bi-card-inner { padding: 22px 24px 20px; }
+    .bi-card-tags {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      margin-bottom: 10px;
+    }
+    .bi-cat {
+      font-size: 10px;
+      color: var(--brand);
+      letter-spacing: 2px;
+      background: var(--brand-dark);
+      padding: 2px 9px;
+      border: 1px solid var(--brand-dim);
+    }
+    .bi-tag-pill {
+      font-size: 10px;
+      color: var(--text-3);
+      letter-spacing: 1px;
+      background: var(--surface3);
+      padding: 2px 8px;
+      border: 1px solid var(--border);
+    }
+    .bi-card-title {
+      font-family: var(--font-dev);
+      font-size: 26px;
+      color: var(--brand);
+      line-height: 1.2;
+      margin-bottom: 4px;
+      text-shadow: 0 0 8px var(--brand);
+    }
+    .bi-card-roman {
+      font-size: 13px;
+      color: var(--cyan);
+      letter-spacing: 1px;
+      margin-bottom: 10px;
+      display: block;
+    }
+    .bi-card-desc {
+      font-size: 14px;
+      color: var(--text-2);
+      line-height: 1.65;
+      max-width: 480px;
+      margin-bottom: 18px;
+    }
+    .bi-card-meta {
+      font-size: 11px;
+      color: var(--text-3);
+      letter-spacing: 1px;
+      margin-bottom: 16px;
+    }
+    .bi-card-meta::before { content: '// '; color: var(--brand-dim); }
+    .bi-read-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 9px 22px;
+      background: var(--brand);
+      color: var(--bg);
+      border: var(--border-brand);
+      font-family: var(--font-ui);
+      font-size: 14px;
+      letter-spacing: 1px;
+      box-shadow: var(--shadow-sm);
+      text-decoration: none;
+      transition: all .1s;
+    }
+    .bi-read-btn:hover { opacity: 0.88; }
+    .bi-read-btn:active { transform: translate(3px,3px); box-shadow: none; }
+  </style>
+</head>
+<body>
+
+<header class="topbar">
+  <div class="logo">
+    <div class="logo-icon">🪔</div>
+    <div>
+      <div class="logo-text">SANSKRIT.EXE <span class="beta-tag">BETA</span></div>
+      <div class="logo-sub">वाग्देव्यै नमः</div>
+    </div>
+  </div>
+  <div class="topbar-right">
+    <div class="streak-badge" tabindex="0">🔥 <span id="streak-count">0</span>×</div>
+    <button class="icon-btn">🔊</button>
+    <button class="prefs-btn" onclick="window.openPrefs && window.openPrefs()">⚙ <span class="prefs-label">PREFS</span></button>
+  </div>
+</header>
+<script>document.getElementById('streak-count').textContent=parseInt(localStorage.getItem('sk_streak'),10)||0;</script>
+
+<div class="blog-index-wrap">
+
+  <nav class="bi-breadcrumb">
+    <a href="/">HOME</a>
+    <span>›</span>
+    BLOGS
+  </nav>
+
+  <div class="bi-tag">BLOG_DIRECTORY</div>
+  <div class="bi-title cursor">BLOGS</div>
+  <div class="bi-sub">Deep dives into Sanskrit grammar, etymology, and the living legacy of the world's oldest language.</div>
+
+  <div class="bi-list-label">ARTICLES · 1 PUBLISHED</div>
+
+  <article class="bi-card">
+    <div class="bi-card-inner">
+      <div class="bi-card-tags">
+        <span class="bi-cat">GRAMMAR</span>
+        <span class="bi-tag-pill">PHONOLOGY</span>
+        <span class="bi-tag-pill">ASHTADHYAYI</span>
+        <span class="bi-tag-pill">PANINI</span>
+      </div>
+      <div class="bi-card-title">अनुस्वारप्रकरण</div>
+      <span class="bi-card-roman">anusvāra-prakaraṇa</span>
+      <div class="bi-card-desc">The Dot That Changes Everything — three sūtra-s from Pāṇini's Ashtādhyāyī that govern the humble bindu (ं) and explain why दंत is दन्त, गंगा is गङ्गा, and both अहं and अहम् are equally correct.</div>
+      <div class="bi-card-meta">GRAMMAR · DEEP DIVE · 10 MIN READ · BEGINNER–INTERMEDIATE</div>
+      <a class="bi-read-btn" href="/blog/anusvara">▶ READ ARTICLE</a>
+    </div>
+  </article>
+
+</div>
+
+<div class="bottom-bar-wrap">
+  <div class="bottom-bar-tab" id="bottom-bar-tab" onclick="window.toggleBottomBar()" title="Toggle bottom bar">
+    <span id="bottom-bar-tab-icon">▼</span><span id="bottom-bar-tab-label" class="bottom-bar-tab-label">CLOSE</span>
+  </div>
+  <div class="explore-dropdown" id="explore-dropdown">
+    <button class="explore-dropdown-item" onclick="window.closeExploreDropdown();window.openComingSoon('About Us','◈','about us','Learn about the team behind SANSKRIT.EXE and our mission to make ancient languages accessible — coming soon.')"><span>◈</span> ABOUT US</button>
+    <button class="explore-dropdown-item" onclick="window.closeExploreDropdown();window.openComingSoon('Our Vision','◉','our vision','Our roadmap for building the most comprehensive Sanskrit learning platform on the web — coming soon.')"><span>◉</span> OUR VISION</button>
+    <button class="explore-dropdown-item" onclick="window.closeExploreDropdown();location.href='/blog'"><span>◇</span> BLOGS</button>
+    <button class="explore-dropdown-item" onclick="window.closeExploreDropdown();window.openComingSoon('Other Products','⬡','other products','Explore our other language and education tools — coming soon.')"><span>⬡</span> OTHER PRODUCTS</button>
+  </div>
+  <footer class="bottom-bar" id="bottom-bar">
+    <button class="bottom-bar-link bl-desktop" onclick="window.openComingSoon('About Us','◈','about us','Learn about the team behind SANSKRIT.EXE and our mission to make ancient languages accessible — coming soon.')"><span class="bl-icon">◈</span><span class="bl-label">ABOUT US</span></button>
+    <button class="bottom-bar-link bl-desktop" onclick="window.openComingSoon('Our Vision','◉','our vision','Our roadmap for building the most comprehensive Sanskrit learning platform on the web — coming soon.')"><span class="bl-icon">◉</span><span class="bl-label">OUR VISION</span></button>
+    <button class="bottom-bar-link bl-desktop" onclick="location.href='/blog'"><span class="bl-icon">◇</span><span class="bl-label">BLOGS</span></button>
+    <button class="bottom-bar-link bl-desktop" onclick="window.openComingSoon('Other Products','⬡','other products','Explore our other language and education tools — coming soon.')"><span class="bl-icon">⬡</span><span class="bl-label">OTHER PRODUCTS</span></button>
+    <button class="bottom-bar-link bl-mobile-only" id="explore-btn" onclick="window.toggleExploreDropdown()"><span class="bl-icon">◈</span><span class="bl-label">EXPLORE ▾</span></button>
+    <button class="bottom-bar-link donate-link" onclick="window.openComingSoon('Donate','♥','donate','Help keep this project alive and free for everyone. Every contribution matters — coming soon.')"><span class="bl-icon">♥</span><span class="bl-label">DONATE</span></button>
+  </footer>
+</div>
+
+<script>
+  (function(){
+    var bb=document.getElementById('bottom-bar');
+    var tabIcon=document.getElementById('bottom-bar-tab-icon');
+    var tabLabel=document.getElementById('bottom-bar-tab-label');
+    var ed=document.getElementById('explore-dropdown');
+    var collapsed=localStorage.getItem('sk_bar')==='0';
+    function apply(){
+      if(collapsed){bb.classList.add('collapsed');document.body.classList.add('bar-collapsed');tabIcon.textContent='▲';tabLabel.textContent='OPEN';}
+      else{bb.classList.remove('collapsed');document.body.classList.remove('bar-collapsed');tabIcon.textContent='▼';tabLabel.textContent='CLOSE';}
+    }
+    apply();
+    window.toggleBottomBar=function(){collapsed=!collapsed;localStorage.setItem('sk_bar',collapsed?'0':'1');apply();};
+    window.toggleExploreDropdown=function(){ed.classList.toggle('open');};
+    window.closeExploreDropdown=function(){ed.classList.remove('open');};
+    window.openComingSoon=function(title,icon,section,text){
+      var o=document.getElementById('cs-overlay');
+      if(!o){
+        o=document.createElement('div');o.id='cs-overlay';o.className='coming-soon-overlay';
+        o.innerHTML='<div class="coming-soon-box"><div class="cs-top" id="cs-top"></div><span class="cs-icon" id="cs-icon"></span><div class="cs-title cursor" id="cs-title"></div><div class="cs-section" id="cs-section"></div><div class="cs-text" id="cs-text"></div><button class="cs-close-btn" onclick="document.getElementById(\'cs-overlay\').classList.remove(\'active\')">✕ CLOSE</button></div>';
+        document.body.appendChild(o);
+        o.addEventListener('click',function(e){if(e.target===o)o.classList.remove('active');});
+      }
+      document.getElementById('cs-top').textContent=section.toUpperCase();
+      document.getElementById('cs-icon').textContent=icon;
+      document.getElementById('cs-title').textContent=title.toUpperCase();
+      document.getElementById('cs-section').textContent='// '+section.toUpperCase();
+      document.getElementById('cs-text').textContent=text;
+      o.classList.add('active');
+    };
+  })();
+</script>
+</body>
+</html>

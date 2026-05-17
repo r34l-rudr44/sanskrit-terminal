@@ -20,6 +20,7 @@ export default defineConfig({
       input: {
         main: resolve(__dirname, 'index.html'),
         lesson: resolve(__dirname, 'lesson.html'),
+        blog: resolve(__dirname, 'blog.html'),
         'blog-anusvara': resolve(__dirname, 'blog-anusvara.html'),
       },
       output: {
