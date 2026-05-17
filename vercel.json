@@ -3,9 +3,6 @@
   "outputDirectory": "dist",
   "cleanUrls": true,
   "trailingSlash": false,
-  "rewrites": [
-    { "source": "/blog/anusvara", "destination": "/blog-anusvara.html" }
-  ],
   "headers": [
     {
       "source": "/assets/(.*)\\.css",

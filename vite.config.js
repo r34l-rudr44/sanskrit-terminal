@@ -13,8 +13,8 @@ export default defineConfig({
       name: 'dev-rewrites',
       configureServer(server) {
         server.middlewares.use((req, _res, next) => {
-          if (req.url === '/blog/anusvara' || req.url === '/blog/anusvara/') req.url = '/blog-anusvara.html';
-          else if (req.url === '/blog' || req.url === '/blog/') req.url = '/blog.html';
+          if (req.url === '/blog/anusvara' || req.url === '/blog/anusvara/') req.url = '/blog/anusvara.html';
+          else if (req.url === '/blog' || req.url === '/blog/') req.url = '/blog/index.html';
           next();
         });
       },
@@ -30,8 +30,8 @@ export default defineConfig({
       input: {
         main: resolve(__dirname, 'index.html'),
         lesson: resolve(__dirname, 'lesson.html'),
-        blog: resolve(__dirname, 'blog.html'),
-        'blog-anusvara': resolve(__dirname, 'blog-anusvara.html'),
+        blog: resolve(__dirname, 'blog/index.html'),
+        'blog-anusvara': resolve(__dirname, 'blog/anusvara.html'),
       },
       output: {
         entryFileNames: 'assets/[name]-[hash].js',
