@@ -9,6 +9,16 @@ const __dirname = dirname(__filename);
 
 export default defineConfig({
   plugins: [
+    {
+      name: 'dev-rewrites',
+      configureServer(server) {
+        server.middlewares.use((req, _res, next) => {
+          if (req.url === '/blog/anusvara' || req.url === '/blog/anusvara/') req.url = '/blog-anusvara.html';
+          else if (req.url === '/blog' || req.url === '/blog/') req.url = '/blog.html';
+          next();
+        });
+      },
+    },
     viteCompression({ algorithm: 'brotliCompress', ext: '.br', threshold: 1024 }),
     viteCompression({ algorithm: 'gzip', ext: '.gz', threshold: 1024 }),
   ],
