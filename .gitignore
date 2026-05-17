@@ -15,6 +15,14 @@ dist-ssr
 
 docs/
 
+# Generated / temporary
+output/
+test-results/
+tmp/
+
+# Claude Code
+.claude/
+
 # Editor directories and files
 .vscode/*
 !.vscode/extensions.json
