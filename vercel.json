@@ -1,6 +1,7 @@
 {
   "rewrites": [
-    { "source": "/blog/anusvara", "destination": "/blog-anusvara.html" }
+    { "source": "/blog/anusvara", "destination": "/blog-anusvara.html" },
+    { "source": "/blog", "destination": "/blog.html" }
   ],
   "headers": [
     {
