@@ -18,6 +18,7 @@ docs/
 # Generated / temporary
 output/
 test-results/
+playwright-report/
 tmp/
 
 # Claude Code
