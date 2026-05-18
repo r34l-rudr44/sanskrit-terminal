@@ -20,19 +20,21 @@ export const expandedMods = new Set();
 
 export function checkStreak() {
   const today = new Date().toDateString();
-  if (state.lastDate && state.lastDate !== today) {
-    const yesterday = new Date(Date.now() - 86400000).toDateString();
-    if (state.lastDate !== yesterday) { 
-      state.streak = 0; 
-      localStorage.setItem('sk_streak', '0'); 
-    }
-  }
+  if (!state.lastDate) return 'new';
+  if (state.lastDate === today) return 'current';
+  const yesterday = new Date(Date.now() - 86400000).toDateString();
+  if (state.lastDate === yesterday) return 'at_risk';
+  state.streak = 0;
+  localStorage.setItem('sk_streak', '0');
+  return 'broken';
 }
 
 export function confirmClearCache() {
   ['sk_completed_v2','sk_mod_tests','sk_streak','sk_total_q','sk_total_c','sk_last_date',
    'sk_booted','sk_theme','sk_fs','sk_script','sk_sound','sk_sidebar','sk_cookie_ack',
-   'sk_lesson_progress'
+   'sk_lesson_progress','sk_session_count','sk_last_session_score','sk_last_seen_date',
+   'sk_achievements','sk_daily_quest','sk_quest_streak','sk_lesson_scores',
+   'sk_notif_asked','sk_notif_granted','sk_notif_shown_date','sk_ach_open'
   ].forEach(k => localStorage.removeItem(k));
   window.location.href = '/';
 }

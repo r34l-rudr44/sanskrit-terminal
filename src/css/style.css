@@ -694,6 +694,101 @@ body.vk-mobile-open .main{padding-bottom:310px;}
   .mod-day-card:hover{transform:translate(-1px,-1px);}
 }
 
+/* ── RETENTION SYSTEM ─────────────────────────────────────────────── */
+
+/* Tomorrow card on score screen */
+.score-tomorrow-card{border:var(--border-brand);background:var(--surface2);padding:16px 20px;margin-top:16px;animation:scanIn .3s ease .4s both;text-align:left;}
+.stc-title{font-family:var(--font-logo);font-size:22px;color:var(--brand);letter-spacing:1px;margin-bottom:6px;}
+.stc-body{font-size:13px;color:var(--text-2);line-height:1.6;margin-bottom:10px;}
+.score-notif-btn{margin-top:4px;font-size:13px;padding:6px 14px;}
+
+/* Achievement toasts */
+@keyframes slideInRight{from{transform:translateX(120%);opacity:0}to{transform:translateX(0);opacity:1}}
+@keyframes slideOutRight{from{transform:translateX(0);opacity:1}to{transform:translateX(120%);opacity:0}}
+.achievement-toast{position:fixed;bottom:76px;right:16px;width:290px;background:var(--surface);border:2px solid var(--ok);box-shadow:var(--shadow-ok);padding:12px 14px;display:flex;align-items:flex-start;gap:12px;animation:slideInRight .25s ease;z-index:1000;}
+.achievement-toast.quest-toast{border-color:var(--brand);box-shadow:var(--shadow);}
+.achievement-toast.ach-toast-out{animation:slideOutRight .3s ease forwards;}
+.ach-toast-icon{font-size:22px;flex-shrink:0;margin-top:1px;}
+.ach-toast-body{flex:1;min-width:0;}
+.ach-toast-label{font-size:10px;color:var(--ok);letter-spacing:2px;margin-bottom:2px;}
+.achievement-toast.quest-toast .ach-toast-label{color:var(--brand);}
+.ach-toast-title{font-family:var(--font-logo);font-size:20px;color:var(--text);letter-spacing:1px;line-height:1.1;}
+.ach-toast-desc{font-size:11px;color:var(--text-2);margin-top:3px;}
+
+/* Achievements section on home */
+.ach-section{margin-bottom:16px;}
+.ach-section-hdr{display:flex;align-items:center;gap:8px;padding:10px 14px;border:var(--border-dim);background:var(--surface2);cursor:pointer;transition:all .1s;}
+.ach-section-hdr:hover{border-color:var(--brand-dim);background:var(--surface3);}
+.ach-section-label{font-size:12px;color:var(--text-3);letter-spacing:2px;flex:1;}
+.ach-count{font-size:11px;color:var(--brand);letter-spacing:1px;}
+.ach-chevron{font-size:10px;color:var(--text-3);}
+.ach-grid{display:grid;grid-template-rows:0fr;transition:grid-template-rows .28s ease;}
+.ach-grid.open{grid-template-rows:1fr;}
+.ach-grid-inner{overflow:hidden;min-height:0;display:grid;grid-template-columns:repeat(auto-fill,minmax(80px,1fr));gap:6px;padding:8px 0 2px;}
+.ach-card{border:var(--border-dim);background:var(--surface2);padding:10px 6px;text-align:center;transition:all .1s;cursor:default;}
+.ach-card.ach-earned{border-color:var(--brand-dim);background:var(--brand-glow);}
+.ach-card.ach-locked{opacity:.38;}
+.ach-card-icon{font-size:22px;margin-bottom:4px;}
+.ach-card-title{font-size:9px;color:var(--text-2);letter-spacing:1px;word-break:break-all;line-height:1.3;}
+.ach-card.ach-earned .ach-card-title{color:var(--brand);}
+
+/* Daily quest card */
+.daily-quest-card{border:var(--border-brand);background:var(--surface2);padding:16px 18px;margin-bottom:12px;box-shadow:var(--shadow);animation:scanIn .2s ease;}
+.daily-quest-card.quest-done{border-color:var(--ok);box-shadow:var(--shadow-ok);}
+.dq-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:6px;}
+.dq-label{font-size:10px;color:var(--text-3);letter-spacing:2px;}
+.dq-complete{font-size:11px;color:var(--ok);letter-spacing:1.5px;}
+.dq-title{font-family:var(--font-logo);font-size:26px;color:var(--brand);letter-spacing:1px;line-height:1;}
+.daily-quest-card.quest-done .dq-title{color:var(--ok);}
+.dq-desc{font-size:13px;color:var(--text-2);margin:4px 0 10px;}
+.dq-btn{padding:8px 18px;font-size:14px;}
+.dq-done-msg{font-size:12px;color:var(--ok);letter-spacing:1px;}
+
+/* Weak lessons card */
+.weak-lessons-card{border:2px solid var(--err-dim);background:var(--surface2);padding:14px 16px;margin-bottom:12px;animation:scanIn .2s ease;}
+.wl-header{font-size:11px;color:var(--err);letter-spacing:2px;margin-bottom:10px;}
+.wl-item{display:flex;align-items:center;gap:10px;padding:8px 0;border-top:1px solid var(--border);}
+.wl-item:first-of-type{border-top:none;}
+.wl-icon{font-size:20px;flex-shrink:0;}
+.wl-info{flex:1;min-width:0;}
+.wl-title{font-size:14px;color:var(--text);}
+.wl-score{font-size:11px;color:var(--err);letter-spacing:1px;}
+.wl-retry-btn{border:2px solid var(--brand-dim);background:transparent;color:var(--brand);font-size:13px;padding:5px 12px;white-space:nowrap;transition:all .1s;}
+.wl-retry-btn:hover{background:var(--brand-glow);border-color:var(--brand);}
+.wl-retry-btn:active{transform:translate(2px,2px);}
+
+/* Needs-review badge on day cards */
+.mod-day-card.needs-review{border-color:var(--err-dim);}
+.mod-day-card.needs-review .mod-day-card-badge{background:var(--err-dim);color:var(--err);}
+
+/* Curriculum progress bar */
+.curriculum-bar-wrap{padding:10px 0 14px;margin-bottom:4px;}
+.cb-header{display:flex;align-items:baseline;justify-content:space-between;margin-bottom:6px;}
+.cb-label{font-size:11px;color:var(--text-3);letter-spacing:2px;}
+.cb-pct{font-family:var(--font-logo);font-size:22px;color:var(--brand);}
+.cb-track{height:6px;background:var(--surface3);border:1px solid var(--border);position:relative;overflow:hidden;}
+.cb-fill{height:100%;background:var(--brand);transition:width .8s ease;min-width:0;}
+.cb-fill--complete{background:var(--ok);}
+.cb-detail{font-size:11px;color:var(--text-3);margin-top:5px;letter-spacing:1px;}
+
+/* Return flash banner */
+.return-flash{display:flex;align-items:center;gap:10px;border-left:3px solid var(--cyan);background:var(--surface2);padding:10px 14px;margin-bottom:12px;animation:scanIn .2s ease;font-size:13px;}
+.return-flash-label{color:var(--cyan);letter-spacing:1.5px;font-size:11px;flex-shrink:0;}
+.return-flash-msg{color:var(--text-2);flex:1;min-width:0;}
+.return-flash-close{border:none;background:transparent;color:var(--text-3);font-size:14px;padding:0 4px;cursor:pointer;flex-shrink:0;}
+.return-flash-close:hover{color:var(--text);}
+
+/* Streak warning banner */
+.streak-warning-banner{display:flex;align-items:center;gap:12px;border:2px solid var(--brand);background:var(--brand-glow);padding:12px 16px;margin-bottom:12px;animation:scanIn .2s ease;}
+.swb-icon{font-size:22px;flex-shrink:0;}
+.swb-body{flex:1;min-width:0;}
+.swb-title{font-family:var(--font-logo);font-size:20px;color:var(--brand);letter-spacing:1px;}
+.swb-sub{font-size:12px;color:var(--text-2);margin-top:2px;}
+.swb-btn{flex-shrink:0;padding:8px 14px;font-size:13px;white-space:nowrap;}
+@media(max-width:480px){.streak-warning-banner{flex-wrap:wrap;}.swb-btn{width:100%;}}
+
+/* ── END RETENTION SYSTEM ─────────────────────────────────────────── */
+
 /* Accessibility: respect the OS "Reduce Motion" preference.
    Kills all CSS animations/transitions and hides confetti particles.
    JS also guards confetti spawning — see finishLesson() in lesson.js. */

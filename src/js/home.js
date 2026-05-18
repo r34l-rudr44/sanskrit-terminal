@@ -2,6 +2,9 @@ import { MODULES, getModule } from '../data/index.js';
 import { state, expandedMods, checkStreak } from './state.js';
 import { Theme, Prefs, escapeHtml } from './utils.js';
 import { injectGlobals } from './components.js';
+import { ACHIEVEMENTS, checkAndGrantAchievements, showAchievementToasts } from './achievements.js';
+import { getDailyQuest } from './quests.js';
+import { maybeShowStreakReminder } from './notifications.js';
 
 // Precomputed map from dayId → isTest for O(1) lookup in updateStats/isDayLocked
 const dayIsTestMap = new Map();
@@ -86,16 +89,19 @@ export function renderHomeModules() {
     const grid = document.createElement('div');
     grid.className = 'module-days-grid';
 
+    const lessonScores = (() => { try { return JSON.parse(localStorage.getItem('sk_lesson_scores') || '{}'); } catch { return {}; } })();
     mod.days.forEach((day, idx) => {
       const done   = completedSet.has(day.id);
       const locked = isDayLocked(mod.id, day.id);
+      const needsReview = done && !day.isTest && (lessonScores[day.id] ?? 100) < 50;
       const card   = document.createElement('div');
       card.className = 'mod-day-card'
         + (done   ? ' completed' : '')
         + (locked ? ' locked'    : '')
-        + (day.isTest ? ' is-test' : '');
+        + (day.isTest ? ' is-test' : '')
+        + (needsReview ? ' needs-review' : '');
       const label = day.isTest ? 'MODULE TEST' : `DAY ${idx + 1}`;
-      const badge = done ? '✓' : (locked ? '🔒' : '');
+      const badge = done ? (needsReview ? '📖' : '✓') : (locked ? '🔒' : '');
       card.innerHTML = `
         <div class="mod-day-card-icon">${escapeHtml(day.icon)}</div>
         <div class="mod-day-card-title">${escapeHtml(day.title)}</div>
@@ -138,6 +144,20 @@ export function updateStats() {
     ? Math.round((state.totalCorrectAll / state.totalQuestions) * 100) + '%'
     : '—';
   el('stat-accuracy').textContent = acc;
+
+  const totalLessons = MODULES.reduce((acc, m) => acc + m.days.filter(d => !d.isTest).length, 0);
+  const curriculumPct = totalLessons > 0 ? Math.round((days / totalLessons) * 100) : 0;
+  const cbWrap = el('curriculum-bar-wrap');
+  const cbFill = el('cb-fill');
+  const cbPct  = el('cb-pct');
+  const cbDetail = el('cb-detail');
+  if (cbWrap) {
+    cbWrap.style.display = hasData ? '' : 'none';
+    if (cbFill) cbFill.style.width = curriculumPct + '%';
+    if (cbPct)  cbPct.textContent  = curriculumPct + '%';
+    if (cbDetail) cbDetail.textContent = `// ${days}/${totalLessons} lessons compiled`;
+    if (cbFill) cbFill.classList.toggle('cb-fill--complete', curriculumPct === 100);
+  }
 }
 
 export function renderSidebar() {
@@ -216,17 +236,26 @@ function restoreSidebarState() {
   }
 }
 
-function updateHeroState() {
+function updateHeroState(streakStatus) {
   const heroBtnEl  = document.querySelector('.hero-btn');
   const heroTagEl  = document.querySelector('.hero-tag');
+  const heroSubEl  = document.querySelector('.hero-sub');
   if (!heroBtnEl || !heroTagEl) return;
 
   const completedLessons = state.completedDays.filter(id => !dayIsTestMap.get(id));
   if (completedLessons.length === 0) {
-    heroTagEl.textContent  = '> SESSION_01 // READY TO BEGIN';
-    heroBtnEl.textContent  = '▶ START LESSON_01';
+    heroTagEl.textContent = '> SESSION_01 // READY TO BEGIN';
+    heroBtnEl.textContent = '▶ START LESSON_01';
     return;
   }
+
+  const today = new Date().toDateString();
+  const lastSeen = localStorage.getItem('sk_last_seen_date');
+  const sessionCount = parseInt(localStorage.getItem('sk_session_count') || '0');
+  const lastScore = parseInt(localStorage.getItem('sk_last_session_score') || '0');
+  const gapDays = lastSeen && lastSeen !== today
+    ? Math.max(1, Math.round((Date.now() - new Date(lastSeen).getTime()) / 86400000))
+    : 0;
 
   // Find next uncompleted non-test day
   let nextDay = null;
@@ -246,24 +275,196 @@ function updateHeroState() {
     heroTagEl.textContent = '> ALL_MODULES COMPLETE';
     heroBtnEl.textContent = '▶ REVIEW MODULES';
   }
+
+  if (!heroSubEl || sessionCount === 0) return;
+
+  const scorePrefix = lastScore >= 80 ? `// Last session: ${lastScore}% mastery. ` : '';
+  let subText = '';
+
+  if (gapDays === 0) {
+    subText = `${scorePrefix}// Session ${sessionCount} logged today. RAM: active.`;
+    heroTagEl.textContent = `> TERMINAL_ACTIVE // SESSION_${sessionCount}`;
+  } else if (gapDays === 1) {
+    subText = `${scorePrefix}// Welcome back. Streak: ${state.streak}×. Yesterday's lesson is consolidating.`;
+  } else if (gapDays < 7) {
+    subText = `${scorePrefix}// ${gapDays} days since last session. Your vocabulary waits. Restart the chain.`;
+    heroTagEl.textContent = `> RECONNECTING... // LESSONS_WAITING`;
+  } else {
+    subText = `${scorePrefix}// ${gapDays} days offline. Panini's grammar is patient. So are we. Begin again.`;
+    heroTagEl.textContent = `> COLD_BOOT // RESTARTING_PROCESS`;
+  }
+
+  if (streakStatus === 'broken' && state.streak === 0 && sessionCount > 1) {
+    subText = '// Streak reset. But vocabulary persists in memory. Rebuild from DAY_1.';
+  }
+
+  heroSubEl.innerHTML = subText.replace(/\n/g, '<br>');
+}
+
+function renderReturnFlash(gapDays) {
+  if (gapDays < 2) return;
+  const hero = document.querySelector('.hero-card');
+  if (!hero) return;
+  const flash = document.createElement('div');
+  flash.className = 'return-flash';
+  flash.id = 'return-flash';
+  flash.innerHTML = `<span class="return-flash-label">PROCESS_RESUMED</span>
+    <span class="return-flash-msg">// ${gapDays} days since last session — picking up where you left off</span>
+    <button class="return-flash-close" onclick="document.getElementById('return-flash').remove()">✕</button>`;
+  hero.insertAdjacentElement('afterend', flash);
+  setTimeout(() => document.getElementById('return-flash')?.remove(), 4000);
+}
+
+function renderStreakWarning(streakStatus) {
+  if (streakStatus !== 'at_risk' || state.streak < 2) return;
+  const statsRow = document.querySelector('.stats-row');
+  if (!statsRow) return;
+  const banner = document.createElement('div');
+  banner.className = 'streak-warning-banner';
+  banner.innerHTML = `<span class="swb-icon">🔥</span>
+    <div class="swb-body">
+      <div class="swb-title">STREAK_ACTIVE — ${state.streak}× days</div>
+      <div class="swb-sub">// Complete a lesson before midnight to keep your chain alive.</div>
+    </div>
+    <button class="swb-btn btn-primary" onclick="window.startFirstLesson()">► LESSON NOW</button>`;
+  statsRow.insertAdjacentElement('afterend', banner);
+}
+
+function renderAchievements() {
+  const container = document.getElementById('home-module-list');
+  if (!container) return;
+  const sessionCount = parseInt(localStorage.getItem('sk_session_count') || '0');
+  if (sessionCount === 0) return;
+  let earned;
+  try { earned = new Set(JSON.parse(localStorage.getItem('sk_achievements') || '[]')); } catch { earned = new Set(); }
+
+  const section = document.createElement('div');
+  section.className = 'ach-section';
+  const isOpen = localStorage.getItem('sk_ach_open') !== 'closed';
+
+  section.innerHTML = `<div class="ach-section-hdr" id="ach-hdr">
+    <span class="ach-section-label">// ACHIEVEMENTS</span>
+    <span class="ach-count">${earned.size}/${ACHIEVEMENTS.length} UNLOCKED</span>
+    <span class="ach-chevron">${isOpen ? '▼' : '▶'}</span>
+  </div>
+  <div class="ach-grid ${isOpen ? 'open' : ''}" id="ach-grid">
+    <div class="ach-grid-inner">
+      ${ACHIEVEMENTS.map(a => `
+        <div class="ach-card ${earned.has(a.id) ? 'ach-earned' : 'ach-locked'}" title="${escapeHtml(a.desc)}">
+          <div class="ach-card-icon">${earned.has(a.id) ? a.icon : '?'}</div>
+          <div class="ach-card-title">${escapeHtml(a.title)}</div>
+        </div>`).join('')}
+    </div>
+  </div>`;
+
+  section.querySelector('#ach-hdr').addEventListener('click', () => {
+    const grid = section.querySelector('#ach-grid');
+    const chevron = section.querySelector('.ach-chevron');
+    const nowOpen = !grid.classList.contains('open');
+    grid.classList.toggle('open', nowOpen);
+    chevron.textContent = nowOpen ? '▼' : '▶';
+    localStorage.setItem('sk_ach_open', nowOpen ? 'open' : 'closed');
+  });
+
+  container.insertAdjacentElement('beforebegin', section);
+}
+
+function renderDailyQuest() {
+  const container = document.getElementById('home-module-list');
+  if (!container) return;
+  const sessionCount = parseInt(localStorage.getItem('sk_session_count') || '0');
+  if (sessionCount === 0) return;
+
+  const { quest, data } = getDailyQuest();
+  const todayStr = new Date().toDateString();
+  const card = document.createElement('div');
+  card.className = 'daily-quest-card' + (data.completed ? ' quest-done' : '');
+  card.innerHTML = `<div class="dq-header">
+    <span class="dq-label">DAILY_MISSION // ${escapeHtml(todayStr.toUpperCase())}</span>
+    ${data.completed ? '<span class="dq-complete">✓ COMPLETE</span>' : ''}
+  </div>
+  <div class="dq-title">${escapeHtml(quest.title)}</div>
+  <div class="dq-desc">// ${escapeHtml(quest.desc)}</div>
+  ${!data.completed
+    ? `<button class="dq-btn btn-primary" onclick="window.startFirstLesson()">► BEGIN MISSION</button>`
+    : `<div class="dq-done-msg">MISSION_SUCCESS — Quest logged to your record.</div>`}`;
+
+  container.insertAdjacentElement('beforebegin', card);
+}
+
+function renderWeakLessons() {
+  const container = document.getElementById('home-module-list');
+  if (!container) return;
+  const sessionCount = parseInt(localStorage.getItem('sk_session_count') || '0');
+  if (sessionCount === 0) return;
+
+  let lessonScores;
+  try { lessonScores = JSON.parse(localStorage.getItem('sk_lesson_scores') || '{}'); } catch { lessonScores = {}; }
+
+  const weak = [];
+  for (const mod of MODULES) {
+    for (const day of mod.days) {
+      if (!day.isTest && typeof lessonScores[day.id] === 'number' && lessonScores[day.id] < 50) {
+        weak.push({ mod, day, score: lessonScores[day.id] });
+      }
+    }
+  }
+  if (weak.length === 0) return;
+
+  const card = document.createElement('div');
+  card.className = 'weak-lessons-card';
+  card.innerHTML = `<div class="wl-header">// REVIEW_QUEUE — ${weak.length} lesson${weak.length !== 1 ? 's' : ''} flagged</div>
+    ${weak.map(({ mod, day, score }) => `
+      <div class="wl-item">
+        <span class="wl-icon">${escapeHtml(day.icon)}</span>
+        <div class="wl-info">
+          <div class="wl-title">${escapeHtml(day.title)}</div>
+          <div class="wl-score">SCORE: ${score}% — REVIEW NEEDED</div>
+        </div>
+        <button class="wl-retry-btn" onclick="startLesson(${mod.id}, '${day.id}')">↺ RETRY</button>
+      </div>`).join('')}`;
+
+  container.insertAdjacentElement('beforebegin', card);
 }
 
 function init() {
   injectGlobals();
   Theme.init();
   Prefs.init();
-  checkStreak();
+  const streakStatus = checkStreak();
   restoreSidebarState();
   renderSidebar();
   renderHomeModules();
   updateStats();
-  updateHeroState();
+  updateHeroState(streakStatus);
+
+  const today = new Date().toDateString();
+  const lastSeen = localStorage.getItem('sk_last_seen_date');
+  const gapDays = lastSeen && lastSeen !== today
+    ? Math.max(1, Math.round((Date.now() - new Date(lastSeen).getTime()) / 86400000))
+    : 0;
+
+  const sessionCount = parseInt(localStorage.getItem('sk_session_count') || '0');
+  if (sessionCount > 0) {
+    renderReturnFlash(gapDays);
+    renderStreakWarning(streakStatus);
+    renderWeakLessons();
+    renderDailyQuest();
+    renderAchievements();
+    const newAchs = checkAndGrantAchievements(state);
+    showAchievementToasts(newAchs);
+    if (streakStatus === 'at_risk') maybeShowStreakReminder(state.streak);
+  }
+
+  localStorage.setItem('sk_last_seen_date', today);
 
   const streakEl = document.getElementById('streak-count');
   if (streakEl) streakEl.textContent = state.streak;
 }
 
 // Bind to window for HTML events
+window.startLesson = startLesson;
+
 window.startFirstLesson = () => {
   for (const mod of MODULES) {
     for (const day of mod.days) {

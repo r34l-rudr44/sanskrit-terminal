@@ -2,6 +2,9 @@ import { MODULES, getModule, getDay } from '../data/index.js';
 import { state } from './state.js';
 import { Theme, Prefs, Audio, Effects, escapeHtml, debounce } from './utils.js';
 import { injectGlobals } from './components.js';
+import { checkAndGrantAchievements, showAchievementToasts } from './achievements.js';
+import { checkDailyQuest } from './quests.js';
+import { requestNotifPermission } from './notifications.js';
 
 let currentDay = null;
 let currentMod = null;
@@ -9,6 +12,7 @@ const LESSON_PROGRESS_KEY = 'sk_lesson_progress';
 const MOBILE_INPUT_MODE_KEY = 'sk_mobile_input_mode';
 let hydratedLessonProgress = null;
 let skipConfirmPending = false;
+let _sessionSkips = 0;
 let _vkHistoryPushed = false;
 let _inputListenerAC = null;
 const _debouncedSaveProgress = debounce(() => saveLessonProgress('lesson'), 300);
@@ -491,6 +495,7 @@ function renderSection(s) {
 }
 
 function showBriefing() {
+  _sessionSkips = 0;
   const data = currentDay.briefing?.pre;
   if (!data) { showLesson(); return; }
   
@@ -528,6 +533,13 @@ window.showLesson = function() {
 window.exitLesson = () => {
   clearLessonProgress();
   window.location.href = '/';
+};
+
+window._requestLessonNotif = () => {
+  requestNotifPermission(() => {
+    const btn = document.querySelector('.score-notif-btn');
+    if (btn) btn.textContent = '✓ REMINDER SET';
+  });
 };
 
 window.confirmExit = () => {
@@ -1052,6 +1064,7 @@ function recordAnswer(correct, q, skipped = false) {
   closeKeyboard();
   state.totalAnswered++;
   if (!skipped && correct) state.totalCorrect++;
+  if (skipped) _sessionSkips++;
   Audio.playTone(correct);
   if (navigator.vibrate && !window._soundMuted) navigator.vibrate(correct ? 50 : [50, 30, 50]);
   
@@ -1073,6 +1086,36 @@ window.nextQuestion = () => {
   else renderQuestion();
 };
 
+function _buildTomorrowCard(pct, sessionCount, streak, nextDay, nextMod, day) {
+  let title, body;
+  if (sessionCount === 1) {
+    title = 'PROCESS_COMPLETE';
+    body = '// Session 1 logged. Return tomorrow to build your streak. Your brain consolidates language during sleep.';
+  } else if (streak >= 2) {
+    title = `STREAK_ACTIVE — ${streak}× days`;
+    body = `// Return tomorrow to reach ${streak + 1}×. Consistency compounds.`;
+  } else if (streak === 0 && sessionCount > 1) {
+    title = 'STREAK_RESET';
+    body = '// But your vocabulary is still in RAM. Come back tomorrow to restart the chain.';
+  } else {
+    title = 'SESSION_LOGGED';
+    body = '// Return tomorrow to continue building your streak.';
+  }
+  if (pct >= 80) {
+    body = `// ${escapeHtml(day.title)} archived at ${pct}% mastery. ${body.slice(3)}`;
+    title = 'MASTERY_LOGGED';
+  }
+  const notifAsked = localStorage.getItem('sk_notif_asked');
+  const notifBtn = !notifAsked && 'Notification' in window
+    ? `<button class="btn-secondary score-notif-btn" onclick="window._requestLessonNotif()">◎ SET REMINDER</button>`
+    : '';
+  return `<div class="score-tomorrow-card">
+    <div class="stc-title">${escapeHtml(title)}</div>
+    <div class="stc-body">${escapeHtml(body)}</div>
+    ${notifBtn}
+  </div>`;
+}
+
 function finishLesson() {
   const pct = state.totalAnswered > 0 ? Math.round((state.totalCorrect / state.totalAnswered) * 100) : 0;
   clearLessonProgress();
@@ -1093,6 +1136,14 @@ function finishLesson() {
   state.totalCorrectAll += state.totalCorrect;
   localStorage.setItem('sk_total_q', state.totalQuestions);
   localStorage.setItem('sk_total_c', state.totalCorrectAll);
+
+  const sessionCount = parseInt(localStorage.getItem('sk_session_count') || '0') + 1;
+  localStorage.setItem('sk_session_count', sessionCount);
+  localStorage.setItem('sk_last_session_score', pct);
+
+  const lessonScores = (() => { try { return JSON.parse(localStorage.getItem('sk_lesson_scores') || '{}'); } catch { return {}; } })();
+  lessonScores[currentDay.id] = pct;
+  localStorage.setItem('sk_lesson_scores', JSON.stringify(lessonScores));
 
   if (currentDay.isTest) {
     if (pct >= 60 && !state.completedModuleTests.includes(currentMod.id)) {
@@ -1166,6 +1217,31 @@ function finishLesson() {
     if (pct >= 70 && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
       Effects.launchConfetti();
     }
+
+    const scoreScreen = document.querySelector('.score-screen');
+    if (scoreScreen) {
+      scoreScreen.insertAdjacentHTML('beforeend', _buildTomorrowCard(pct, sessionCount, state.streak, nextDay, nextMod, currentDay));
+    }
+  }
+
+  const allLessonsComplete = MODULES.every(m => m.days.every(d => state.completedDays.includes(d.id)));
+  const newAchs = checkAndGrantAchievements(state, { pct, lessonCompleted: true, allLessonsComplete });
+  showAchievementToasts(newAchs);
+
+  const completedQuest = checkDailyQuest({ lessonCompleted: true, pct, sessionCorrect: state.totalCorrect, skipped: _sessionSkips });
+  if (completedQuest) {
+    setTimeout(() => {
+      const toast = document.createElement('div');
+      toast.className = 'achievement-toast quest-toast';
+      toast.innerHTML = `<span class="ach-toast-icon">✦</span>
+        <div class="ach-toast-body">
+          <div class="ach-toast-label">MISSION_COMPLETE</div>
+          <div class="ach-toast-title">${completedQuest.title}</div>
+          <div class="ach-toast-desc">${completedQuest.desc}</div>
+        </div>`;
+      document.body.appendChild(toast);
+      setTimeout(() => { toast.classList.add('ach-toast-out'); setTimeout(() => toast.remove(), 300); }, 3500);
+    }, newAchs.length * 500 + 300);
   }
 }
 
