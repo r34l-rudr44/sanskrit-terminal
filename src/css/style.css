@@ -169,8 +169,8 @@ body.bar-collapsed{padding-bottom:14px;}
 .cookie-accept-btn:active{transform:translate(3px,3px);box-shadow:none;}
 .cookie-decline-btn{padding:7px 14px;background:transparent;color:var(--text-3);border:var(--border-dim);font-family:var(--font-ui);font-size:13px;cursor:pointer;transition:all .1s;}
 .cookie-decline-btn:hover{color:var(--text-2);border-color:var(--text-2);}
-.install-banner{position:fixed;top:61px;left:0;right:0;z-index:90;background:var(--surface2);border-bottom:var(--border-brand);padding:10px 20px;display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;transform:translateY(-100%);transition:transform .25s ease;pointer-events:none;}
-.install-banner.visible{transform:translateY(0);pointer-events:auto;}
+.install-banner{position:fixed;top:0;left:0;right:0;z-index:90;background:var(--surface2);border-bottom:var(--border-brand);padding:10px 20px;display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;transform:translateY(-100%);transition:transform .25s ease;pointer-events:none;}
+.install-banner.visible{transform:translateY(61px);pointer-events:auto;}
 .install-banner-text{font-size:13px;color:var(--brand);flex:1;min-width:180px;letter-spacing:.5px;}
 .install-banner-actions{display:flex;gap:8px;flex-shrink:0;}
 .install-accept-btn{padding:6px 16px;background:var(--brand);color:var(--bg);border:var(--border-brand);font-family:var(--font-ui);font-size:12px;letter-spacing:1px;cursor:pointer;box-shadow:var(--shadow-sm);transition:all .1s;}
