@@ -241,12 +241,7 @@ export function injectGlobals() {
   // Fullscreen
   const _updateFullscreenUI = () => {
     const isFs = !!document.fullscreenElement;
-    const headerBtn = document.getElementById('fullscreen-btn');
     const prefsBtn = document.getElementById('prefs-fullscreen-btn');
-    if (headerBtn) {
-      headerBtn.textContent = isFs ? '⊡' : '⛶';
-      headerBtn.title = isFs ? 'Exit fullscreen' : 'Enter fullscreen';
-    }
     if (prefsBtn) prefsBtn.textContent = isFs ? '⊡ EXIT FULL' : '⛶ FULLSCREEN';
   };
   window.toggleFullscreen = () => {
@@ -257,10 +252,6 @@ export function injectGlobals() {
     }
   };
   document.addEventListener('fullscreenchange', _updateFullscreenUI);
-  if (!document.documentElement.requestFullscreen) {
-    const fsBtn = document.getElementById('fullscreen-btn');
-    if (fsBtn) fsBtn.style.display = 'none';
-  }
 
   document.addEventListener('keydown', (e) => {
     if (e.key !== 'Escape') return;
