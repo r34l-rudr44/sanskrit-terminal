@@ -145,16 +145,18 @@ export function updateStats() {
     : '—';
   el('stat-accuracy').textContent = acc;
 
-  const totalLessons = MODULES.reduce((acc, m) => acc + m.days.filter(d => !d.isTest).length, 0);
-  const curriculumPct = totalLessons > 0 ? Math.round((days / totalLessons) * 100) : 0;
+  const completedSet = new Set(state.completedDays);
+  const totalModules = MODULES.length;
+  const completedModules = MODULES.filter(m => m.days.some(d => d.isTest && completedSet.has(d.id))).length;
+  const curriculumPct = totalModules > 0 ? Math.round((completedModules / totalModules) * 100) : 0;
   const cbWrap = el('curriculum-bar-wrap');
   const cbFill = el('cb-fill');
   const cbPct  = el('cb-pct');
   const cbDetail = el('cb-detail');
   if (cbWrap) {
-if (cbFill) cbFill.style.width = curriculumPct + '%';
+    if (cbFill) cbFill.style.width = curriculumPct + '%';
     if (cbPct)  cbPct.textContent  = curriculumPct + '%';
-    if (cbDetail) cbDetail.textContent = `// ${days}/${totalLessons} modules completed`;
+    if (cbDetail) cbDetail.textContent = `// ${completedModules}/${totalModules} modules completed`;
     if (cbFill) cbFill.classList.toggle('cb-fill--complete', curriculumPct === 100);
   }
 }
