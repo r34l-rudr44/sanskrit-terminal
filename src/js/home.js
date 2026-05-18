@@ -154,7 +154,7 @@ export function updateStats() {
   if (cbWrap) {
 if (cbFill) cbFill.style.width = curriculumPct + '%';
     if (cbPct)  cbPct.textContent  = curriculumPct + '%';
-    if (cbDetail) cbDetail.textContent = `// ${days}/${totalLessons} lessons compiled`;
+    if (cbDetail) cbDetail.textContent = `// ${days}/${totalLessons} modules completed`;
     if (cbFill) cbFill.classList.toggle('cb-fill--complete', curriculumPct === 100);
   }
 }
