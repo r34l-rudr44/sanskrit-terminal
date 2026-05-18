@@ -173,6 +173,25 @@
     }
     .bi-read-btn:hover { opacity: 0.88; }
     .bi-read-btn:active { transform: translate(3px,3px); box-shadow: none; }
+
+    /* Responsive — mobile (≤ 600px) */
+    @media(max-width:600px) {
+      /* Container */
+      .blog-index-wrap  { padding: 16px 14px 48px; }
+
+      /* Typography */
+      .bi-title         { font-size: 26px; }
+      .bi-sub           { font-size: 14px; max-width: none; }
+
+      /* Card */
+      .bi-card::before  { font-size: 60px; }
+      .bi-card-inner    { padding: 16px 16px 14px; }
+      .bi-card-title    { font-size: 22px; }
+      .bi-card-desc     { max-width: none; }
+
+      /* CTA button — full width, taller touch target */
+      .bi-read-btn      { width: 100%; justify-content: center; min-height: 44px; }
+    }
   </style>
 </head>
 <body>

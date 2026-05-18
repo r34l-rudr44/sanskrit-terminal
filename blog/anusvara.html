@@ -515,10 +515,48 @@
     .blog-footer-btn:hover { opacity: 0.88; }
     .blog-footer-btn:active { transform: translate(3px,3px); box-shadow: none; }
 
-    /* Responsive */
-    @media(max-width:480px) {
-      .blog-title { font-size: 30px; }
-      .rule-header { flex-direction: column; gap: 4px; }
+    /* Responsive — mobile (≤ 600px) */
+    @media(max-width:600px) {
+      /* Container & hero */
+      .blog-wrap          { padding: 16px 14px 48px; }
+      .blog-hero          { padding: 20px 16px 16px; }
+      .blog-hero::before  { font-size: 80px; right: 10px; }
+
+      /* Typography */
+      .blog-title         { font-size: 26px; }
+      .blog-subtitle      { font-size: 14px; max-width: none; }
+      .blog-meta          { gap: 10px; }
+      .blog-section-title { font-size: 22px; }
+      .blog-body p        { font-size: 14px; }
+
+      /* Shloka */
+      .shloka-block       { padding: 14px 14px 14px 16px; }
+      .shloka-line        { font-size: 16px; }
+
+      /* Rule card */
+      .rule-header        { flex-direction: column; gap: 4px; }
+      .rule-sutra-dev     { font-size: 20px; }
+      .rule-body          { padding: 14px 14px; }
+
+      /* Example tables — enable horizontal scroll */
+      .example-block      { overflow-x: auto; overflow-y: hidden; }
+      .example-table      { min-width: 420px; font-size: 13px; }
+
+      /* Corollary */
+      .corollary          { padding: 12px 14px; }
+
+      /* Process box */
+      .process-box        { padding: 14px 14px; }
+
+      /* Pull quote */
+      .pull-quote         { padding: 14px 16px; }
+      .pull-quote-text    { font-size: 18px; }
+
+      /* Summary chips — stack full-width */
+      .summary-chip       { flex: 1 1 100%; }
+
+      /* Footer CTA — stack vertically */
+      .blog-footer-card   { flex-direction: column; gap: 10px; padding: 16px 16px; }
     }
   </style>
 </head>
