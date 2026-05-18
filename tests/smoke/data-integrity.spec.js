@@ -1,15 +1,15 @@
 import { test, expect } from '@playwright/test';
 
 const LESSONS = [
-  { mod: 1, day: '1-1', qCount: 6, title: 'Basic Vocabulary' },
-  { mod: 1, day: '1-2', qCount: 6, title: 'Numbers & Counting' },
-  { mod: 1, day: '1-3', qCount: 6, title: 'Greetings & Phrases' },
-  { mod: 1, day: '1-4', qCount: 6, title: 'Nature & Elements' },
-  { mod: 1, day: '1-T', qCount: 8, title: 'Final Test', isTest: true },
-  { mod: 2, day: '2-1', qCount: 6, title: 'Verbs & Actions' },
-  { mod: 2, day: '2-2', qCount: 6, title: 'Family & People' },
-  { mod: 2, day: '2-3', qCount: 6, title: 'Colors & World' },
-  { mod: 2, day: '2-T', qCount: 8, title: 'Final Test', isTest: true },
+  { mod: 1, day: '1-1', qCount: 7, title: 'Pronouns' },
+  { mod: 1, day: '1-2', qCount: 7, title: 'Going' },
+  { mod: 1, day: '1-3', qCount: 8, title: 'Where' },
+  { mod: 1, day: '1-4', qCount: 8, title: 'No & Not' },
+  { mod: 1, day: '1-T', qCount: 9, title: 'Final Test', isTest: true },
+  { mod: 2, day: '2-1', qCount: 8, title: 'Places' },
+  { mod: 2, day: '2-2', qCount: 7, title: 'Questions + Places' },
+  { mod: 2, day: '2-3', qCount: 7, title: 'Negation' },
+  { mod: 2, day: '2-T', qCount: 9, title: 'Final Test', isTest: true },
 ];
 
 test.beforeEach(async ({ page }) => {

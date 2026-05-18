@@ -14,9 +14,9 @@ test('home loads and a module can be expanded', async ({ page }) => {
 
   await expect(page.locator('#screen-home')).toBeVisible();
   await expect(page.locator('.hero-title')).toContainText('WELCOME TO SANSKRIT');
-  await expect(page.locator('.module-entry-title').first()).toContainText('FOUNDATIONS');
+  await expect(page.locator('.module-entry-title').first()).toContainText('TOOLKIT');
 
-  const firstModuleHeader = page.locator('.module-entry').filter({ hasText: 'FOUNDATIONS' }).locator('.module-entry-hdr');
+  const firstModuleHeader = page.locator('.module-entry').filter({ hasText: 'TOOLKIT' }).locator('.module-entry-hdr');
   await firstModuleHeader.click();
 
   await expect(page.locator('.module-body.open').first()).toBeVisible();
@@ -28,19 +28,19 @@ test('lesson renders, answers advance, and progress survives refresh', async ({ 
 
   await page.getByRole('button', { name: /BEGIN LESSON/i }).click();
   await expect(page.locator('#screen-lesson')).toHaveClass(/active/);
-  await expect(page.locator('#progress-count')).toHaveText(/1\/6/);
+  await expect(page.locator('#progress-count')).toHaveText(/1\/7/);
 
-  await page.getByRole('button', { name: /Jala/i }).click();
+  await page.getByRole('button', { name: /He — वह/ }).click();
   await expect(page.locator('#feedback-banner')).toHaveClass(/active/);
   await page.getByRole('button', { name: /CONTINUE/i }).click();
 
-  await expect(page.locator('#progress-count')).toHaveText(/2\/6/);
+  await expect(page.locator('#progress-count')).toHaveText(/2\/7/);
 
   await page.reload();
 
   await expect(page.locator('#screen-lesson')).toHaveClass(/active/);
-  await expect(page.locator('#progress-count')).toHaveText(/2\/6/);
-  await expect(page.locator('.q-text')).toContainText('fire');
+  await expect(page.locator('#progress-count')).toHaveText(/2\/7/);
+  await expect(page.locator('.q-text')).toContainText("I — मैं");
 });
 
 test('module test can be completed end-to-end', async ({ page }) => {
@@ -49,7 +49,7 @@ test('module test can be completed end-to-end', async ({ page }) => {
   await page.getByRole('button', { name: /BEGIN TEST/i }).click();
   await expect(page.locator('#screen-lesson')).toHaveClass(/active/);
 
-  for (let i = 0; i < 8; i++) {
+  for (let i = 0; i < 9; i++) {
     await page.getByRole('button', { name: /SKIP/i }).click();
     await expect(page.locator('#skip-confirm-overlay')).toHaveClass(/active/);
     await page.getByRole('button', { name: /YES, SKIP/i }).click();
@@ -65,14 +65,14 @@ test('skip requires confirmation before advancing', async ({ page }) => {
   await page.goto('/lesson.html?mod=1&day=1-1');
 
   await page.getByRole('button', { name: /BEGIN LESSON/i }).click();
-  await expect(page.locator('#progress-count')).toHaveText(/1\/6/);
+  await expect(page.locator('#progress-count')).toHaveText(/1\/7/);
 
   await page.getByRole('button', { name: /SKIP/i }).click();
   await expect(page.locator('#skip-confirm-overlay')).toHaveClass(/active/);
   await page.getByRole('button', { name: /CANCEL/i }).click();
 
   await expect(page.locator('#feedback-banner')).not.toHaveClass(/active/);
-  await expect(page.locator('.q-text')).toContainText('water');
+  await expect(page.locator('.q-text')).toContainText('सः');
   await expect(page.locator('#skip-confirm-overlay')).not.toHaveClass(/active/);
 
   await page.getByRole('button', { name: /SKIP/i }).click();
@@ -84,16 +84,21 @@ test('skip requires confirmation before advancing', async ({ page }) => {
 });
 
 test('typed answers are accepted after transliterating roman input to Devanagari', async ({ page }) => {
-  await page.goto('/lesson.html?mod=1&day=1-1');
+  // lesson 2-2 Q6 (last) is a translation question
+  await page.goto('/lesson.html?mod=2&day=2-2');
 
   await page.getByRole('button', { name: /BEGIN LESSON/i }).click();
-  await page.getByRole('button', { name: /Jala/i }).click();
-  await page.getByRole('button', { name: /CONTINUE/i }).click();
-  await page.getByRole('button', { name: /Agni/i }).click();
-  await page.getByRole('button', { name: /CONTINUE/i }).click();
 
-  await expect(page.locator('.q-text')).toContainText('Ram goes to the forest');
-  await page.locator('#active-input').fill('raamaH vanaM gacchati');
+  // skip Q0–Q5 to reach the translation question at Q6
+  for (let i = 0; i < 6; i++) {
+    await page.getByRole('button', { name: /SKIP/i }).click();
+    await expect(page.locator('#skip-confirm-overlay')).toHaveClass(/active/);
+    await page.getByRole('button', { name: /YES, SKIP/i }).click();
+    await page.getByRole('button', { name: /CONTINUE/i }).click();
+  }
+
+  await expect(page.locator('.q-text')).toContainText('Where does he go');
+  await page.locator('#active-input').fill('saH kutra gacchati');
   await page.getByRole('button', { name: /SUBMIT/i }).click();
 
   await expect(page.locator('#feedback-banner')).toHaveClass(/correct-fb/);

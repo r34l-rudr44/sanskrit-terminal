@@ -32,7 +32,7 @@ test('Completed day shows .completed class on home module card', async ({ page }
   await page.goto('/');
 
   // Expand Module 1
-  const modHeader = page.locator('.module-entry').filter({ hasText: 'FOUNDATIONS' }).locator('.module-entry-hdr');
+  const modHeader = page.locator('.module-entry').filter({ hasText: 'TOOLKIT' }).locator('.module-entry-hdr');
   await modHeader.click();
   await expect(page.locator('.module-body.open').first()).toBeVisible();
 
@@ -51,7 +51,7 @@ test('Home stats update after completing a lesson', async ({ page }) => {
 });
 
 test('Lesson progress is cleared after finishing, so next visit shows briefing', async ({ page }) => {
-  await finishLesson(page, 1, '1-1', 6);
+  await finishLesson(page, 1, '1-1', 7);
 
   // Navigate directly to same lesson
   await page.goto('/lesson.html?mod=1&day=1-1');
@@ -66,16 +66,16 @@ test('In-progress lesson resumes at the saved question after reload', async ({ p
   await page.getByRole('button', { name: /SKIP/i }).click();
   await page.getByRole('button', { name: /YES, SKIP/i }).click();
   await page.getByRole('button', { name: /CONTINUE/i }).click();
-  await expect(page.locator('#progress-count')).toHaveText('2/6');
+  await expect(page.locator('#progress-count')).toHaveText('2/7');
 
   await page.reload();
 
   await expect(page.locator('#screen-lesson')).toHaveClass(/active/);
-  await expect(page.locator('#progress-count')).toHaveText('2/6');
+  await expect(page.locator('#progress-count')).toHaveText('2/7');
 });
 
 test('completedDays is persisted to localStorage after finishing a lesson', async ({ page }) => {
-  await finishLesson(page, 1, '1-1', 6);
+  await finishLesson(page, 1, '1-1', 7);
 
   const completed = await page.evaluate(() => {
     return JSON.parse(localStorage.getItem('sk_completed_v2') || '[]');
@@ -93,7 +93,7 @@ test('Streak increments when completing first lesson of the day', async ({ page 
     localStorage.setItem('sk_last_date', lastDate);
   }, yesterday);
 
-  await finishLesson(page, 1, '1-1', 6);
+  await finishLesson(page, 1, '1-1', 7);
 
   const streak = await page.evaluate(() => parseInt(localStorage.getItem('sk_streak'), 10));
   expect(streak).toBe(4);
