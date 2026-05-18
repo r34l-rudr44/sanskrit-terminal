@@ -42,6 +42,13 @@ export function injectGlobals() {
           <button class="btn-danger" onclick="window.openDeleteOverlay()">🗑 DELETE</button>
         </div>
       </div>
+      <div class="pref-section">
+        <div class="pref-section-title">APP</div>
+        <div class="app-pref-row">
+          <button class="app-pref-btn pwa-install-btn" onclick="window.installApp()" style="display:none">⬇ INSTALL APP</button>
+          <button class="app-pref-btn" id="prefs-fullscreen-btn" onclick="window.toggleFullscreen()">⛶ FULLSCREEN</button>
+        </div>
+      </div>
     </div>
   </div>
 </div>
@@ -87,6 +94,15 @@ export function injectGlobals() {
   <div class="cookie-bar-actions">
     <button class="cookie-accept-btn" onclick="window.cookieAccept()">✓ GOT IT</button>
     <button class="cookie-decline-btn" onclick="window.cookieDismiss()">✕</button>
+  </div>
+</div>
+
+<!-- INSTALL BANNER -->
+<div class="install-banner" id="install-banner">
+  <span class="install-banner-text">⬇ Install SANSKRIT.EXE for a faster, offline-ready experience.</span>
+  <div class="install-banner-actions">
+    <button class="install-accept-btn pwa-install-btn" onclick="window.installApp()">INSTALL</button>
+    <button class="install-dismiss-btn" onclick="window.dismissInstallBanner()">✕</button>
   </div>
 </div>
   `;
@@ -190,6 +206,60 @@ export function injectGlobals() {
 
   if (!localStorage.getItem('sk_cookie_ack')) {
     setTimeout(() => document.getElementById('cookie-bar').classList.add('visible'), 2500);
+  }
+
+  // PWA Install
+  let _installPrompt = null;
+  window.addEventListener('beforeinstallprompt', (e) => {
+    e.preventDefault();
+    _installPrompt = e;
+    document.querySelectorAll('.pwa-install-btn').forEach(b => b.style.display = '');
+    if (!localStorage.getItem('sk_install_dismissed')) {
+      document.getElementById('install-banner')?.classList.add('visible');
+    }
+  });
+  window.installApp = async () => {
+    if (!_installPrompt) return;
+    _installPrompt.prompt();
+    const { outcome } = await _installPrompt.userChoice;
+    if (outcome === 'accepted') {
+      _installPrompt = null;
+      document.querySelectorAll('.pwa-install-btn').forEach(b => b.style.display = 'none');
+      window.dismissInstallBanner();
+    }
+  };
+  window.dismissInstallBanner = () => {
+    localStorage.setItem('sk_install_dismissed', 'true');
+    document.getElementById('install-banner')?.classList.remove('visible');
+  };
+  window.addEventListener('appinstalled', () => {
+    _installPrompt = null;
+    document.querySelectorAll('.pwa-install-btn').forEach(b => b.style.display = 'none');
+    window.dismissInstallBanner();
+  });
+
+  // Fullscreen
+  const _updateFullscreenUI = () => {
+    const isFs = !!document.fullscreenElement;
+    const headerBtn = document.getElementById('fullscreen-btn');
+    const prefsBtn = document.getElementById('prefs-fullscreen-btn');
+    if (headerBtn) {
+      headerBtn.textContent = isFs ? '⊡' : '⛶';
+      headerBtn.title = isFs ? 'Exit fullscreen' : 'Enter fullscreen';
+    }
+    if (prefsBtn) prefsBtn.textContent = isFs ? '⊡ EXIT FULL' : '⛶ FULLSCREEN';
+  };
+  window.toggleFullscreen = () => {
+    if (!document.fullscreenElement) {
+      document.documentElement.requestFullscreen?.();
+    } else {
+      document.exitFullscreen?.();
+    }
+  };
+  document.addEventListener('fullscreenchange', _updateFullscreenUI);
+  if (!document.documentElement.requestFullscreen) {
+    const fsBtn = document.getElementById('fullscreen-btn');
+    if (fsBtn) fsBtn.style.display = 'none';
   }
 
   document.addEventListener('keydown', (e) => {
