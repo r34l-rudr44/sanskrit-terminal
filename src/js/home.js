@@ -152,8 +152,7 @@ export function updateStats() {
   const cbPct  = el('cb-pct');
   const cbDetail = el('cb-detail');
   if (cbWrap) {
-    cbWrap.style.display = hasData ? '' : 'none';
-    if (cbFill) cbFill.style.width = curriculumPct + '%';
+if (cbFill) cbFill.style.width = curriculumPct + '%';
     if (cbPct)  cbPct.textContent  = curriculumPct + '%';
     if (cbDetail) cbDetail.textContent = `// ${days}/${totalLessons} lessons compiled`;
     if (cbFill) cbFill.classList.toggle('cb-fill--complete', curriculumPct === 100);
