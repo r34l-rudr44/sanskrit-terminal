@@ -239,7 +239,6 @@ function restoreSidebarState() {
 function updateHeroState(streakStatus) {
   const heroBtnEl  = document.querySelector('.hero-btn');
   const heroTagEl  = document.querySelector('.hero-tag');
-  const heroSubEl  = document.querySelector('.hero-sub');
   if (!heroBtnEl || !heroTagEl) return;
 
   const completedLessons = state.completedDays.filter(id => !dayIsTestMap.get(id));
@@ -276,29 +275,15 @@ function updateHeroState(streakStatus) {
     heroBtnEl.textContent = '▶ REVIEW MODULES';
   }
 
-  if (!heroSubEl || sessionCount === 0) return;
-
-  const scorePrefix = lastScore >= 80 ? `// Last session: ${lastScore}% mastery. ` : '';
-  let subText = '';
+  if (sessionCount === 0) return;
 
   if (gapDays === 0) {
-    subText = `${scorePrefix}// Session ${sessionCount} logged today. RAM: active.`;
     heroTagEl.textContent = `> TERMINAL_ACTIVE // SESSION_${sessionCount}`;
-  } else if (gapDays === 1) {
-    subText = `${scorePrefix}// Welcome back. Streak: ${state.streak}×. Yesterday's lesson is consolidating.`;
-  } else if (gapDays < 7) {
-    subText = `${scorePrefix}// ${gapDays} days since last session. Your vocabulary waits. Restart the chain.`;
-    heroTagEl.textContent = `> RECONNECTING... // LESSONS_WAITING`;
-  } else {
-    subText = `${scorePrefix}// ${gapDays} days offline. Panini's grammar is patient. So are we. Begin again.`;
+  } else if (gapDays >= 7) {
     heroTagEl.textContent = `> COLD_BOOT // RESTARTING_PROCESS`;
+  } else if (gapDays >= 2) {
+    heroTagEl.textContent = `> RECONNECTING... // LESSONS_WAITING`;
   }
-
-  if (streakStatus === 'broken' && state.streak === 0 && sessionCount > 1) {
-    subText = '// Streak reset. But vocabulary persists in memory. Rebuild from DAY_1.';
-  }
-
-  heroSubEl.innerHTML = subText.replace(/\n/g, '<br>');
 }
 
 function renderReturnFlash(gapDays) {

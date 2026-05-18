@@ -91,21 +91,20 @@
       <div class="hero-card">
         <span class="hero-tag">> SESSION_01 // READY TO BEGIN</span>
         <div class="hero-title cursor">NAMASTE — WELCOME TO SANSKRIT</div>
-        <div class="hero-sub">// Load the world's oldest language into memory.<br>// One lesson per day. One module at a time.</div>
+        <div class="curriculum-bar-wrap" id="curriculum-bar-wrap" style="display:none">
+          <div class="cb-header">
+            <span class="cb-label">CURRICULUM_PROGRESS</span>
+            <span class="cb-pct" id="cb-pct">0%</span>
+          </div>
+          <div class="cb-track"><div class="cb-fill" id="cb-fill" style="width:0%"></div></div>
+          <div class="cb-detail" id="cb-detail">// 0/0 lessons compiled</div>
+        </div>
         <button class="hero-btn" onclick="startFirstLesson()">▶ START LESSON_01</button>
       </div>
       <div class="stats-row">
         <div class="stat-card stat-card--empty"><span class="stat-num" id="stat-days">—</span><span class="stat-label">DAYS_DONE</span></div>
         <div class="stat-card stat-card--empty"><span class="stat-num" id="stat-questions">—</span><span class="stat-label">Q_ANSWERED</span></div>
         <div class="stat-card stat-card--empty"><span class="stat-num" id="stat-accuracy">—</span><span class="stat-label">ACCURACY</span></div>
-      </div>
-      <div class="curriculum-bar-wrap" id="curriculum-bar-wrap" style="display:none">
-        <div class="cb-header">
-          <span class="cb-label">CURRICULUM_PROGRESS</span>
-          <span class="cb-pct" id="cb-pct">0%</span>
-        </div>
-        <div class="cb-track"><div class="cb-fill" id="cb-fill" style="width:0%"></div></div>
-        <div class="cb-detail" id="cb-detail">// 0/0 lessons compiled</div>
       </div>
       <div class="section-title">LEARNING_PATH</div>
       <div id="home-module-list">
