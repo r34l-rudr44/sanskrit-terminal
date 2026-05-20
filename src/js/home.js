@@ -213,7 +213,13 @@ export function renderSidebar() {
           <div class="day-meta">${escapeHtml(day.title)}</div>
         </div>
         ${done ? '<span class="day-check">✓</span>' : ''}`;
-      btn.onclick = () => startLesson(mod.id, day.id);
+      if (locked) {
+        btn.disabled = true;
+        const remaining = mod.days.filter(d => !d.isTest && !completedSet.has(d.id)).length;
+        btn.title = `Complete ${remaining} lesson${remaining !== 1 ? 's' : ''} to unlock`;
+      } else {
+        btn.onclick = () => startLesson(mod.id, day.id);
+      }
       inner.appendChild(btn);
     });
 
