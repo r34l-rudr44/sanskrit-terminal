@@ -806,6 +806,10 @@ body.vk-mobile-open .main{padding-bottom:310px;}
 
 /* ── END RETENTION SYSTEM ─────────────────────────────────────────── */
 
+/* Mobile fullscreen letterbox: preserve space where native bars were */
+html.mobile-fs .topbar{padding-top:24px;}
+html.mobile-fs .bottom-bar-wrap{padding-bottom:20px;}
+
 /* Accessibility: respect the OS "Reduce Motion" preference.
    Kills all CSS animations/transitions and hides confetti particles.
    JS also guards confetti spawning — see finishLesson() in lesson.js. */

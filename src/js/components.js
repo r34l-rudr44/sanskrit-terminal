@@ -243,6 +243,8 @@ export function injectGlobals() {
     const isFs = !!document.fullscreenElement;
     const prefsBtn = document.getElementById('prefs-fullscreen-btn');
     if (prefsBtn) prefsBtn.textContent = isFs ? '⊡ EXIT FULL' : '⛶ FULLSCREEN';
+    const isMobile = window.matchMedia('(max-width: 768px)').matches;
+    document.documentElement.classList.toggle('mobile-fs', isFs && isMobile);
   };
   window.toggleFullscreen = () => {
     if (!document.fullscreenElement) {
