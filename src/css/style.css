@@ -773,6 +773,15 @@ body.vk-mobile-open .main{padding-bottom:310px;}
   /* MODALS */
   .modal-overlay{padding:46px 8px 8px;}
   .modal-box{max-height:calc(100vh - 54px);}
+
+  /* FULLSCREEN — defeat mobile-fs specificity in landscape */
+  html.mobile-fs .topbar{padding-top:5px;padding-bottom:5px;}
+  html.mobile-fs .bottom-bar-wrap{padding-bottom:env(safe-area-inset-bottom,0px);}
+
+  /* LANDSCAPE SAFE AREAS — notch/island side insets */
+  .topbar{padding-left:calc(18px + env(safe-area-inset-left,0px));padding-right:calc(18px + env(safe-area-inset-right,0px));}
+  .main{padding-left:calc(10px + env(safe-area-inset-left,0px));}
+  .bottom-bar-wrap{padding-left:env(safe-area-inset-left,0px);padding-right:env(safe-area-inset-right,0px);}
 }
 
 /* Wide landscape phones (≥600px) — 2-col MCQ + VK split pane */
@@ -785,6 +794,7 @@ body.vk-mobile-open .main{padding-bottom:310px;}
   body.vk-mobile-open .vk-mobile-dock{
     top:44px;
     left:auto;
+    right:env(safe-area-inset-right,0px);
     width:44%;
     border-left:var(--border-brand);
     border-top:none;
@@ -797,7 +807,7 @@ body.vk-mobile-open .main{padding-bottom:310px;}
   }
   body.vk-mobile-open .main{
     padding-bottom:0;
-    padding-right:46%;
+    padding-right:calc(46% + env(safe-area-inset-right,0px));
   }
 }
 
