@@ -14,7 +14,7 @@ export function injectGlobals() {
       <div class="pref-section">
         <div class="pref-section-title">THEME</div>
         <div class="theme-row">
-          <button class="theme-btn-opt active" id="theme-dark"  onclick="window.setTheme('dark')">◉ DARK</button>
+          <button class="theme-btn-opt" id="theme-dark"  onclick="window.setTheme('dark')">◉ DARK</button>
           <button class="theme-btn-opt"        id="theme-light" onclick="window.setTheme('light')">◎ LIGHT</button>
         </div>
       </div>

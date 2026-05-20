@@ -67,7 +67,7 @@ export const Theme = (() => {
     document.getElementById('theme-dark')?.classList.toggle('active', mode === 'dark');
     document.getElementById('theme-light')?.classList.toggle('active', mode === 'light');
   }
-  function init() { apply(localStorage.getItem('sk_theme') || 'dark'); }
+  function init() { apply(localStorage.getItem('sk_theme') || (window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark')); }
   return { apply, init };
 })();
 
