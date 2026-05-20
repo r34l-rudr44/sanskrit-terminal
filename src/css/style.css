@@ -683,11 +683,122 @@ body.vk-mobile-open .main{padding-bottom:310px;}
   body{padding-bottom:60px;}
 }
 
-/* Landscape phones — shrink VK and topbar to reclaim vertical space */
+/* Landscape phones — comprehensive optimization */
 @media(orientation:landscape) and (max-height:500px){
+  /* TOPBAR */
   .topbar{padding-top:5px;padding-bottom:5px;}
+  .logo-icon{width:28px;height:28px;font-size:14px;}
+  .logo-sub{display:none;}
+  .logo-text{font-size:17px;gap:4px;}
+  .streak-badge{padding:2px 8px;font-size:14px;}
+  .icon-btn{width:34px;height:34px;font-size:16px;}
+  .prefs-btn{padding:4px 10px;font-size:15px;}
+
+  /* MAIN */
+  .main{padding:8px 10px;}
+
+  /* BOTTOM BAR */
+  .bottom-bar{max-height:38px;}
+  .bottom-bar-link{padding:8px 14px;font-size:11px;}
+  body{padding-bottom:50px;}
+  body.bar-collapsed{padding-bottom:10px;}
+
+  /* HOME — HERO */
+  .hero-card{padding:12px 14px;margin-bottom:10px;}
+  .hero-card::before{font-size:70px;}
+  .hero-title{font-size:20px;}
+  .hero-sub{font-size:13px;line-height:1.4;}
+  .hero-btn{padding:7px 16px;font-size:15px;margin-top:8px;}
+
+  /* HOME — STATS */
+  .stats-row{gap:8px;margin-bottom:10px;}
+  .stat-card{padding:8px;}
+  .stat-num{font-size:30px;}
+
+  /* HOME — MODULES */
+  .section-title{margin-bottom:8px;}
+  .module-entry-hdr{padding:10px 14px;}
+  .module-entry-title{font-size:18px;}
+  .module-days-grid{gap:6px;padding:8px 12px 10px;}
+  .mod-day-card{padding:8px;}
+
+  /* LESSON */
+  .lesson-nav{margin-bottom:6px;}
+  .progress-bar{height:8px;}
+  .question-card{padding:12px;}
+  .q-text{font-size:17px;margin-bottom:10px;}
+  .feedback-banner{padding:10px 12px;margin-top:8px;}
+  .fb-title{font-size:15px;}
+  .fb-detail{font-size:13px;}
+  .action-area{margin-top:10px;}
+  .btn-primary{padding:10px 22px;font-size:17px;}
+  .btn-secondary{padding:10px 16px;font-size:15px;}
+
+  /* VK KEYS — COMPACT */
   .vk-mobile-dock .vk-body{max-height:min(30vh,200px);}
-  .main{padding-top:10px;padding-bottom:10px;}
+  .vk-key{padding:4px 2px;font-size:13px;min-width:26px;min-height:34px;}
+  .vk-row{gap:1px;}
+  .vk-space{font-size:11px;min-height:34px;}
+  .vk-backspace{min-height:34px;}
+
+  /* SCORE SCREEN */
+  .score-screen{padding:8px 0;}
+  .score-trophy{font-size:36px;margin-bottom:4px;}
+  .score-title{font-size:20px;margin-bottom:4px;}
+  .score-sub{font-size:14px;margin-bottom:12px;}
+  .score-big{width:80px;height:80px;font-size:34px;margin-bottom:16px;}
+  .score-stats{gap:8px;margin-bottom:14px;}
+  .score-stat{padding:8px 14px;min-width:70px;}
+  .score-stat-val{font-size:28px;}
+  .score-actions{flex-direction:row;justify-content:center;gap:10px;}
+  .score-actions .btn-primary,.score-actions .btn-secondary{width:auto;}
+
+  /* CERT SCREEN */
+  .cert-outer{padding:8px 0;}
+  .cert-card{padding:16px;}
+  .cert-badge{font-size:44px;margin-bottom:6px;}
+  .cert-module-title{font-size:22px;}
+  .cert-score-row{flex-direction:row;align-items:center;gap:14px;margin-bottom:14px;}
+  .cert-score-box{width:72px;height:72px;font-size:28px;}
+  .cert-actions{flex-direction:row;gap:10px;}
+  .cert-actions .cert-home-btn,.cert-actions .cert-retry-btn{width:auto;}
+  .cert-stamp{font-size:20px;padding:6px 18px;}
+
+  /* BRIEFING */
+  .briefing-header{padding:6px 14px 10px;}
+  .briefing-body{padding:10px 14px;}
+  .briefing-footer{padding:8px 14px;flex-direction:row;}
+  .briefing-footer .btn-primary{width:auto;}
+
+  /* MODALS */
+  .modal-overlay{padding:46px 8px 8px;}
+  .modal-box{max-height:calc(100vh - 54px);}
+}
+
+/* Wide landscape phones (≥600px) — 2-col MCQ + VK split pane */
+@media(orientation:landscape) and (max-height:500px) and (min-width:600px){
+  /* 2-column MCQ */
+  .options-grid{grid-template-columns:1fr 1fr;}
+  .option-btn{font-size:15px;padding:10px;}
+
+  /* VK split pane: dock moves from bottom strip → right sidebar */
+  body.vk-mobile-open .vk-mobile-dock{
+    top:44px;
+    left:auto;
+    width:44%;
+    border-left:var(--border-brand);
+    border-top:none;
+    border-right:none;
+    border-bottom:none;
+    box-shadow:-8px 0 20px rgba(0,0,0,.45);
+  }
+  body.vk-mobile-open .vk-mobile-dock .vk-body{
+    max-height:calc(100vh - 90px);
+  }
+  body.vk-mobile-open .main{
+    padding-bottom:0;
+    padding-right:46%;
+  }
 }
 
 /* Tablets & small desktops (481px – 768px) */
