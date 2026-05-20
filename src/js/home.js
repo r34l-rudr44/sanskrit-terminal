@@ -405,16 +405,35 @@ function renderWeakLessons() {
 
   const card = document.createElement('div');
   card.className = 'weak-lessons-card';
-  card.innerHTML = `<div class="wl-header">// REVIEW_QUEUE — ${weak.length} lesson${weak.length !== 1 ? 's' : ''} flagged</div>
-    ${weak.map(({ mod, day, score }) => `
-      <div class="wl-item">
-        <span class="wl-icon">${escapeHtml(day.icon)}</span>
-        <div class="wl-info">
-          <div class="wl-title">${escapeHtml(day.title)}</div>
-          <div class="wl-score">SCORE: ${score}% — REVIEW NEEDED</div>
-        </div>
-        <button class="wl-retry-btn" onclick="startLesson(${mod.id}, '${day.id}')">↺ RETRY</button>
-      </div>`).join('')}`;
+
+  const hdr = document.createElement('div');
+  hdr.className = 'wl-header';
+  hdr.textContent = `// REVIEW_QUEUE — ${weak.length} lesson${weak.length !== 1 ? 's' : ''} flagged`;
+  card.appendChild(hdr);
+
+  weak.forEach(({ mod, day, score }) => {
+    const item = document.createElement('div');
+    item.className = 'wl-item';
+
+    const icon = document.createElement('span');
+    icon.className = 'wl-icon';
+    icon.textContent = day.icon;
+
+    const info = document.createElement('div');
+    info.className = 'wl-info';
+    info.innerHTML = `<div class="wl-title">${escapeHtml(day.title)}</div>
+      <div class="wl-score">SCORE: ${score}% — REVIEW NEEDED</div>`;
+
+    const btn = document.createElement('button');
+    btn.className = 'wl-retry-btn';
+    btn.textContent = '↺ RETRY';
+    btn.onclick = () => startLesson(mod.id, day.id);
+
+    item.appendChild(icon);
+    item.appendChild(info);
+    item.appendChild(btn);
+    card.appendChild(item);
+  });
 
   container.insertAdjacentElement('beforebegin', card);
 }
