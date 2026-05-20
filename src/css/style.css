@@ -608,9 +608,8 @@ body.vk-mobile-open .main{padding-bottom:310px;}
   .module-skel-icon{width:24px;height:24px;}
   .module-skel-line-title{height:20px;width:130px;}
   .module-skel-line-sub{width:150px;}
-  #home-module-list{display:flex;gap:12px;overflow-x:auto;scroll-snap-type:x mandatory;-webkit-overflow-scrolling:touch;scrollbar-width:none;}
-  #home-module-list::-webkit-scrollbar{display:none;}
-  .home-module-group{display:flex;flex:0 0 100%;min-width:100%;flex-direction:column;gap:12px;scroll-snap-align:start;}
+  #home-module-list{display:flex;flex-direction:column;gap:12px;}
+  .home-module-group{display:flex;flex-direction:column;gap:12px;}
   .home-module-group .module-entry{margin-bottom:0;}
   .module-days-grid{grid-template-columns:repeat(auto-fill,minmax(90px,1fr));gap:6px;padding:10px 12px 14px;}
   .mod-day-card{padding:10px;}
