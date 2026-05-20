@@ -930,6 +930,16 @@ body.vk-mobile-open .main{padding-bottom:310px;}
 html.mobile-fs .topbar{padding-top:24px;}
 html.mobile-fs .bottom-bar-wrap{padding-bottom:20px;}
 
+/* Portrait mobile: lock viewport, scroll only within module list */
+@media(max-width:480px) and (orientation:portrait){
+  body{height:100vh;height:100dvh;overflow:hidden;display:flex;flex-direction:column;padding-bottom:0;}
+  .topbar{flex-shrink:0;}
+  .app{flex:1;min-height:0;overflow:hidden;}
+  .main{height:100%;display:flex;flex-direction:column;overflow:hidden;padding-bottom:0;}
+  #screen-home{flex:1;display:flex;flex-direction:column;min-height:0;overflow:hidden;}
+  #home-module-list{flex:1;overflow-y:auto;min-height:0;-webkit-overflow-scrolling:touch;padding-bottom:70px;}
+}
+
 /* Accessibility: respect the OS "Reduce Motion" preference.
    Kills all CSS animations/transitions and hides confetti particles.
    JS also guards confetti spawning — see finishLesson() in lesson.js. */
