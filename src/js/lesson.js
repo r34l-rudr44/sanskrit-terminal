@@ -1080,7 +1080,10 @@ function recordAnswer(correct, q, skipped = false) {
   fb.innerHTML = `<span class="fb-icon">${icon}</span><div><div class="fb-title">${title}</div><div class="fb-detail">${detail}</div></div>`;
 
   const aa = document.getElementById('action-area');
-  if (aa) aa.innerHTML = `<button class="btn-primary" onclick="window.nextQuestion()">CONTINUE →</button>`;
+  if (aa) {
+    aa.innerHTML = `<button class="btn-primary" onclick="window.nextQuestion()">CONTINUE →</button>`;
+    setTimeout(() => aa.scrollIntoView({ behavior: 'smooth', block: 'nearest' }), 100);
+  }
 }
 
 window.nextQuestion = () => {
