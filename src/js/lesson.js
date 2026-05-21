@@ -1082,7 +1082,10 @@ function recordAnswer(correct, q, skipped = false) {
   const aa = document.getElementById('action-area');
   if (aa) {
     aa.innerHTML = `<button class="btn-primary" onclick="window.nextQuestion()">CONTINUE →</button>`;
-    setTimeout(() => aa.scrollIntoView({ behavior: 'smooth', block: 'end' }), 100);
+    setTimeout(() => {
+      const screen = document.getElementById('screen-lesson');
+      if (screen) screen.scrollTo({ top: screen.scrollHeight, behavior: 'smooth' });
+    }, 100);
   }
 }
 
