@@ -1082,7 +1082,7 @@ function recordAnswer(correct, q, skipped = false) {
   const aa = document.getElementById('action-area');
   if (aa) {
     aa.innerHTML = `<button class="btn-primary" onclick="window.nextQuestion()">CONTINUE →</button>`;
-    setTimeout(() => aa.scrollIntoView({ behavior: 'smooth', block: 'nearest' }), 100);
+    setTimeout(() => aa.scrollIntoView({ behavior: 'smooth', block: 'end' }), 100);
   }
 }
 
