@@ -459,9 +459,7 @@ function init() {
   if (sessionCount > 0) {
     renderReturnFlash(gapDays);
     renderStreakWarning(streakStatus);
-    renderWeakLessons();
-    renderDailyQuest();
-    renderAchievements();
+
     const newAchs = checkAndGrantAchievements(state);
     showAchievementToasts(newAchs);
     if (streakStatus === 'at_risk') maybeShowStreakReminder(state.streak);
