@@ -193,15 +193,14 @@
       .bi-read-btn      { width: 100%; justify-content: center; min-height: 44px; }
     }
 
-    /* Portrait mobile: the global CSS locks body to overflow:hidden for the main app's
-       screen-based layout. Blog pages use a flat wrapper instead, so we must make it
-       the scroll container explicitly. */
+    /* Portrait mobile: the global CSS locks body into a flex viewport for the main app's
+       screen-based layout. Blog pages are long-form documents — restore normal scrolling. */
     @media(max-width:480px) and (orientation:portrait) {
-      .blog-index-wrap {
-        flex: 1;
-        min-height: 0;
+      body {
+        height: auto;
+        overflow-x: hidden;
         overflow-y: auto;
-        -webkit-overflow-scrolling: touch;
+        display: block;
         padding-bottom: calc(74px + env(safe-area-inset-bottom, 0px));
       }
     }
