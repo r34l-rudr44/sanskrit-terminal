@@ -192,6 +192,19 @@
       /* CTA button — full width, taller touch target */
       .bi-read-btn      { width: 100%; justify-content: center; min-height: 44px; }
     }
+
+    /* Portrait mobile: the global CSS locks body to overflow:hidden for the main app's
+       screen-based layout. Blog pages use a flat wrapper instead, so we must make it
+       the scroll container explicitly. */
+    @media(max-width:480px) and (orientation:portrait) {
+      .blog-index-wrap {
+        flex: 1;
+        min-height: 0;
+        overflow-y: auto;
+        -webkit-overflow-scrolling: touch;
+        padding-bottom: calc(74px + env(safe-area-inset-bottom, 0px));
+      }
+    }
   </style>
 </head>
 <body>

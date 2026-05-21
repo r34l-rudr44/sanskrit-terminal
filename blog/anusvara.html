@@ -557,6 +557,19 @@
       /* Footer CTA — stack vertically */
       .blog-footer-card   { flex-direction: column; gap: 10px; padding: 16px 16px; }
     }
+
+    /* Portrait mobile: the global CSS locks body to overflow:hidden for the main app's
+       screen-based layout. Blog pages use a flat wrapper instead, so we must make it
+       the scroll container explicitly. */
+    @media(max-width:480px) and (orientation:portrait) {
+      .blog-wrap {
+        flex: 1;
+        min-height: 0;
+        overflow-y: auto;
+        -webkit-overflow-scrolling: touch;
+        padding-bottom: calc(74px + env(safe-area-inset-bottom, 0px));
+      }
+    }
   </style>
 </head>
 <body>
