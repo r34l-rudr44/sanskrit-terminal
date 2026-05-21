@@ -561,7 +561,7 @@
     /* Portrait mobile: the global CSS locks body into a flex viewport for the main app's
        screen-based layout. Blog pages are long-form documents — restore normal scrolling. */
     @media(max-width:480px) and (orientation:portrait) {
-      body {
+      html body {
         height: auto;
         overflow-x: hidden;
         overflow-y: auto;
