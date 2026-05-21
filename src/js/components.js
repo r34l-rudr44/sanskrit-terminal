@@ -151,6 +151,7 @@ export function injectGlobals() {
     document.getElementById('bottom-bar-tab-icon').textContent = isCollapsed ? '▲' : '▼';
     document.getElementById('bottom-bar-tab-label').textContent = isCollapsed ? 'OPEN' : 'CLOSE';
     document.body.classList.toggle('bar-collapsed', isCollapsed);
+    localStorage.setItem('sk_bar', isCollapsed ? '0' : '1');
   };
 
   const syncExploreDropdown = () => {

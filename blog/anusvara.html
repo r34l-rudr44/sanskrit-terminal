@@ -838,36 +838,36 @@
       <div class="example-header">RULE_02 · EXAMPLES</div>
       <table class="example-table">
         <tr>
-          <td>दंत →</td>
-          <td><span class="dev">त</span> is त-वर्ग · nasal = <span class="dev" style="color:var(--ok)">न्</span></td>
+          <td>INPUT</td>
+          <td><span class="dev">दंत</span> · <span class="dev">त</span> is त-वर्ग · nasal = <span class="dev" style="color:var(--ok)">न्</span></td>
           <td class="arrow">→</td>
           <td class="result">दन्त</td>
           <td class="note">"tooth"</td>
         </tr>
         <tr>
-          <td>गंगा →</td>
-          <td><span class="dev">ग</span> is क-वर्ग · nasal = <span class="dev" style="color:var(--ok)">ङ्</span></td>
+          <td>INPUT</td>
+          <td><span class="dev">गंगा</span> · <span class="dev">ग</span> is क-वर्ग · nasal = <span class="dev" style="color:var(--ok)">ङ्</span></td>
           <td class="arrow">→</td>
           <td class="result">गङ्गा</td>
           <td class="note">"Ganges"</td>
         </tr>
         <tr>
-          <td>व्यंजन →</td>
-          <td><span class="dev">ज</span> is च-वर्ग · nasal = <span class="dev" style="color:var(--ok)">ञ्</span></td>
+          <td>INPUT</td>
+          <td><span class="dev">व्यंजन</span> · <span class="dev">ज</span> is च-वर्ग · nasal = <span class="dev" style="color:var(--ok)">ञ्</span></td>
           <td class="arrow">→</td>
           <td class="result">व्यञ्जन</td>
           <td class="note">"consonant"</td>
         </tr>
         <tr>
-          <td>घंटा →</td>
-          <td><span class="dev">ट</span> is ट-वर्ग · nasal = <span class="dev" style="color:var(--ok)">ण्</span></td>
+          <td>INPUT</td>
+          <td><span class="dev">घंटा</span> · <span class="dev">ट</span> is ट-वर्ग · nasal = <span class="dev" style="color:var(--ok)">ण्</span></td>
           <td class="arrow">→</td>
           <td class="result">घण्टा</td>
           <td class="note">"bell"</td>
         </tr>
         <tr>
-          <td>चंपा →</td>
-          <td><span class="dev">प</span> is प-वर्ग · nasal = <span class="dev" style="color:var(--ok)">म्</span></td>
+          <td>INPUT</td>
+          <td><span class="dev">चंपा</span> · <span class="dev">प</span> is प-वर्ग · nasal = <span class="dev" style="color:var(--ok)">म्</span></td>
           <td class="arrow">→</td>
           <td class="result">चम्पा</td>
           <td class="note">"champak flower"</td>
@@ -1020,34 +1020,10 @@
 <script>
   (function(){
     var bb=document.getElementById('bottom-bar');
-    var tab=document.getElementById('bottom-bar-tab');
     var tabIcon=document.getElementById('bottom-bar-tab-icon');
     var tabLabel=document.getElementById('bottom-bar-tab-label');
-    var ed=document.getElementById('explore-dropdown');
     var collapsed=localStorage.getItem('sk_bar')==='0';
-    function apply(){
-      if(collapsed){bb.classList.add('collapsed');document.body.classList.add('bar-collapsed');tabIcon.textContent='▲';tabLabel.textContent='OPEN';}
-      else{bb.classList.remove('collapsed');document.body.classList.remove('bar-collapsed');tabIcon.textContent='▼';tabLabel.textContent='CLOSE';}
-    }
-    apply();
-    window.toggleBottomBar=function(){collapsed=!collapsed;localStorage.setItem('sk_bar',collapsed?'0':'1');apply();};
-    window.toggleExploreDropdown=function(){ed.classList.toggle('open');};
-    window.closeExploreDropdown=function(){ed.classList.remove('open');};
-    window.openComingSoon=function(title,icon,section,text){
-      var o=document.getElementById('cs-overlay');
-      if(!o){
-        o=document.createElement('div');o.id='cs-overlay';o.className='coming-soon-overlay';
-        o.innerHTML='<div class="coming-soon-box"><div class="cs-top" id="cs-top"></div><span class="cs-icon" id="cs-icon"></span><div class="cs-title cursor" id="cs-title"></div><div class="cs-section" id="cs-section"></div><div class="cs-text" id="cs-text"></div><button class="cs-close-btn" onclick="document.getElementById(\'cs-overlay\').classList.remove(\'active\')">✕ CLOSE</button></div>';
-        document.body.appendChild(o);
-        o.addEventListener('click',function(e){if(e.target===o)o.classList.remove('active');});
-      }
-      document.getElementById('cs-top').textContent=section.toUpperCase();
-      document.getElementById('cs-icon').textContent=icon;
-      document.getElementById('cs-title').textContent=title.toUpperCase();
-      document.getElementById('cs-section').textContent='// '+section.toUpperCase();
-      document.getElementById('cs-text').textContent=text;
-      o.classList.add('active');
-    };
+    if(collapsed){bb.classList.add('collapsed');document.body.classList.add('bar-collapsed');tabIcon.textContent='▲';tabLabel.textContent='OPEN';}
   })();
 </script>
 <script type="module">
