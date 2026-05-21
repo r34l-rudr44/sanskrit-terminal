@@ -574,6 +574,7 @@ body.bar-collapsed{padding-bottom:14px;}
 .vk-space{flex:1;max-width:200px;font-family:var(--font-ui);font-size:13px;letter-spacing:1px;color:var(--text-2);min-height:38px;}
 .vk-backspace{width:56px;font-family:var(--font-ui);color:var(--err);min-height:38px;}
 body.vk-mobile-open .main{padding-bottom:310px;}
+body.vk-mobile-open #screen-lesson{padding-bottom:310px;}
 .vk-mobile-dock{position:fixed;left:0;right:0;bottom:0;margin:0;z-index:9300;border-top:var(--border-brand);box-shadow:0 -14px 28px rgba(0,0,0,.45);transform:translateY(100%);transition:transform .18s ease;}
 .vk-mobile-dock.open{transform:translateY(0);}
 .vk-mobile-dock .vk-header{cursor:default;}
@@ -944,6 +945,7 @@ html.mobile-fs .bottom-bar-wrap{padding-bottom:20px;}
   #screen-lesson,
   #screen-score,
   #screen-cert{flex:1;min-height:0;overflow-y:auto;-webkit-overflow-scrolling:touch;padding-bottom:70px;}
+  #screen-lesson .lesson-header{position:sticky;top:0;background:var(--bg);z-index:5;margin-bottom:12px;padding-bottom:4px;}
 }
 
 /* Accessibility: respect the OS "Reduce Motion" preference.

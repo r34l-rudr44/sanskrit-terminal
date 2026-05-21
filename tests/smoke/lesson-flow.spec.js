@@ -13,7 +13,7 @@ test('home loads and a module can be expanded', async ({ page }) => {
   await page.goto('/');
 
   await expect(page.locator('#screen-home')).toBeVisible();
-  await expect(page.locator('.hero-title')).toContainText('WELCOME TO SANSKRIT');
+  await expect(page.locator('.hero-title')).toContainText('NAMASTE');
   await expect(page.locator('.module-entry-title').first()).toContainText('TOOLKIT');
 
   const firstModuleHeader = page.locator('.module-entry').filter({ hasText: 'TOOLKIT' }).locator('.module-entry-hdr');

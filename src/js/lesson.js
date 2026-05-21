@@ -31,6 +31,7 @@ function showScreen(name) {
   const target = document.getElementById('screen-' + name);
   if (target) {
     target.classList.add('active');
+    target.scrollTop = 0;
     window.scrollTo(0, 0);
   }
 }
@@ -741,6 +742,8 @@ window.vkBackspace = () => {
 
 function renderQuestion() {
   closeKeyboard();
+  const screenEl = document.getElementById('screen-lesson');
+  if (screenEl) screenEl.scrollTop = 0;
   const q = currentDay.questions[state.currentQ];
   if (!q) return;
   const pct = Math.round((state.currentQ / currentDay.questions.length) * 100);
