@@ -10,6 +10,9 @@ import * as m2d2 from './module-2/day-2.js';
 import * as m2d3 from './module-2/day-3.js';
 import * as m2test from './module-2/test.js';
 
+import * as m3d1 from './module-3/day-1.js';
+import * as m3d2 from './module-3/day-2.js';
+
 export const MODULES = [
   {
     id: 1,
@@ -26,6 +29,14 @@ export const MODULES = [
     icon: "📜",
     description: "Learn Sanskrit destination nouns, question patterns with किम्/कुत्र/कः, and negate with न to form rich real-world sentences.",
     days: [m2d1, m2d2, m2d3, m2test]
+  },
+  {
+    id: 3,
+    title: "FLOW",
+    subtitle: "Time, Correlatives & Nuance",
+    icon: "⏰",
+    description: "Learn temporal adverbs (कदा, यदा, सदा, तदा), the यदा...तदा correlative pair, and how negation with time words creates nuanced meaning.",
+    days: [m3d1, m3d2]
   }
 ];
 
