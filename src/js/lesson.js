@@ -1198,10 +1198,10 @@ function finishLesson() {
 
     const dayNum = currentMod.days.findIndex(d => d.id === currentDay.id) + 1;
     const subText = pct >= 80
-      ? `Module ${currentMod.id} · Day ${dayNum} — flawless execution.`
+      ? `Module ${currentMod.id} · Unit ${dayNum} — flawless execution.`
       : pct >= 50
-      ? `Module ${currentMod.id} · Day ${dayNum} — good progress.`
-      : `Module ${currentMod.id} · Day ${dayNum} — keep practicing.`;
+      ? `Module ${currentMod.id} · Unit ${dayNum} — good progress.`
+      : `Module ${currentMod.id} · Unit ${dayNum} — keep practicing.`;
     document.getElementById('score-sub').textContent = subText;
 
     document.getElementById('score-big').textContent = pct + '%';

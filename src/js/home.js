@@ -100,7 +100,7 @@ export function renderHomeModules() {
         + (locked ? ' locked'    : '')
         + (day.isTest ? ' is-test' : '')
         + (needsReview ? ' needs-review' : '');
-      const label = day.isTest ? 'MODULE TEST' : `DAY ${idx + 1}`;
+      const label = day.isTest ? 'MODULE TEST' : `UNIT ${idx + 1}`;
       const badge = done ? (needsReview ? '📖' : '✓') : (locked ? '🔒' : '');
       card.innerHTML = `
         <div class="mod-day-card-icon">${escapeHtml(day.icon)}</div>
@@ -201,7 +201,7 @@ export function renderSidebar() {
     mod.days.forEach((day, idx) => {
       const done   = completedSet.has(day.id);
       const locked = isDayLocked(mod.id, day.id);
-      const dayNum = day.isTest ? 'TEST' : `DAY_${idx + 1}`;
+      const dayNum = day.isTest ? 'TEST' : `UNIT_${idx + 1}`;
       const btn = document.createElement('button');
       btn.className = 'day-btn'
         + (done   ? ' completed' : '')
