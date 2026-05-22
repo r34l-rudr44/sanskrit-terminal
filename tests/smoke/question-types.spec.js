@@ -107,16 +107,30 @@ test('WordTiles: correct tile order gives correct feedback', async ({ page }) =>
   await expect(page.locator('#feedback-banner')).toHaveClass(/correct-fb/);
 });
 
-test('WordTiles: wrong tile order gives wrong feedback', async ({ page }) => {
+test('WordTiles: any word order with correct words gives correct feedback', async ({ page }) => {
   await page.goto('/lesson.html?mod=1&day=1-4');
   await page.getByRole('button', { name: /BEGIN LESSON/i }).click();
   await skipQuestions(page, 5);
 
-  // Click in wrong order: verb first
+  // Click in a different order — Sanskrit word order is free
   await page.locator('#wt-bank .wt-tile').filter({ hasText: 'गच्छामि' }).click();
-  await page.locator('#wt-bank .wt-tile').filter({ hasText: 'अहं' }).click();
   await page.locator('#wt-bank .wt-tile').filter({ hasText: 'न' }).click();
   await page.locator('#wt-bank .wt-tile').filter({ hasText: 'तत्र' }).click();
+  await page.locator('#wt-bank .wt-tile').filter({ hasText: 'अहं' }).click();
+  await page.locator('#wt-check-btn').click();
+  await expect(page.locator('#feedback-banner')).toHaveClass(/correct-fb/);
+});
+
+test('WordTiles: wrong words (distractor used) gives wrong feedback', async ({ page }) => {
+  await page.goto('/lesson.html?mod=1&day=1-4');
+  await page.getByRole('button', { name: /BEGIN LESSON/i }).click();
+  await skipQuestions(page, 5);
+
+  // Use distractor गच्छसि instead of correct गच्छामि
+  await page.locator('#wt-bank .wt-tile').filter({ hasText: 'अहं' }).click();
+  await page.locator('#wt-bank .wt-tile').filter({ hasText: 'तत्र' }).click();
+  await page.locator('#wt-bank .wt-tile').filter({ hasText: 'न' }).click();
+  await page.locator('#wt-bank .wt-tile').filter({ hasText: 'गच्छसि' }).click();
   await page.locator('#wt-check-btn').click();
   await expect(page.locator('#feedback-banner')).toHaveClass(/wrong-fb/);
 });

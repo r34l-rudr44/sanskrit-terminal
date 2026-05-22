@@ -1008,7 +1008,8 @@ window.checkWordTiles = () => {
   if (state.answered) return;
   const q = currentDay.questions[state.currentQ];
   const built = state.wtTray.map(id => state.wtTiles[id]?.word ?? '').join(' ');
-  const isCorrect = normalizeAnswerText(built) === normalizeAnswerText(q.answer);
+  const toSortedWords = s => normalizeAnswerText(s).split(/\s+/).filter(Boolean).sort().join('\x00');
+  const isCorrect = toSortedWords(built) === toSortedWords(q.answer);
   state.answered = true;
   const tray = document.getElementById('wt-tray');
   if (tray) tray.classList.add(isCorrect ? 'correct-tray' : 'wrong-tray');
