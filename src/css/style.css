@@ -629,6 +629,7 @@ body.vk-mobile-open #screen-lesson{padding-bottom:310px;}
   .answer-input{padding:12px;font-size:18px;}
   .mobile-input-switch{gap:6px;}
   .mobile-input-mode-btn{padding:10px 8px;font-size:11px;}
+  .blank-input{min-width:50px;}
   .match-grid{display:flex;gap:10px;align-items:stretch;}
   .match-col{flex:1;min-width:0;}
   .match-panel{padding:10px 8px;height:100%;}
