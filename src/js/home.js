@@ -89,19 +89,16 @@ export function renderHomeModules() {
     const grid = document.createElement('div');
     grid.className = 'module-days-grid';
 
-    const lessonScores = (() => { try { return JSON.parse(localStorage.getItem('sk_lesson_scores') || '{}'); } catch { return {}; } })();
     mod.days.forEach((day, idx) => {
       const done   = completedSet.has(day.id);
       const locked = isDayLocked(mod.id, day.id);
-      const needsReview = done && !day.isTest && (lessonScores[day.id] ?? 100) < 50;
       const card   = document.createElement('div');
       card.className = 'mod-day-card'
         + (done   ? ' completed' : '')
         + (locked ? ' locked'    : '')
-        + (day.isTest ? ' is-test' : '')
-        + (needsReview ? ' needs-review' : '');
+        + (day.isTest ? ' is-test' : '');
       const label = day.isTest ? 'MODULE TEST' : `UNIT ${idx + 1}`;
-      const badge = done ? (needsReview ? '📖' : '✓') : (locked ? '🔒' : '');
+      const badge = done ? '✓' : (locked ? '🔒' : '');
       card.innerHTML = `
         <div class="mod-day-card-icon">${escapeHtml(day.icon)}</div>
         <div class="mod-day-card-title">${escapeHtml(day.title)}</div>
@@ -293,19 +290,6 @@ function updateHeroState(streakStatus) {
   }
 }
 
-function renderReturnFlash(gapDays) {
-  if (gapDays < 2) return;
-  const hero = document.querySelector('.hero-card');
-  if (!hero) return;
-  const flash = document.createElement('div');
-  flash.className = 'return-flash';
-  flash.id = 'return-flash';
-  flash.innerHTML = `<span class="return-flash-label">PROCESS_RESUMED</span>
-    <span class="return-flash-msg">// ${gapDays} days since last session — picking up where you left off</span>
-    <button class="return-flash-close" onclick="document.getElementById('return-flash').remove()">✕</button>`;
-  hero.insertAdjacentElement('afterend', flash);
-  setTimeout(() => document.getElementById('return-flash')?.remove(), 4000);
-}
 
 function renderStreakWarning(streakStatus) {
   if (streakStatus !== 'at_risk' || state.streak < 2) return;
@@ -384,59 +368,6 @@ function renderDailyQuest() {
   container.appendChild(card);
 }
 
-function renderWeakLessons() {
-  const container = document.getElementById('home-widgets');
-  if (!container) return;
-  const sessionCount = parseInt(localStorage.getItem('sk_session_count') || '0');
-  if (sessionCount === 0) return;
-
-  let lessonScores;
-  try { lessonScores = JSON.parse(localStorage.getItem('sk_lesson_scores') || '{}'); } catch { lessonScores = {}; }
-
-  const weak = [];
-  for (const mod of MODULES) {
-    for (const day of mod.days) {
-      if (!day.isTest && typeof lessonScores[day.id] === 'number' && lessonScores[day.id] < 50) {
-        weak.push({ mod, day, score: lessonScores[day.id] });
-      }
-    }
-  }
-  if (weak.length === 0) return;
-
-  const card = document.createElement('div');
-  card.className = 'weak-lessons-card';
-
-  const hdr = document.createElement('div');
-  hdr.className = 'wl-header';
-  hdr.textContent = `// REVIEW_QUEUE — ${weak.length} lesson${weak.length !== 1 ? 's' : ''} flagged`;
-  card.appendChild(hdr);
-
-  weak.forEach(({ mod, day, score }) => {
-    const item = document.createElement('div');
-    item.className = 'wl-item';
-
-    const icon = document.createElement('span');
-    icon.className = 'wl-icon';
-    icon.textContent = day.icon;
-
-    const info = document.createElement('div');
-    info.className = 'wl-info';
-    info.innerHTML = `<div class="wl-title">${escapeHtml(day.title)}</div>
-      <div class="wl-score">SCORE: ${score}% — REVIEW NEEDED</div>`;
-
-    const btn = document.createElement('button');
-    btn.className = 'wl-retry-btn';
-    btn.textContent = '↺ RETRY';
-    btn.onclick = () => startLesson(mod.id, day.id);
-
-    item.appendChild(icon);
-    item.appendChild(info);
-    item.appendChild(btn);
-    card.appendChild(item);
-  });
-
-  container.appendChild(card);
-}
 
 function init() {
   injectGlobals();
@@ -449,17 +380,11 @@ function init() {
   updateHeroState(streakStatus);
 
   const today = new Date().toDateString();
-  const lastSeen = localStorage.getItem('sk_last_seen_date');
-  const gapDays = lastSeen && lastSeen !== today
-    ? Math.max(1, Math.round((Date.now() - new Date(lastSeen).getTime()) / 86400000))
-    : 0;
 
   const sessionCount = parseInt(localStorage.getItem('sk_session_count') || '0');
   if (sessionCount > 0) {
-    renderReturnFlash(gapDays);
     renderStreakWarning(streakStatus);
     renderDailyQuest();
-    renderWeakLessons();
     renderAchievements();
 
     const newAchs = checkAndGrantAchievements(state);
