@@ -58,7 +58,7 @@ export function renderHomeModules() {
         <div class="module-entry-sub">${escapeHtml(mod.subtitle)}</div>
       </div>
       <div class="module-entry-right">
-        <div class="module-prog-text">${doneDays}/${totalDays} DAYS</div>
+        <div class="module-prog-text">${doneDays}/${totalDays} UNITS</div>
         <div class="module-prog-mini"><div class="module-prog-mini-fill" style="width:${pct}%"></div></div>
         <div class="module-chevron">▶</div>
       </div>`;
