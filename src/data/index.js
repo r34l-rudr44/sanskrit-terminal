@@ -13,6 +13,8 @@ import * as m2test from './module-2/test.js';
 import * as m3d1 from './module-3/day-1.js';
 import * as m3d2 from './module-3/day-2.js';
 
+import * as m4d1 from './module-4/day-1.js';
+
 export const MODULES = [
   {
     id: 1,
@@ -37,6 +39,14 @@ export const MODULES = [
     icon: "⏰",
     description: "Learn temporal adverbs (कदा, यदा, सदा, तदा), the यदा...तदा correlative pair, and how negation with time words creates nuanced meaning.",
     days: [m3d1, m3d2]
+  },
+  {
+    id: 4,
+    title: "FORM",
+    subtitle: "Sandhi & Sound Rules",
+    icon: "🔤",
+    description: "Learn how Sanskrit words combine through sandhi — the rules governing sound changes at word boundaries. Begin with दीर्घ सन्धि, where similar vowels fuse into long vowels.",
+    days: [m4d1]
   }
 ];
 
