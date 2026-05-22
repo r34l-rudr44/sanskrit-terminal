@@ -2,8 +2,6 @@ import { MODULES, getModule } from '../data/index.js';
 import { state, expandedMods, checkStreak } from './state.js';
 import { Theme, Prefs, escapeHtml } from './utils.js';
 import { injectGlobals } from './components.js';
-import { ACHIEVEMENTS, checkAndGrantAchievements, showAchievementToasts } from './achievements.js';
-import { getDailyQuest } from './quests.js';
 import { maybeShowStreakReminder } from './notifications.js';
 
 // Precomputed map from dayId → isTest for O(1) lookup in updateStats/isDayLocked
@@ -306,67 +304,6 @@ function renderStreakWarning(streakStatus) {
   statsRow.insertAdjacentElement('afterend', banner);
 }
 
-function renderAchievements() {
-  const container = document.getElementById('home-widgets');
-  if (!container) return;
-  const sessionCount = parseInt(localStorage.getItem('sk_session_count') || '0');
-  if (sessionCount === 0) return;
-  let earned;
-  try { earned = new Set(JSON.parse(localStorage.getItem('sk_achievements') || '[]')); } catch { earned = new Set(); }
-
-  const section = document.createElement('div');
-  section.className = 'ach-section';
-  const isOpen = localStorage.getItem('sk_ach_open') !== 'closed';
-
-  section.innerHTML = `<div class="ach-section-hdr" id="ach-hdr">
-    <span class="ach-section-label">// ACHIEVEMENTS</span>
-    <span class="ach-count">${earned.size}/${ACHIEVEMENTS.length} UNLOCKED</span>
-    <span class="ach-chevron">${isOpen ? '▼' : '▶'}</span>
-  </div>
-  <div class="ach-grid ${isOpen ? 'open' : ''}" id="ach-grid">
-    <div class="ach-grid-inner">
-      ${ACHIEVEMENTS.map(a => `
-        <div class="ach-card ${earned.has(a.id) ? 'ach-earned' : 'ach-locked'}" title="${escapeHtml(a.desc)}">
-          <div class="ach-card-icon">${earned.has(a.id) ? a.icon : '?'}</div>
-          <div class="ach-card-title">${escapeHtml(a.title)}</div>
-        </div>`).join('')}
-    </div>
-  </div>`;
-
-  section.querySelector('#ach-hdr').addEventListener('click', () => {
-    const grid = section.querySelector('#ach-grid');
-    const chevron = section.querySelector('.ach-chevron');
-    const nowOpen = !grid.classList.contains('open');
-    grid.classList.toggle('open', nowOpen);
-    chevron.textContent = nowOpen ? '▼' : '▶';
-    localStorage.setItem('sk_ach_open', nowOpen ? 'open' : 'closed');
-  });
-
-  container.appendChild(section);
-}
-
-function renderDailyQuest() {
-  const container = document.getElementById('home-widgets');
-  if (!container) return;
-  const sessionCount = parseInt(localStorage.getItem('sk_session_count') || '0');
-  if (sessionCount === 0) return;
-
-  const { quest, data } = getDailyQuest();
-  const todayStr = new Date().toDateString();
-  const card = document.createElement('div');
-  card.className = 'daily-quest-card' + (data.completed ? ' quest-done' : '');
-  card.innerHTML = `<div class="dq-header">
-    <span class="dq-label">DAILY_MISSION // ${escapeHtml(todayStr.toUpperCase())}</span>
-    ${data.completed ? '<span class="dq-complete">✓ COMPLETE</span>' : ''}
-  </div>
-  <div class="dq-title">${escapeHtml(quest.title)}</div>
-  <div class="dq-desc">// ${escapeHtml(quest.desc)}</div>
-  ${!data.completed
-    ? `<button class="dq-btn btn-primary" onclick="window.startFirstLesson()">► BEGIN MISSION</button>`
-    : `<div class="dq-done-msg">MISSION_SUCCESS — Quest logged to your record.</div>`}`;
-
-  container.appendChild(card);
-}
 
 
 function init() {
@@ -384,11 +321,6 @@ function init() {
   const sessionCount = parseInt(localStorage.getItem('sk_session_count') || '0');
   if (sessionCount > 0) {
     renderStreakWarning(streakStatus);
-    renderDailyQuest();
-    renderAchievements();
-
-    const newAchs = checkAndGrantAchievements(state);
-    showAchievementToasts(newAchs);
     if (streakStatus === 'at_risk') maybeShowStreakReminder(state.streak);
   }
 

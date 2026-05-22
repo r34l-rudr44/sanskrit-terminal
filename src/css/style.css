@@ -864,34 +864,6 @@ body.vk-mobile-open #screen-lesson{padding-bottom:310px;}
 .ach-toast-title{font-family:var(--font-logo);font-size:20px;color:var(--text);letter-spacing:1px;line-height:1.1;}
 .ach-toast-desc{font-size:11px;color:var(--text-2);margin-top:3px;}
 
-/* Achievements section on home */
-.ach-section{margin-bottom:16px;}
-.ach-section-hdr{display:flex;align-items:center;gap:8px;padding:10px 14px;border:var(--border-dim);background:var(--surface2);cursor:pointer;transition:all .1s;}
-.ach-section-hdr:hover{border-color:var(--brand-dim);background:var(--surface3);}
-.ach-section-label{font-size:12px;color:var(--text-3);letter-spacing:2px;flex:1;}
-.ach-count{font-size:11px;color:var(--brand);letter-spacing:1px;}
-.ach-chevron{font-size:10px;color:var(--text-3);}
-.ach-grid{display:grid;grid-template-rows:0fr;transition:grid-template-rows .28s ease;}
-.ach-grid.open{grid-template-rows:1fr;}
-.ach-grid-inner{overflow:hidden;min-height:0;display:grid;grid-template-columns:repeat(auto-fill,minmax(80px,1fr));gap:6px;padding:8px 0 2px;}
-.ach-card{border:var(--border-dim);background:var(--surface2);padding:10px 6px;text-align:center;transition:all .1s;cursor:default;}
-.ach-card.ach-earned{border-color:var(--brand-dim);background:var(--brand-glow);}
-.ach-card.ach-locked{opacity:.38;}
-.ach-card-icon{font-size:22px;margin-bottom:4px;}
-.ach-card-title{font-size:9px;color:var(--text-2);letter-spacing:1px;word-break:break-all;line-height:1.3;}
-.ach-card.ach-earned .ach-card-title{color:var(--brand);}
-
-/* Daily quest card */
-.daily-quest-card{border:var(--border-brand);background:var(--surface2);padding:16px 18px;margin-bottom:12px;box-shadow:var(--shadow);animation:scanIn .2s ease;}
-.daily-quest-card.quest-done{border-color:var(--ok);box-shadow:var(--shadow-ok);}
-.dq-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:6px;}
-.dq-label{font-size:10px;color:var(--text-3);letter-spacing:2px;}
-.dq-complete{font-size:11px;color:var(--ok);letter-spacing:1.5px;}
-.dq-title{font-family:var(--font-logo);font-size:26px;color:var(--brand);letter-spacing:1px;line-height:1;}
-.daily-quest-card.quest-done .dq-title{color:var(--ok);}
-.dq-desc{font-size:13px;color:var(--text-2);margin:4px 0 10px;}
-.dq-btn{padding:8px 18px;font-size:14px;}
-.dq-done-msg{font-size:12px;color:var(--ok);letter-spacing:1px;}
 
 
 /* Curriculum progress bar */
