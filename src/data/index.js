@@ -14,6 +14,7 @@ import * as m3d1 from './module-3/day-1.js';
 import * as m3d2 from './module-3/day-2.js';
 import * as m3d3 from './module-3/day-3.js';
 import * as m3d4 from './module-3/day-4.js';
+import * as m3d5 from './module-3/day-5.js';
 
 import * as m4d1 from './module-4/day-1.js';
 
@@ -40,7 +41,7 @@ export const MODULES = [
     subtitle: "Time, Correlatives & Nuance",
     icon: "⏰",
     description: "Learn temporal adverbs (कदा, यदा, सदा, तदा), time-of-day words (प्रातः, सायम्, रात्रौ), the future tense (गमिष्यामि), and correlative pairs यदा...तदा, यदि...तर्हि, यथा...तथा.",
-    days: [m3d1, m3d2, m3d3, m3d4]
+    days: [m3d1, m3d2, m3d3, m3d4, m3d5]
   },
   {
     id: 4,
