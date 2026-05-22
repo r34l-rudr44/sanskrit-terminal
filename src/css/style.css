@@ -43,6 +43,7 @@ button{font-family:var(--font-ui);cursor:pointer;touch-action:manipulation;}
 @keyframes glowPulse{0%,100%{box-shadow:0 0 8px var(--brand-glow),var(--shadow)}50%{box-shadow:0 0 22px var(--brand-glow),var(--shadow)}}
 @keyframes shake{0%,100%{transform:translateX(0)}20%{transform:translateX(-6px)}40%{transform:translateX(6px)}60%{transform:translateX(-4px)}80%{transform:translateX(4px)}}
 @keyframes fbIconIn{0%{transform:scale(0) rotate(-10deg);opacity:0}70%{transform:scale(1.25) rotate(3deg)}100%{transform:scale(1) rotate(0);opacity:1}}
+@keyframes scanOut  {from{opacity:1;clip-path:inset(0 0 0% 0)}to{opacity:0;clip-path:inset(0 0 100% 0)}}
 .cursor::after{content:'█';animation:blink 1s step-end infinite;color:var(--brand);font-size:0.8em;margin-left:3px;}
 
 .topbar{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:10px 18px;padding-top:max(10px,env(safe-area-inset-top,0px));background:var(--surface);border-bottom:var(--border-brand);position:sticky;top:0;z-index:100;animation:flicker 11s infinite;}
@@ -195,10 +196,14 @@ body.bar-collapsed{padding-bottom:calc(62px + env(safe-area-inset-bottom,0px));}
 .bl-desktop{}.bl-mobile-only{display:none!important;}
 .explore-dropdown{display:none;flex-direction:column;position:absolute;bottom:100%;left:0;min-width:0;background:var(--surface);border:var(--border-brand);border-bottom:none;box-shadow:-4px -4px 0 var(--brand-dark);z-index:201;}
 .explore-dropdown.open{display:flex;animation:scanIn .15s ease;}
+.explore-dropdown.closing{display:flex;animation:scanOut .12s ease-in forwards;}
 .explore-dropdown-item{display:flex;align-items:center;gap:10px;width:100%;padding:13px 18px;border:none;border-bottom:1px solid var(--border);background:transparent;color:var(--text-2);font-family:var(--font-ui);font-size:13px;letter-spacing:1.5px;cursor:pointer;text-align:left;transition:all .1s;white-space:nowrap;}
 .explore-dropdown-item:last-child{border-bottom:none;}
 .explore-dropdown-item:hover{color:var(--brand);background:var(--surface2);}
 .explore-dropdown-item:active{color:var(--brand-dim);background:var(--surface3);}
+.explore-chevron{display:inline-block;transition:transform .18s ease;margin-left:3px;font-size:10px;line-height:1;}
+#explore-btn.open{color:var(--brand);background:var(--brand-glow2);}
+#explore-btn.open .explore-chevron{transform:rotate(180deg);}
 @media(max-width:640px){.bl-desktop{display:none!important;}.bl-mobile-only{display:flex!important;flex:1;justify-content:center;}.bottom-bar-link.donate-link{flex:1;justify-content:center;border-right:none;}}
 
 .screen{display:none;}

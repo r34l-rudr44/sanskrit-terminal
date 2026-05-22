@@ -172,13 +172,29 @@ export function injectGlobals() {
     dd.style.width = `${btnRect.width}px`;
   };
 
+  const closeExploreWithAnim = (dd) => {
+    const btn = document.getElementById('explore-btn');
+    dd.classList.add('closing');
+    dd.classList.remove('open');
+    btn?.classList.remove('open');
+    dd.addEventListener('animationend', () => dd.classList.remove('closing'), { once: true });
+  };
+
   window.toggleExploreDropdown = () => {
     const dd = document.getElementById('explore-dropdown');
+    const btn = document.getElementById('explore-btn');
     syncExploreDropdown();
-    dd.classList.toggle('open');
+    if (dd.classList.contains('open')) {
+      closeExploreWithAnim(dd);
+    } else {
+      dd.classList.remove('closing');
+      dd.classList.add('open');
+      btn?.classList.add('open');
+    }
   };
   window.closeExploreDropdown = () => {
-    document.getElementById('explore-dropdown').classList.remove('open');
+    const dd = document.getElementById('explore-dropdown');
+    if (dd.classList.contains('open')) closeExploreWithAnim(dd);
   };
   window.addEventListener('resize', debounce(syncExploreDropdown, 100));
 
