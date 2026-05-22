@@ -850,7 +850,11 @@ function buildQuestion(q) {
   }
 
   if (q.type === 'fill') {
+    const translationHint = q.translation
+      ? `<div class="fill-translation">${escapeHtml(q.translation)}</div>`
+      : '';
     return `${badge}${renderMobileInputSwitcher()}<div class="fill-sentence">${escapeHtml(q.sentenceParts[0])}<input class="blank-input devanagari" id="active-input" type="text" autocomplete="off" autocapitalize="off" spellcheck="false" onkeydown="if(event.key==='Enter') window.submitInputQuestion()" ${renderInputModeAttrs()}>${escapeHtml(q.sentenceParts[1])}</div>
+      ${translationHint}
       <div class="keyboard-hint">${renderKeyboardHint()}</div>
       ${renderVirtualKeyboard()}`;
   }
