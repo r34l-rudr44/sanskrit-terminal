@@ -36,7 +36,7 @@
   <script>(function(){var t=localStorage.getItem('sk_theme');if(t==='light'||t==='dark'){document.documentElement.setAttribute('data-theme',t);}else{document.documentElement.setAttribute('data-theme',window.matchMedia('(prefers-color-scheme: light)').matches?'light':'dark');}})();</script>
   <link rel="stylesheet" href="/src/css/style.css">
 </head>
-<body>
+<body data-page="home">
 
 <header class="topbar">
   <a class="logo" href="index.html">
@@ -99,58 +99,14 @@
           <div class="cb-track"><div class="cb-fill" id="cb-fill" style="width:0%"></div></div>
           <div class="cb-detail" id="cb-detail">// 0/0 modules completed</div>
         </div>
-        <button class="hero-btn" onclick="startFirstLesson()">▶ START LESSON_01</button>
+        <button class="hero-btn" onclick="location.href='/path.html'">▶ LEARNING PATH</button>
       </div>
       <div class="stats-row">
         <div class="stat-card stat-card--empty"><span class="stat-num" id="stat-days">—</span><span class="stat-label">LESSONS_DONE</span></div>
         <div class="stat-card stat-card--empty"><span class="stat-num" id="stat-questions">—</span><span class="stat-label">Q_ANSWERED</span></div>
         <div class="stat-card stat-card--empty"><span class="stat-num" id="stat-accuracy">—</span><span class="stat-label">ACCURACY</span></div>
       </div>
-      <div class="section-title">LEARNING_PATH</div>
-      <div id="home-module-list">
-        <div class="module-entry module-skel-card" aria-hidden="true">
-          <div class="module-entry-hdr module-skel-hdr">
-            <div class="module-skel-icon"></div>
-            <div class="module-entry-info">
-              <div class="module-skel-line module-skel-line-id"></div>
-              <div class="module-skel-line module-skel-line-title"></div>
-              <div class="module-skel-line module-skel-line-sub"></div>
-            </div>
-            <div class="module-entry-right module-skel-right">
-              <div class="module-skel-line module-skel-line-meta"></div>
-              <div class="module-skel-chevron"></div>
-            </div>
-          </div>
-        </div>
-        <div class="module-entry module-skel-card" aria-hidden="true">
-          <div class="module-entry-hdr module-skel-hdr">
-            <div class="module-skel-icon"></div>
-            <div class="module-entry-info">
-              <div class="module-skel-line module-skel-line-id"></div>
-              <div class="module-skel-line module-skel-line-title"></div>
-              <div class="module-skel-line module-skel-line-sub"></div>
-            </div>
-            <div class="module-entry-right module-skel-right">
-              <div class="module-skel-line module-skel-line-meta"></div>
-              <div class="module-skel-chevron"></div>
-            </div>
-          </div>
-        </div>
-        <div class="module-entry module-skel-card" aria-hidden="true">
-          <div class="module-entry-hdr module-skel-hdr">
-            <div class="module-skel-icon"></div>
-            <div class="module-entry-info">
-              <div class="module-skel-line module-skel-line-id"></div>
-              <div class="module-skel-line module-skel-line-title"></div>
-              <div class="module-skel-line module-skel-line-sub"></div>
-            </div>
-            <div class="module-entry-right module-skel-right">
-              <div class="module-skel-line module-skel-line-meta"></div>
-              <div class="module-skel-chevron"></div>
-            </div>
-          </div>
-        </div>
-      </div>
+      <div id="home-widgets"></div>
     </div>
   </main>
 </div>

@@ -251,7 +251,7 @@ function updateHeroState(streakStatus) {
   const completedLessons = state.completedDays.filter(id => !dayIsTestMap.get(id));
   if (completedLessons.length === 0) {
     heroTagEl.textContent = '> SESSION_01 // READY TO BEGIN';
-    heroBtnEl.textContent = '▶ START LESSON_01';
+    heroBtnEl.textContent = '▶ START LEARNING';
     return;
   }
 
@@ -276,10 +276,10 @@ function updateHeroState(streakStatus) {
 
   if (nextDay) {
     heroTagEl.textContent = `> CONTINUE — ${escapeHtml(nextDay.title)}`;
-    heroBtnEl.textContent = '▶ RESUME PROGRESS';
+    heroBtnEl.textContent = '▶ LEARNING PATH';
   } else {
     heroTagEl.textContent = '> ALL_MODULES COMPLETE';
-    heroBtnEl.textContent = '▶ REVIEW MODULES';
+    heroBtnEl.textContent = '▶ LEARNING PATH';
   }
 
   if (sessionCount === 0) return;
@@ -323,7 +323,7 @@ function renderStreakWarning(streakStatus) {
 }
 
 function renderAchievements() {
-  const container = document.getElementById('home-module-list');
+  const container = document.getElementById('home-widgets');
   if (!container) return;
   const sessionCount = parseInt(localStorage.getItem('sk_session_count') || '0');
   if (sessionCount === 0) return;
@@ -358,11 +358,11 @@ function renderAchievements() {
     localStorage.setItem('sk_ach_open', nowOpen ? 'open' : 'closed');
   });
 
-  container.insertAdjacentElement('beforebegin', section);
+  container.appendChild(section);
 }
 
 function renderDailyQuest() {
-  const container = document.getElementById('home-module-list');
+  const container = document.getElementById('home-widgets');
   if (!container) return;
   const sessionCount = parseInt(localStorage.getItem('sk_session_count') || '0');
   if (sessionCount === 0) return;
@@ -381,11 +381,11 @@ function renderDailyQuest() {
     ? `<button class="dq-btn btn-primary" onclick="window.startFirstLesson()">► BEGIN MISSION</button>`
     : `<div class="dq-done-msg">MISSION_SUCCESS — Quest logged to your record.</div>`}`;
 
-  container.insertAdjacentElement('beforebegin', card);
+  container.appendChild(card);
 }
 
 function renderWeakLessons() {
-  const container = document.getElementById('home-module-list');
+  const container = document.getElementById('home-widgets');
   if (!container) return;
   const sessionCount = parseInt(localStorage.getItem('sk_session_count') || '0');
   if (sessionCount === 0) return;
@@ -435,7 +435,7 @@ function renderWeakLessons() {
     card.appendChild(item);
   });
 
-  container.insertAdjacentElement('beforebegin', card);
+  container.appendChild(card);
 }
 
 function init() {
@@ -445,7 +445,6 @@ function init() {
   const streakStatus = checkStreak();
   restoreSidebarState();
   renderSidebar();
-  renderHomeModules();
   updateStats();
   updateHeroState(streakStatus);
 
@@ -459,6 +458,9 @@ function init() {
   if (sessionCount > 0) {
     renderReturnFlash(gapDays);
     renderStreakWarning(streakStatus);
+    renderDailyQuest();
+    renderWeakLessons();
+    renderAchievements();
 
     const newAchs = checkAndGrantAchievements(state);
     showAchievementToasts(newAchs);
@@ -496,4 +498,6 @@ window.toggleSidebar = () => {
   localStorage.setItem('sk_sidebar', isCollapsed ? 'collapsed' : 'open');
 };
 
-document.addEventListener('DOMContentLoaded', init);
+if (document.body?.dataset.page === 'home') {
+  document.addEventListener('DOMContentLoaded', init);
+}

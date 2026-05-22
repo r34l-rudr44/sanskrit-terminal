@@ -957,6 +957,14 @@ html.mobile-fs .bottom-bar-wrap{padding-bottom:20px;}
   #screen-lesson .lesson-header{position:sticky;top:0;background:var(--bg);z-index:5;margin-bottom:12px;padding-bottom:4px;}
 }
 
+/* Learning path page */
+.path-page{max-width:900px;margin:0 auto;padding:24px 20px 80px;}
+.path-header{display:flex;align-items:center;gap:16px;margin-bottom:20px;}
+.path-back{font-size:12px;letter-spacing:1.5px;color:var(--text-2);text-decoration:none;border:var(--border-dim);padding:4px 10px;transition:all .1s;}
+.path-back:hover{color:var(--brand);border-color:var(--brand-dim);}
+.path-header .section-title{margin-bottom:0;}
+@media(max-width:600px){.path-page{padding:16px 12px 60px;}}
+
 /* Accessibility: respect the OS "Reduce Motion" preference.
    Kills all CSS animations/transitions and hides confetti particles.
    JS also guards confetti spawning — see finishLesson() in lesson.js. */

@@ -56,6 +56,7 @@ export default defineConfig({
       input: {
         main: resolve(__dirname, 'index.html'),
         lesson: resolve(__dirname, 'lesson.html'),
+        path: resolve(__dirname, 'path.html'),
         blog: resolve(__dirname, 'blog/index.html'),
         'blog-anusvara': resolve(__dirname, 'blog/anusvara.html'),
       },

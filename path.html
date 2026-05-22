@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover"/>
+  <meta name="description" content="SANSKRIT.EXE — Learning Path. Browse all modules and units."/>
+  <meta name="application-name" content="SANSKRIT.EXE"/>
+  <meta name="theme-color" content="#06060A"/>
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg"/>
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png"/>
+  <link rel="shortcut icon" href="/favicon.ico"/>
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"/>
+  <link rel="manifest" href="/site.webmanifest"/>
+  <title>SANSKRIT.EXE — Learning Path</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" crossorigin>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=VT323&family=Share+Tech+Mono&family=Noto+Sans+Devanagari:wght@400&display=swap" rel="stylesheet"/>
+  <script>(function(){var t=localStorage.getItem('sk_theme');if(t==='light'||t==='dark'){document.documentElement.setAttribute('data-theme',t);}else{document.documentElement.setAttribute('data-theme',window.matchMedia('(prefers-color-scheme: light)').matches?'light':'dark');}})();</script>
+  <link rel="stylesheet" href="/src/css/style.css">
+</head>
+<body data-page="path">
+
+<header class="topbar">
+  <a class="logo" href="index.html">
+    <div class="logo-icon">🪔</div>
+    <div>
+      <div class="logo-text">SANSKRIT.EXE <span class="beta-tag">BETA</span></div>
+      <div class="logo-sub">वाग्देव्यै नमः</div>
+    </div>
+  </a>
+  <div class="topbar-right">
+    <div class="streak-badge" tabindex="0">🔥 <span id="streak-count">0</span>×</div>
+    <button class="icon-btn" id="sound-toggle-btn" onclick="window.toggleSound && window.toggleSound()">🔊</button>
+    <button class="prefs-btn" onclick="window.openPrefs && window.openPrefs()">⚙ <span class="prefs-label">PREFS</span></button>
+  </div>
+</header>
+<script>document.getElementById('streak-count').textContent=parseInt(localStorage.getItem('sk_streak'),10)||0;</script>
+
+<div class="path-page">
+  <div class="path-header">
+    <a class="path-back" href="index.html">← HOME</a>
+    <div class="section-title">LEARNING_PATH</div>
+  </div>
+  <div id="home-module-list">
+    <div class="module-entry module-skel-card" aria-hidden="true">
+      <div class="module-entry-hdr module-skel-hdr">
+        <div class="module-skel-icon"></div>
+        <div class="module-entry-info">
+          <div class="module-skel-line module-skel-line-id"></div>
+          <div class="module-skel-line module-skel-line-title"></div>
+          <div class="module-skel-line module-skel-line-sub"></div>
+        </div>
+        <div class="module-entry-right module-skel-right">
+          <div class="module-skel-line module-skel-line-meta"></div>
+          <div class="module-skel-chevron"></div>
+        </div>
+      </div>
+    </div>
+    <div class="module-entry module-skel-card" aria-hidden="true">
+      <div class="module-entry-hdr module-skel-hdr">
+        <div class="module-skel-icon"></div>
+        <div class="module-entry-info">
+          <div class="module-skel-line module-skel-line-id"></div>
+          <div class="module-skel-line module-skel-line-title"></div>
+          <div class="module-skel-line module-skel-line-sub"></div>
+        </div>
+        <div class="module-entry-right module-skel-right">
+          <div class="module-skel-line module-skel-line-meta"></div>
+          <div class="module-skel-chevron"></div>
+        </div>
+      </div>
+    </div>
+    <div class="module-entry module-skel-card" aria-hidden="true">
+      <div class="module-entry-hdr module-skel-hdr">
+        <div class="module-skel-icon"></div>
+        <div class="module-entry-info">
+          <div class="module-skel-line module-skel-line-id"></div>
+          <div class="module-skel-line module-skel-line-title"></div>
+          <div class="module-skel-line module-skel-line-sub"></div>
+        </div>
+        <div class="module-entry-right module-skel-right">
+          <div class="module-skel-line module-skel-line-meta"></div>
+          <div class="module-skel-chevron"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script type="module" src="/src/js/path.js"></script>
+</body>
+</html>
