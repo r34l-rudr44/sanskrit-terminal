@@ -908,7 +908,7 @@ html.mobile-fs .bottom-bar-wrap{padding-bottom:20px;}
 }
 
 /* Review queue widget */
-.review-widget{margin-top:20px;border:var(--border-brand);background:var(--surface);padding:14px 16px;}
+.review-widget{border:var(--border-brand);background:var(--surface);padding:14px 16px;}
 .review-widget-hdr{display:flex;align-items:baseline;gap:10px;margin-bottom:12px;}
 .review-widget-title{font-family:var(--font-logo);font-size:20px;color:var(--brand);letter-spacing:1px;}
 .review-widget-sub{font-size:11px;color:var(--text-3);letter-spacing:1px;}
