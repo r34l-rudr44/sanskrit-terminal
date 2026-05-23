@@ -19,6 +19,10 @@ import * as m3d6 from './module-3/day-6.js';
 import * as m3test from './module-3/test.js';
 
 import * as m4d1 from './module-4/day-1.js';
+import * as m4d2 from './module-4/day-2.js';
+import * as m4d3 from './module-4/day-3.js';
+import * as m4d4 from './module-4/day-4.js';
+import * as m4d5 from './module-4/day-5.js';
 import * as m4test from './module-4/test.js';
 
 export const MODULES = [
@@ -51,8 +55,8 @@ export const MODULES = [
     title: "FORM",
     subtitle: "Sandhi & Sound Rules",
     icon: "🔤",
-    description: "Learn how Sanskrit words combine through sandhi — the rules governing sound changes at word boundaries. Begin with दीर्घ सन्धि, where similar vowels fuse into long vowels.",
-    days: [m4d1, m4test]
+    description: "Master all five types of स्वर सन्धि — the rules governing vowel changes at Sanskrit word boundaries: दीर्घ (similar vowels fuse), गुण (अ/आ + इ/उ/ऋ), वृद्धि (अ/आ + ए/ओ), यण (इ/उ/ऋ → semi-vowels), and अयादि (ए/ओ/ऐ/औ dissolve).",
+    days: [m4d1, m4d2, m4d3, m4d4, m4d5, m4test]
   }
 ];
 

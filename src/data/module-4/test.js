@@ -5,18 +5,18 @@ export const isTest = true;
 
 export const metadata = {
   difficulty: "beginner",
-  estimatedMinutes: 8,
+  estimatedMinutes: 12,
   tags: ["assessment", "module-test", "sandhi", "review"],
-  grammarTopics: ["sandhi", "dirgha-sandhi"],
+  grammarTopics: ["sandhi", "dirgha-sandhi", "guNa-sandhi", "vRddhi-sandhi", "yaN-sandhi", "ayaadi-sandhi"],
   vocabularyTopics: ["compound words"]
 };
 
 export const briefing = {
   pre: {
     title: "Module 4 Final Test",
-    lead: "You've learned दीर्घ सन्धि — the rule that fuses two similar vowels into one long vowel at a word boundary. This test checks whether you can apply the rule and recognise real words formed by it.",
+    lead: "You've learned all five types of स्वर सन्धि — दीर्घ, गुण, वृद्धि, यण, and अयादि. This test checks whether you can identify which rule applies and apply it correctly.",
     sections: [
-      { type:"block", text:"<strong>This test covers:</strong> The दीर्घ सन्धि rule · all four vowel pairs (अ/आ, इ/ई, उ/ऊ, ऋ/ॠ) · recognising and applying sandhi in real Sanskrit words" },
+      { type:"block", text:"<strong>This test covers:</strong> दीर्घ सन्धि (similar vowels fuse) · गुण सन्धि (अ/आ + इ/उ/ऋ → ए/ओ/अर्) · वृद्धि सन्धि (अ/आ + ए/ओ → ऐ/औ) · यण सन्धि (इ/उ/ऋ → य्/व्/र् before different vowel) · अयादि सन्धि (ए/ऐ/ओ/औ → अय्/आय्/अव्/आव्)" },
       { type:"grammar", label:"TEST RULES", text:"Answer at least 60% correctly to pass. Mistakes show the correct answer with an explanation." }
     ]
   },
@@ -24,11 +24,14 @@ export const briefing = {
 };
 
 export const questions = [
-  {type:"mcq",question:"दीर्घ सन्धि occurs when:",options:["Two different vowels meet","Two similar vowels meet at a word boundary — सवर्ण स्वर मिलते हैं","A vowel meets a consonant","Two consonants meet"],answer:"Two similar vowels meet at a word boundary — सवर्ण स्वर मिलते हैं",explanation:"दीर्घ सन्धि = long vowel fusion. The rule अकः सवर्णे दीर्घः: when two similar (सवर्ण) vowels meet at a boundary, they fuse into one long vowel."},
-  {type:"mcq",question:"उ + ऊ = ?",options:["उ","ओ","उऊ","ऊ"],answer:"ऊ",explanation:"उ + ऊ → ऊ by दीर्घ सन्धि. Short or long, two similar उ-family vowels always fuse to long ऊ. Example: भानु + उदय = भानूदय."},
-  {type:"mcq",question:"भानु + उदय = ?",options:["भानुउदय","भानोदय","भानूदय","भानोउदय"],answer:"भानूदय",explanation:"भानु ends in उ; उदय begins with उ. उ + उ → ऊ: the boundary fuses into long ऊ, giving भानूदय (sunrise)."},
-  {type:"mcq",question:"Which of these is NOT a दीर्घ सन्धि combination?",options:["आ + अ","इ + ई","उ + उ","अ + इ"],answer:"अ + इ",explanation:"अ + इ is NOT दीर्घ सन्धि — these are different vowel families (अ-family and इ-family). Mixing vowel families produces गुण or वृद्धि सन्धि, not दीर्घ. दीर्घ सन्धि only applies when both vowels belong to the same family."},
-  {type:"fill",question:"Apply दीर्घ सन्धि: मुनि + ईश = ___",sentenceParts:["मुनि + ईश = ",""],answer:"मुनीश",answerRoman:"muniisha",translation:"Sage + lord = Lord of sages",explanation:"मुनि ends in इ; ईश begins with ई. इ + ई → ई: the boundary इ+ई fuses into one long ई, giving मुनीश."},
-  {type:"fill",question:"Apply दीर्घ सन्धि: हिम + आलय = ___",sentenceParts:["हिम + आलय = ",""],answer:"हिमालय",answerRoman:"himaalaya",translation:"Snow + abode = Himalaya",explanation:"हिम ends in अ; आलय begins with आ. अ + आ → आ: the boundary fuses into one long आ, giving हिमालय (Himalaya)."},
-  {type:"match",question:"Match each word pair to its sandhi result",pairs:[{left:"विद्या + अर्थी",right:"विद्यार्थी"},{left:"पुस्तक + आलय",right:"पुस्तकालय"},{left:"रवि + इन्द्र",right:"रवीन्द्र"},{left:"भानु + उदय",right:"भानूदय"}],explanation:"All four are दीर्घ सन्धि: आ+अ→आ (विद्यार्थी), अ+आ→आ (पुस्तकालय), इ+इ→ई (रवीन्द्र), उ+उ→ऊ (भानूदय)."}
+  {type:"mcq",question:"हिम + आलय = ?",options:["हिमेलय","हिमाआलय","हिमालय","हिमोलय"],answer:"हिमालय",explanation:"दीर्घ सन्धि: हिम ends in अ; आलय begins with आ. अ + आ → आ (same family — both fuse to long आ). Result: हिमालय (Himalaya)."},
+  {type:"mcq",question:"देव + इन्द्र = ?",options:["देवइन्द्र","देवेन्द्र","देवैन्द्र","देवोन्द्र"],answer:"देवेन्द्र",explanation:"गुण सन्धि: देव ends in अ; इन्द्र begins with इ (different family). अ + इ → ए. Result: देवेन्द्र (Lord of gods)."},
+  {type:"mcq",question:"एक + एक = ?",options:["एकेक","एकएक","एकोक","एकैक"],answer:"एकैक",explanation:"वृद्धि सन्धि: एक ends in अ; the second एक begins with ए. अ + ए → ऐ (vṛddhi rule). Result: एकैक (one by one)."},
+  {type:"mcq",question:"यदि + अपि = ?",options:["यदिअपि","यदेऽपि","यद्यपि","यदिपि"],answer:"यद्यपि",explanation:"यण सन्धि: यदि ends in इ; अपि begins with a different vowel अ. इ → य् before अ. Result: यद्यपि (although)."},
+  {type:"mcq",question:"ने + अन = ?",options:["नेअन","नेन","नान","नयन"],answer:"नयन",explanation:"अयादि सन्धि: ने ends in ए; अन begins with अ. ए → अय् before अ. Result: नयन (eye)."},
+  {type:"mcq",question:"Which sandhi type applies to: रवि + इन्द्र = रवीन्द्र?",options:["गुण सन्धि","वृद्धि सन्धि","दीर्घ सन्धि","यण सन्धि"],answer:"दीर्घ सन्धि",explanation:"रवि ends in इ; इन्द्र begins with इ — the same vowel family. इ + इ → ई. This is दीर्घ सन्धि (similar vowels fuse into one long vowel)."},
+  {type:"mcq",question:"Which sandhi type applies to: महा + ओषधि = महौषधि?",options:["गुण सन्धि","दीर्घ सन्धि","वृद्धि सन्धि","अयादि सन्धि"],answer:"वृद्धि सन्धि",explanation:"महा ends in आ; ओषधि begins with ओ. आ + ओ → औ. This is वृद्धि सन्धि — अ/आ before ओ/औ produces vṛddhi vowel औ."},
+  {type:"fill",question:"Apply sandhi: सूर्य + उदय = ___",sentenceParts:["सूर्य + उदय = ",""],answer:"सूर्योदय",answerRoman:"suuRyodaya",translation:"Sunrise",explanation:"गुण सन्धि: सूर्य ends in अ; उदय begins with उ. अ + उ → ओ. Result: सूर्योदय (sunrise)."},
+  {type:"fill",question:"Apply sandhi: गुरु + आश्रम = ___",sentenceParts:["गुरु + आश्रम = ",""],answer:"गुर्वाश्रम",answerRoman:"gurvaaShrama",translation:"Guru's hermitage",explanation:"यण सन्धि: गुरु ends in उ; आश्रम begins with आ (different vowel). उ → व् before आ. Result: गुर्वाश्रम."},
+  {type:"match",question:"Match each word pair to the sandhi type it follows",pairs:[{left:"हिम + आलय → हिमालय",right:"दीर्घ सन्धि"},{left:"गण + ईश → गणेश",right:"गुण सन्धि"},{left:"नौ + इक → नाविक",right:"अयादि सन्धि"},{left:"पितृ + आदेश → पित्रादेश",right:"यण सन्धि"}],explanation:"दीर्घ (similar vowels fuse), गुण (अ/आ + इ/ई → ए), अयादि (औ → आव्), यण (ऋ → र् before vowel)."}
 ];
