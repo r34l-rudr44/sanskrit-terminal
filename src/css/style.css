@@ -907,6 +907,19 @@ html.mobile-fs .bottom-bar-wrap{padding-bottom:20px;}
   #screen-lesson .lesson-header{position:sticky;top:0;background:var(--bg);z-index:5;margin-bottom:12px;padding-bottom:4px;}
 }
 
+/* Review queue widget */
+.review-widget{margin-top:20px;border:var(--border-brand);background:var(--surface);padding:14px 16px;}
+.review-widget-hdr{display:flex;align-items:baseline;gap:10px;margin-bottom:12px;}
+.review-widget-title{font-family:var(--font-logo);font-size:20px;color:var(--brand);letter-spacing:1px;}
+.review-widget-sub{font-size:11px;color:var(--text-3);letter-spacing:1px;}
+.review-widget-list{display:flex;flex-direction:column;gap:8px;}
+.review-item{display:flex;align-items:center;gap:10px;padding:8px 10px;border:1px solid var(--border);background:var(--surface2);}
+.review-item-icon{font-size:20px;flex-shrink:0;width:28px;text-align:center;}
+.review-item-body{flex:1;min-width:0;}
+.review-item-title{font-size:13px;letter-spacing:1px;color:var(--text);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.review-item-score{font-size:11px;color:var(--err);letter-spacing:1px;margin-top:2px;}
+.review-item-btn{flex-shrink:0;font-size:11px;padding:5px 10px;}
+
 /* Learning path page */
 .path-page{max-width:900px;margin:0 auto;padding:24px 20px 80px;}
 .path-header{display:flex;align-items:center;gap:16px;margin-bottom:20px;}

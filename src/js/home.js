@@ -3,6 +3,7 @@ import { state, expandedMods, checkStreak } from './state.js';
 import { Theme, Prefs, escapeHtml } from './utils.js';
 import { injectGlobals } from './components.js';
 import { maybeShowStreakReminder } from './notifications.js';
+import { renderReviewQueue } from './review.js';
 
 // Precomputed map from dayId → isTest for O(1) lookup in updateStats/isDayLocked
 const dayIsTestMap = new Map();
@@ -322,6 +323,7 @@ function init() {
   if (sessionCount > 0) {
     renderStreakWarning(streakStatus);
     if (streakStatus === 'at_risk') maybeShowStreakReminder(state.streak);
+    renderReviewQueue(streakStatus);
   }
 
   localStorage.setItem('sk_last_seen_date', today);
