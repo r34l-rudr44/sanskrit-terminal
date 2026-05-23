@@ -1,4 +1,4 @@
-export const id = "3-6";
+export const id = "5-1";
 export const title = "How Often? — आवृत्तिवाचक शब्द";
 export const icon = "🔁";
 
