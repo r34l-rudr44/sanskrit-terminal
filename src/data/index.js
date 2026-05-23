@@ -8,6 +8,8 @@ import * as m1test from './module-1/test.js';
 import * as m2d1 from './module-2/day-1.js';
 import * as m2d2 from './module-2/day-2.js';
 import * as m2d3 from './module-2/day-3.js';
+import * as m2p1 from './module-2/practice-1.js';
+import * as m2p2 from './module-2/practice-2.js';
 import * as m2test from './module-2/test.js';
 
 import * as m3d1 from './module-3/day-1.js';
@@ -42,7 +44,7 @@ export const MODULES = [
     subtitle: "Nouns, Places & Sentences",
     icon: "📜",
     description: "Learn Sanskrit destination nouns, question patterns with किम्/कुत्र/कः, and negate with न to form rich real-world sentences.",
-    days: [m2d1, m2d2, m2d3, m2test]
+    days: [m2d1, m2d2, m2d3, m2p1, m2p2, m2test]
   },
   {
     id: 3,
