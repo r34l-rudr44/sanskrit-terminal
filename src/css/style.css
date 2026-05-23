@@ -914,6 +914,10 @@ html.mobile-fs .bottom-bar-wrap{padding-bottom:20px;}
 .path-back:hover{color:var(--brand);border-color:var(--brand-dim);}
 .path-header .section-title{margin-bottom:0;}
 @media(max-width:600px){.path-page{padding:16px 12px 60px;}}
+@media(max-width:480px) and (orientation:portrait){
+  body[data-page="path"]{height:auto;overflow-y:auto;}
+  body[data-page="path"] #home-module-list{flex:unset;overflow-y:visible;min-height:unset;padding-bottom:0;}
+}
 
 /* Accessibility: respect the OS "Reduce Motion" preference.
    Kills all CSS animations/transitions and hides confetti particles.
