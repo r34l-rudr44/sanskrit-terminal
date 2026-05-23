@@ -915,8 +915,9 @@ html.mobile-fs .bottom-bar-wrap{padding-bottom:20px;}
 .path-header .section-title{margin-bottom:0;}
 @media(max-width:600px){.path-page{padding:16px 12px 60px;}}
 @media(max-width:480px) and (orientation:portrait){
-  body[data-page="path"]{height:auto;overflow-y:auto;}
-  body[data-page="path"] #home-module-list{flex:unset;overflow-y:visible;min-height:unset;padding-bottom:0;}
+  body[data-page="path"] .path-page{flex:1;display:flex;flex-direction:column;min-height:0;overflow:hidden;padding:0 12px;}
+  body[data-page="path"] .path-header{flex-shrink:0;padding-top:16px;margin-bottom:12px;}
+  body[data-page="path"] #home-module-list{flex:1;overflow-y:auto;min-height:0;-webkit-overflow-scrolling:touch;padding-bottom:calc(20px + env(safe-area-inset-bottom,0px));}
 }
 
 /* Accessibility: respect the OS "Reduce Motion" preference.
