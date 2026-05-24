@@ -879,7 +879,7 @@ body.vk-mobile-open #screen-lesson{padding-bottom:310px;}
 
 
 /* Streak warning banner */
-.streak-warning-banner{display:flex;align-items:center;gap:12px;border:2px solid var(--brand);background:var(--brand-glow);padding:12px 16px;margin-bottom:12px;animation:scanIn .2s ease;}
+.streak-warning-banner{display:flex;align-items:center;gap:12px;border:2px solid var(--brand);background:var(--brand-glow);padding:12px 16px;margin-bottom:22px;animation:scanIn .2s ease;}
 .swb-icon{font-size:22px;flex-shrink:0;}
 .swb-body{flex:1;min-width:0;}
 .swb-title{font-family:var(--font-logo);font-size:20px;color:var(--brand);letter-spacing:1px;}
