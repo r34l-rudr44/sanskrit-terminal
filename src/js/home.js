@@ -298,8 +298,8 @@ function renderStreakWarning(streakStatus) {
   banner.className = 'streak-warning-banner';
   banner.innerHTML = `<span class="swb-icon">🔥</span>
     <div class="swb-body">
-      <div class="swb-title">STREAK_ACTIVE — ${state.streak}× days</div>
-      <div class="swb-sub">// Complete a lesson before midnight to keep your chain alive.</div>
+      <div class="swb-title">SAVE_STREAK — ${state.streak} days</div>
+      <div class="swb-sub">// Complete a lesson today!</div>
     </div>
     <button class="swb-btn btn-primary" onclick="window.startFirstLesson()">► LESSON NOW</button>`;
   statsRow.insertAdjacentElement('afterend', banner);

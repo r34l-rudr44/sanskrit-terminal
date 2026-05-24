@@ -1106,7 +1106,7 @@ function _buildTomorrowCard(pct, sessionCount, streak, nextDay, nextMod, day) {
     title = 'PROCESS_COMPLETE';
     body = '// Session 1 logged. Return tomorrow to build your streak. Your brain consolidates language during sleep.';
   } else if (streak >= 2) {
-    title = `STREAK_ACTIVE — ${streak}× days`;
+    title = `SAVE_STREAK — ${streak}× days`;
     body = `// Return tomorrow to reach ${streak + 1}×. Consistency compounds.`;
   } else if (streak === 0 && sessionCount > 1) {
     title = 'STREAK_RESET';
