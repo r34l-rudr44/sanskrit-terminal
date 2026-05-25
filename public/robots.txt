@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://sanskrit-terminal.vercel.app/sitemap.xml

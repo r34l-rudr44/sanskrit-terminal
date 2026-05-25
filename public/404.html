@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover"/>
+  <meta name="robots" content="noindex"/>
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg"/>
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png"/>
+  <link rel="shortcut icon" href="/favicon.ico"/>
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"/>
+  <title>404 — SANSKRIT.EXE</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" crossorigin>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=VT323&family=Share+Tech+Mono&display=swap" rel="stylesheet"/>
+  <script>(function(){var t=localStorage.getItem('sk_theme');if(t==='light'||t==='dark'){document.documentElement.setAttribute('data-theme',t);}else{document.documentElement.setAttribute('data-theme',window.matchMedia('(prefers-color-scheme: light)').matches?'light':'dark');}})();</script>
+  <style>
+    [data-theme="dark"] {
+      --bg:#06060A; --surface:#0C0C12; --surface2:#12121A;
+      --brand:#F0A500; --brand-dark:#3D2800; --brand-glow:rgba(240,165,0,0.12);
+      --err:#FF4D4D; --err-dim:#6B1A1A;
+      --text:#E8DEB8; --text-2:#9A8F60; --text-3:#4A4535;
+      --border:#252018;
+      --shadow:4px 4px 0 var(--brand-dark); --shadow-sm:3px 3px 0 var(--brand-dark);
+      --scanline-opacity:0.12;
+    }
+    [data-theme="light"] {
+      --bg:#F5EDDA; --surface:#EDE3C8; --surface2:#E4D9B8;
+      --brand:#6B3A00; --brand-dark:#2A1600; --brand-glow:rgba(107,58,0,0.10);
+      --err:#B52020; --err-dim:#5C1010;
+      --text:#2A1E06; --text-2:#6B5A30; --text-3:#A08858;
+      --border:#C4B48A;
+      --shadow:4px 4px 0 var(--brand-dark); --shadow-sm:3px 3px 0 var(--brand-dark);
+      --scanline-opacity:0.04;
+    }
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+    body{
+      font-family:'Share Tech Mono',monospace;
+      background:var(--bg);
+      color:var(--text);
+      min-height:100vh;
+      overflow-x:hidden;
+    }
+    body::before{
+      content:'';position:fixed;inset:0;pointer-events:none;z-index:9999;
+      background:repeating-linear-gradient(to bottom,transparent 0px,transparent 3px,rgba(0,0,0,var(--scanline-opacity)) 3px,rgba(0,0,0,var(--scanline-opacity)) 4px);
+    }
+    [data-theme="light"] body::before{
+      background:repeating-linear-gradient(to bottom,transparent 0px,transparent 3px,rgba(107,58,0,var(--scanline-opacity)) 3px,rgba(107,58,0,var(--scanline-opacity)) 4px);
+    }
+    @keyframes blink{0%,100%{opacity:1}50%{opacity:0}}
+    @keyframes flicker{0%,100%{opacity:1}91%{opacity:1}93%{opacity:0.97}95%{opacity:1}98%{opacity:0.97}}
+    @keyframes scanIn{from{opacity:0;clip-path:inset(0 0 100% 0)}to{opacity:1;clip-path:inset(0 0 0% 0)}}
+
+    .topbar{
+      display:flex;align-items:center;justify-content:space-between;gap:12px;
+      padding:10px 18px;padding-top:max(10px,env(safe-area-inset-top,0px));
+      background:var(--surface);border-bottom:2px solid var(--brand);
+      position:sticky;top:0;z-index:100;animation:flicker 11s infinite;
+    }
+    .logo{display:flex;align-items:center;gap:10px;text-decoration:none;color:inherit;}
+    .logo:focus-visible{outline:2px solid var(--brand);outline-offset:2px;}
+    .logo-icon{
+      width:40px;height:40px;border:2px solid var(--brand);
+      background:var(--brand);display:flex;align-items:center;justify-content:center;
+      color:var(--bg);box-shadow:var(--shadow-sm);flex-shrink:0;
+    }
+    .logo-icon svg{width:65%;height:65%;}
+    .logo-text{
+      font-family:'VT323',monospace;font-size:22px;color:var(--brand);
+      letter-spacing:2px;line-height:1.2;text-shadow:0 0 12px var(--brand);
+      display:flex;align-items:center;gap:6px;
+    }
+    .beta-tag{
+      font-family:'Share Tech Mono',monospace;font-size:10px;
+      color:var(--bg);background:var(--brand);padding:2px 6px;
+      border-radius:2px;letter-spacing:1px;text-shadow:none;
+    }
+    .logo-sub{font-size:12px;color:var(--text-3);margin-top:1px;letter-spacing:1px;}
+
+    .page{
+      display:flex;flex-direction:column;align-items:center;justify-content:center;
+      min-height:calc(100vh - 61px);padding:40px 24px;text-align:center;
+    }
+    .err-code{
+      font-family:'VT323',monospace;font-size:clamp(80px,20vw,160px);
+      color:var(--err);text-shadow:0 0 24px rgba(255,77,77,0.3);
+      line-height:1;margin-bottom:8px;
+    }
+    .err-label{
+      font-size:clamp(14px,3vw,20px);color:var(--err);letter-spacing:3px;
+      margin-bottom:32px;
+    }
+    .err-box{
+      border:2px solid var(--border);background:var(--surface);
+      padding:24px 32px;max-width:480px;width:100%;
+      box-shadow:var(--shadow);margin-bottom:32px;
+      animation:scanIn .4s ease both;
+    }
+    .err-line{font-size:13px;color:var(--text-2);letter-spacing:1px;line-height:2;}
+    .err-line .prompt{color:var(--brand);}
+    .err-line .val{color:var(--text);}
+    .cursor-block::after{content:'█';animation:blink 1s step-end infinite;color:var(--brand);}
+
+    .home-btn{
+      display:inline-flex;align-items:center;gap:10px;
+      padding:12px 28px;border:2px solid var(--brand);
+      background:var(--surface);color:var(--brand);
+      font-family:'Share Tech Mono',monospace;font-size:16px;
+      letter-spacing:2px;cursor:pointer;text-decoration:none;
+      box-shadow:var(--shadow);transition:all .1s;
+    }
+    .home-btn:hover{background:var(--surface2);box-shadow:6px 6px 0 var(--brand-dark),0 0 12px var(--brand-glow);}
+    .home-btn:active{transform:translate(4px,4px);box-shadow:none;}
+    .home-btn:focus-visible{outline:2px solid var(--brand);outline-offset:3px;}
+  </style>
+</head>
+<body>
+
+<header class="topbar">
+  <a class="logo" href="/">
+    <div class="logo-icon">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 46" aria-hidden="true">
+        <path fill="currentColor" d="M25.946 44.938c-.664.845-2.021.375-2.021-.698V33.937a2.26 2.26 0 0 0-2.262-2.262H10.287c-.92 0-1.456-1.04-.92-1.788l7.48-10.471c1.07-1.497 0-3.578-1.842-3.578H1.237c-.92 0-1.456-1.04-.92-1.788L10.013.474c.214-.297.556-.474.92-.474h28.894c.92 0 1.456 1.04.92 1.788l-7.48 10.471c-1.07 1.498 0 3.579 1.842 3.579h11.377c.943 0 1.473 1.088.89 1.83L25.947 44.94z"/>
+      </svg>
+    </div>
+    <div>
+      <div class="logo-text">SANSKRIT.EXE <span class="beta-tag">BETA</span></div>
+      <div class="logo-sub">वाग्देव्यै नमः</div>
+    </div>
+  </a>
+</header>
+
+<main class="page" role="main">
+  <div class="err-code" aria-label="404">404</div>
+  <div class="err-label">// PAGE_NOT_FOUND</div>
+
+  <div class="err-box" role="region" aria-label="Error details">
+    <div class="err-line"><span class="prompt">$ </span><span class="val">GET</span> <span style="color:var(--err)">/???</span></div>
+    <div class="err-line"><span class="prompt">→ </span>STATUS: <span style="color:var(--err)">404 NOT_FOUND</span></div>
+    <div class="err-line"><span class="prompt">→ </span>MSG: Path does not exist</div>
+    <div class="err-line"><span class="prompt">→ </span>HINT: Return to <span class="val">/home</span> and try again</div>
+    <div class="err-line" style="margin-top:8px;"><span class="prompt">$ </span><span class="cursor-block"></span></div>
+  </div>
+
+  <a href="/" class="home-btn">▶ RETURN_HOME</a>
+</main>
+
+</body>
+</html>
