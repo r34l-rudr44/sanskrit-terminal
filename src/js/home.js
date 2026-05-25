@@ -296,7 +296,7 @@ function renderStreakWarning(streakStatus) {
   if (!statsRow) return;
   const banner = document.createElement('div');
   banner.className = 'streak-warning-banner';
-  banner.innerHTML = `<span class="swb-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 10 14" class="streak-flame" aria-hidden="true" fill="currentColor"><path d="M5 0C3.5 2.5 1.5 5 1.5 8.5 1.5 11.5 3 14 5 14 7 14 8.5 11.5 8.5 8.5 8.5 5 6.5 2.5 5 0Z"/></svg></span>
+  banner.innerHTML = `<span class="swb-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 12 16" class="streak-flame" aria-hidden="true" fill="currentColor"><path fill-rule="evenodd" d="M6 0C4 3 1.5 7 1.5 11c0 3 2 5 4.5 5s4.5-2 4.5-5C10.5 7 8 3 6 0ZM6 8c1.5 1.5 2.5 3 2.5 4.5 0 1.1-1 2-2.5 2s-2.5-.9-2.5-2c0-1.5 1-3 2.5-4.5Z"/></svg></span>
     <div class="swb-body">
       <div class="swb-title">SAVE_STREAK — ${state.streak} days</div>
       <div class="swb-sub">// Complete a lesson today!</div>

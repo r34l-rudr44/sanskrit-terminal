@@ -57,7 +57,7 @@ a.logo:focus-visible{outline:2px solid var(--brand);outline-offset:2px;}
 .logo-sub{font-size:12px;color:var(--text-3);margin-top:1px;letter-spacing:1px;white-space:nowrap;}
 .topbar-right{display:flex;align-items:center;gap:8px;justify-self:end;}
 .streak-badge{display:flex;align-items:center;gap:6px;border:var(--border-brand);padding:4px 12px;font-size:18px;color:var(--brand);background:var(--surface2);box-shadow:var(--shadow-sm);white-space:nowrap;position:relative;cursor:default;}
-.streak-flame{width:0.82em;height:1.15em;flex-shrink:0;}
+.streak-flame{width:0.86em;height:1.15em;flex-shrink:0;}
 .streak-tip{position:fixed;display:none;background:var(--surface);border:var(--border-brand);color:var(--brand);font-family:var(--font-ui);font-size:11px;letter-spacing:.5px;padding:5px 10px;white-space:nowrap;pointer-events:none;z-index:300;box-shadow:var(--shadow-sm);}
 .streak-tip.visible{display:block;}
 .icon-btn{width:44px;height:44px;border:var(--border-dim);background:var(--surface2);font-size:20px;display:flex;align-items:center;justify-content:center;color:var(--text-2);transition:all .1s;}
