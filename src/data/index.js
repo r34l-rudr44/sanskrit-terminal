@@ -27,6 +27,7 @@ import * as m4d5 from './module-4/day-5.js';
 import * as m4test from './module-4/test.js';
 
 import * as m5d1 from './module-5/day-1.js';
+import * as m5d2 from './module-5/day-2.js';
 import * as m5test from './module-5/test.js';
 
 export const MODULES = [
@@ -68,7 +69,7 @@ export const MODULES = [
     subtitle: "Frequency & Repetition",
     icon: "🔁",
     description: "Learn the -दा frequency words — एकदा, अनेकदा, शतदा, अन्यदा, नित्यदा — and the productive suffix pattern that lets any numeral or qualifier answer 'how often?'",
-    days: [m5d1, m5test]
+    days: [m5d1, m5d2, m5test]
   }
 ];
 
