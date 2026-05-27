@@ -13,6 +13,21 @@
   <meta property="og:locale" content="en_US"/>
   <meta name="twitter:card" content="summary_large_image"/>
   <meta name="twitter:title" content="अनुस्वारप्रकरण — The Dot That Changes Everything"/>
+  <meta property="og:url" content="https://sanskrit-terminal.vercel.app/blog/anusvara"/>
+  <meta property="article:published_time" content="2026-05-17T00:00:00+05:30"/>
+  <meta property="article:author" content="SANSKRIT.EXE"/>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "headline": "अनुस्वारप्रकरण — The Dot That Changes Everything",
+    "description": "A deep dive into the rules governing Anusvāra (अनुस्वार) in Sanskrit, drawn from Pāṇini's Ashtādhyāyī — the world's oldest formal grammar.",
+    "author": { "@type": "Organization", "name": "SANSKRIT.EXE" },
+    "publisher": { "@type": "Organization", "name": "SANSKRIT.EXE" },
+    "datePublished": "2026-05-17",
+    "url": "https://sanskrit-terminal.vercel.app/blog/anusvara"
+  }
+  </script>
   <link rel="icon" type="image/svg+xml" href="/favicon.svg"/>
   <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png"/>
   <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"/>
@@ -558,6 +573,72 @@
       .blog-footer-card   { flex-direction: column; gap: 10px; padding: 16px 16px; }
     }
 
+    /* Share button */
+    .blog-actions {
+      margin-top: 14px;
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+    .share-btn {
+      padding: 7px 18px;
+      background: transparent;
+      color: var(--brand);
+      border: var(--border-brand);
+      font-family: var(--font-ui);
+      font-size: 13px;
+      letter-spacing: 1px;
+      cursor: pointer;
+      transition: background .1s;
+    }
+    .share-btn:hover { background: var(--brand-dark); }
+    .share-btn:active { transform: translate(2px, 2px); }
+
+    /* Citation block */
+    .citation-block {
+      border: var(--border-dim);
+      background: var(--surface);
+      margin: 40px 0 0;
+      overflow: hidden;
+    }
+    .citation-header {
+      font-size: 11px;
+      color: var(--text-3);
+      letter-spacing: 2px;
+      padding: 6px 14px;
+      background: var(--surface3);
+      border-bottom: 1px solid var(--border);
+    }
+    .citation-header::before { content: '> '; color: var(--brand-dim); }
+    .citation-text {
+      font-family: var(--font-ui);
+      font-size: 13px;
+      color: var(--text-2);
+      line-height: 1.75;
+      padding: 14px 16px;
+      margin: 0;
+      white-space: pre-wrap;
+      word-break: break-word;
+    }
+    .citation-actions {
+      padding: 0 16px 14px;
+      display: flex;
+      gap: 8px;
+    }
+    .copy-btn {
+      padding: 6px 16px;
+      background: var(--brand);
+      color: var(--bg);
+      border: var(--border-brand);
+      font-family: var(--font-ui);
+      font-size: 12px;
+      letter-spacing: 1px;
+      cursor: pointer;
+      transition: opacity .1s;
+    }
+    .copy-btn:hover { opacity: 0.88; }
+    .copy-btn:active { transform: translate(2px, 2px); }
+
     /* Portrait mobile: the global CSS locks body into a flex viewport for the main app's
        screen-based layout. Blog pages are long-form documents — restore normal scrolling. */
     @media(max-width:480px) and (orientation:portrait) {
@@ -613,6 +694,10 @@
       <div class="blog-meta-item">GRAMMAR · DEEP DIVE</div>
       <div class="blog-meta-item">10 MIN READ</div>
       <div class="blog-meta-item">BEGINNER–INTERMEDIATE</div>
+      <div class="blog-meta-item">17 MAY 2026</div>
+    </div>
+    <div class="blog-actions">
+      <button class="share-btn" onclick="shareArticle()">◇ SHARE ARTICLE</button>
     </div>
   </div>
 
@@ -982,6 +1067,17 @@
       Pāṇini, in roughly six syllables per sūtra, compressed a phonological system so precise that it would take linguists two millennia to fully appreciate. Three sūtra-s. One bindu. The dot that changes everything.
     </p>
 
+    <!-- CITATION -->
+    <div class="citation-block">
+      <div class="citation-header">CITE THIS ARTICLE</div>
+      <pre class="citation-text" id="cite-text">SANSKRIT.EXE. "अनुस्वारप्रकरण — The Dot That Changes Everything."
+SANSKRIT.EXE Blog, 17 May 2026.
+https://sanskrit-terminal.vercel.app/blog/anusvara</pre>
+      <div class="citation-actions">
+        <button class="copy-btn" id="copy-btn" onclick="copyCitation()">◈ COPY CITATION</button>
+      </div>
+    </div>
+
     <!-- FOOTER CTA -->
     <div class="blog-footer-card">
       <div class="blog-footer-icon">📜</div>
@@ -1025,6 +1121,30 @@
     var collapsed=localStorage.getItem('sk_bar')==='0';
     if(collapsed){bb.classList.add('collapsed');document.body.classList.add('bar-collapsed');tabIcon.textContent='▲';tabLabel.textContent='OPEN';}
   })();
+</script>
+<script>
+(function() {
+  window.shareArticle = function() {
+    if (navigator.share) {
+      navigator.share({ title: document.title, url: location.href });
+    } else {
+      navigator.clipboard.writeText(location.href).then(function() {
+        var btn = document.querySelector('.share-btn');
+        var orig = btn.textContent;
+        btn.textContent = '✓ LINK COPIED';
+        setTimeout(function() { btn.textContent = orig; }, 2000);
+      });
+    }
+  };
+  window.copyCitation = function() {
+    var text = document.getElementById('cite-text').textContent;
+    navigator.clipboard.writeText(text).then(function() {
+      var btn = document.getElementById('copy-btn');
+      btn.textContent = '✓ COPIED';
+      setTimeout(function() { btn.textContent = '◈ COPY CITATION'; }, 2000);
+    });
+  };
+})();
 </script>
 <script type="module">
   import { injectGlobals } from '/src/js/components.js';
