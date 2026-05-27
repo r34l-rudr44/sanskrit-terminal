@@ -135,6 +135,84 @@ export function injectGlobals() {
   </div>
 </div>
 
+<!-- ABOUT US MODAL -->
+<div class="modal-overlay" id="about-modal">
+  <div class="modal-box">
+    <div class="modal-header">
+      <span class="modal-header-title">ABOUT US</span>
+      <button class="modal-close-btn" onclick="window.closeAbout()">✕</button>
+    </div>
+    <div class="modal-scrollable">
+      <div class="pref-section">
+        <div class="pref-section-title">WHO WE ARE</div>
+        <p class="priv-p">SANSKRIT.EXE is an independent project dedicated to making Sanskrit accessible through focused, interactive daily practice — no fluff, no paywalls.</p>
+      </div>
+      <div class="pref-section">
+        <div class="pref-section-title">OUR MISSION</div>
+        <p class="priv-p">Ancient languages should stay alive. Our goal is to build the most focused, no-friction Sanskrit learning tool on the web — one lesson at a time.</p>
+      </div>
+      <div class="pref-section">
+        <div class="pref-section-title">THE TEAM</div>
+        <p class="priv-p">Full team page coming soon.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- OTHER PRODUCTS MODAL -->
+<div class="modal-overlay" id="products-modal">
+  <div class="modal-box">
+    <div class="modal-header">
+      <span class="modal-header-title">OTHER PRODUCTS</span>
+      <button class="modal-close-btn" onclick="window.closeProducts()">✕</button>
+    </div>
+    <div class="modal-scrollable">
+      <div class="pref-section">
+        <div class="pref-section-title">IN THE PIPELINE</div>
+        <p class="priv-p">We're building a suite of tools for classical language learners. First up after SANSKRIT.EXE:</p>
+        <ul class="priv-list">
+          <li>Sanskrit Dictionary</li>
+          <li>Grammar Reference</li>
+          <li>Sandhi Calculator</li>
+          <li>Metre Analyser</li>
+        </ul>
+      </div>
+      <div class="pref-section">
+        <div class="pref-section-title">STATUS</div>
+        <p class="priv-p">All coming soon. Follow along — updates will appear here first.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- DONATE MODAL -->
+<div class="modal-overlay" id="donate-modal">
+  <div class="modal-box">
+    <div class="modal-header">
+      <span class="modal-header-title">DONATE</span>
+      <button class="modal-close-btn" onclick="window.closeDonate()">✕</button>
+    </div>
+    <div class="modal-scrollable">
+      <div class="pref-section">
+        <div class="pref-section-title">WHY IT MATTERS</div>
+        <p class="priv-hl"><strong>SANSKRIT.EXE is free</strong> and always will be. Hosting and development are funded out of pocket.</p>
+      </div>
+      <div class="pref-section">
+        <div class="pref-section-title">HOW TO HELP</div>
+        <p class="priv-p">Payment links coming soon. The biggest help right now is spreading the word.</p>
+      </div>
+      <div class="pref-section">
+        <div class="pref-section-title">OTHER WAYS</div>
+        <ul class="priv-list">
+          <li>Share with a friend or teacher</li>
+          <li>Star the repo on GitHub</li>
+          <li>Send feedback — every bug report matters</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+
 <!-- COOKIE BAR -->
 <div class="cookie-bar" id="cookie-bar">
   <span class="cookie-bar-text">This site uses localStorage to save your progress and preferences. No data leaves your device.</span>
@@ -163,6 +241,12 @@ export function injectGlobals() {
   window.closePrefs = () => document.getElementById('prefs-modal').classList.remove('open');
   window.openPrivacy = () => document.getElementById('privacy-modal').classList.add('open');
   window.closePrivacy = () => document.getElementById('privacy-modal').classList.remove('open');
+  window.openAbout = () => document.getElementById('about-modal').classList.add('open');
+  window.closeAbout = () => document.getElementById('about-modal').classList.remove('open');
+  window.openProducts = () => document.getElementById('products-modal').classList.add('open');
+  window.closeProducts = () => document.getElementById('products-modal').classList.remove('open');
+  window.openDonate = () => document.getElementById('donate-modal').classList.add('open');
+  window.closeDonate = () => document.getElementById('donate-modal').classList.remove('open');
   window.setTheme = (mode) => Theme.apply(mode);
   window.setFontSize = (s) => Prefs.setFontSize(s);
   window.setScript = (s) => Prefs.setScript(s);
@@ -172,6 +256,15 @@ export function injectGlobals() {
   });
   document.getElementById('privacy-modal')?.addEventListener('click', e => {
     if (e.target === e.currentTarget) window.closePrivacy();
+  });
+  document.getElementById('about-modal')?.addEventListener('click', e => {
+    if (e.target === e.currentTarget) window.closeAbout();
+  });
+  document.getElementById('products-modal')?.addEventListener('click', e => {
+    if (e.target === e.currentTarget) window.closeProducts();
+  });
+  document.getElementById('donate-modal')?.addEventListener('click', e => {
+    if (e.target === e.currentTarget) window.closeDonate();
   });
 
   window.openDeleteOverlay = () => {
@@ -330,6 +423,12 @@ export function injectGlobals() {
     if (prefsModal?.classList.contains('open')) { window.closePrefs(); return; }
     const privacyModal = document.getElementById('privacy-modal');
     if (privacyModal?.classList.contains('open')) { window.closePrivacy(); return; }
+    const aboutModal = document.getElementById('about-modal');
+    if (aboutModal?.classList.contains('open')) { window.closeAbout(); return; }
+    const productsModal = document.getElementById('products-modal');
+    if (productsModal?.classList.contains('open')) { window.closeProducts(); return; }
+    const donateModal = document.getElementById('donate-modal');
+    if (donateModal?.classList.contains('open')) { window.closeDonate(); return; }
     const deleteOverlay = document.getElementById('delete-overlay');
     if (deleteOverlay?.classList.contains('active')) { window.closeDeleteOverlay(); return; }
     const comingSoon = document.getElementById('coming-soon-overlay');
