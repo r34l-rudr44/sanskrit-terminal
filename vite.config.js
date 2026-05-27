@@ -42,6 +42,7 @@ export default defineConfig({
       configureServer(server) {
         server.middlewares.use((req, _res, next) => {
           if (req.url === '/blog/anusvara' || req.url === '/blog/anusvara/') req.url = '/blog/anusvara.html';
+          else if (req.url === '/blog/vyakarana' || req.url === '/blog/vyakarana/') req.url = '/blog/vyakarana.html';
           else if (req.url === '/blog' || req.url === '/blog/') req.url = '/blog/index.html';
           next();
         });
@@ -59,6 +60,7 @@ export default defineConfig({
         path: resolve(__dirname, 'path.html'),
         blog: resolve(__dirname, 'blog/index.html'),
         'blog-anusvara': resolve(__dirname, 'blog/anusvara.html'),
+        'blog-vyakarana': resolve(__dirname, 'blog/vyakarana.html'),
       },
       output: {
         entryFileNames: 'assets/[name]-[hash].js',

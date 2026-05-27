@@ -1,0 +1,845 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover"/>
+  <meta name="description" content="The story of Indra and Bṛhaspati, the genius of Pāṇini's Aṣṭādhyāyī, the six types of sūtra-s, and why Vyākaraṇa is one of the six sacred Vedāṅga-s."/>
+  <meta name="application-name" content="SANSKRIT.EXE"/>
+  <meta name="theme-color" content="#06060A"/>
+  <meta property="og:title" content="व्याकरणम् — The Origin and Purpose of Vyākaraṇa | SANSKRIT.EXE Blog"/>
+  <meta property="og:description" content="The ancient science of language — from Indra and Bṛhaspati to Pāṇini's 4,000 sūtra-s. Why grammar is sacred in the Hindu tradition."/>
+  <meta property="og:type" content="article"/>
+  <meta property="og:site_name" content="SANSKRIT.EXE"/>
+  <meta property="og:locale" content="en_US"/>
+  <meta name="twitter:card" content="summary_large_image"/>
+  <meta name="twitter:title" content="व्याकरणम् — The Origin and Purpose of Vyākaraṇa"/>
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg"/>
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png"/>
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"/>
+  <link rel="shortcut icon" href="/favicon.ico"/>
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"/>
+  <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#F0A500"/>
+  <link rel="manifest" href="/site.webmanifest"/>
+  <title>व्याकरणम् — The Origin and Purpose of Vyākaraṇa | SANSKRIT.EXE</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" crossorigin>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="dns-prefetch" href="https://fonts.googleapis.com">
+  <link rel="dns-prefetch" href="https://fonts.gstatic.com">
+  <link href="https://fonts.googleapis.com/css2?family=VT323&family=Share+Tech+Mono&family=Noto+Sans+Devanagari:wght@400;700&display=swap" rel="stylesheet"/>
+  <script>(function(){var t=localStorage.getItem('sk_theme');if(t==='light'||t==='dark')document.documentElement.setAttribute('data-theme',t);})();</script>
+  <link rel="stylesheet" href="/src/css/style.css">
+  <style>
+    /* ── Blog-specific layout ── */
+    .blog-wrap {
+      max-width: 720px;
+      margin: 0 auto;
+      padding: 32px 20px 60px;
+    }
+
+    /* Breadcrumb */
+    .blog-breadcrumb {
+      font-size: 12px;
+      color: var(--text-3);
+      letter-spacing: 1.5px;
+      margin-bottom: 28px;
+    }
+    .blog-breadcrumb a {
+      color: var(--brand-dim);
+      text-decoration: none;
+      transition: color .1s;
+    }
+    .blog-breadcrumb a:hover { color: var(--brand); }
+    .blog-breadcrumb span { color: var(--text-3); margin: 0 6px; }
+
+    /* Hero */
+    .blog-hero {
+      border: var(--border-brand);
+      background: var(--surface2);
+      padding: 32px 28px 28px;
+      margin-bottom: 32px;
+      box-shadow: var(--shadow);
+      position: relative;
+      overflow: hidden;
+    }
+    .blog-hero::before {
+      content: 'ण';
+      position: absolute;
+      right: 24px;
+      top: 50%;
+      transform: translateY(-50%);
+      font-family: var(--font-dev);
+      font-size: 180px;
+      color: var(--brand-glow);
+      line-height: 1;
+      pointer-events: none;
+      text-shadow: 0 0 60px var(--brand-glow);
+    }
+    [data-theme="light"] .blog-hero::before { color: rgba(107,58,0,0.08); text-shadow: none; }
+    .blog-tag-row {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 12px;
+      flex-wrap: wrap;
+    }
+    .blog-category {
+      font-size: 11px;
+      color: #E8DEB8;
+      letter-spacing: 2px;
+      background: var(--brand-dark);
+      padding: 3px 10px;
+      border: 1px solid var(--brand-dim);
+    }
+    .blog-tag {
+      font-size: 11px;
+      color: var(--text-3);
+      letter-spacing: 1px;
+      background: var(--surface3);
+      padding: 3px 8px;
+      border: 1px solid var(--border);
+    }
+    .blog-title {
+      font-family: var(--font-logo);
+      font-size: 40px;
+      color: var(--brand);
+      line-height: 1.15;
+      margin-bottom: 6px;
+      text-shadow: 0 0 18px var(--brand);
+      animation: flicker 9s infinite;
+    }
+    .blog-subtitle {
+      font-size: 17px;
+      color: var(--text-2);
+      line-height: 1.6;
+      margin-bottom: 20px;
+      max-width: 480px;
+    }
+    .blog-meta {
+      display: flex;
+      gap: 20px;
+      flex-wrap: wrap;
+      font-size: 12px;
+      color: var(--text-3);
+      letter-spacing: 1px;
+      border-top: 1px solid var(--border);
+      padding-top: 14px;
+    }
+    .blog-meta-item { display: flex; align-items: center; gap: 6px; }
+    .blog-meta-item::before { content: '//'; color: var(--brand-dim); }
+
+    /* Body prose */
+    .blog-body { line-height: 1.85; }
+    .blog-body p {
+      font-size: 15px;
+      color: var(--text-2);
+      margin-bottom: 18px;
+    }
+    .blog-body strong { color: var(--text); }
+    .blog-body em { color: var(--cyan); font-style: normal; }
+
+    /* Section headers */
+    .blog-section {
+      margin-top: 40px;
+      margin-bottom: 20px;
+    }
+    .blog-section-tag {
+      font-size: 11px;
+      color: var(--text-3);
+      letter-spacing: 2px;
+      margin-bottom: 6px;
+    }
+    .blog-section-tag::before { content: '> '; color: var(--brand-dim); }
+    .blog-section-title {
+      font-family: var(--font-logo);
+      font-size: 28px;
+      color: var(--brand);
+      letter-spacing: 2px;
+      text-shadow: 0 0 10px var(--brand);
+      line-height: 1.2;
+    }
+
+    /* Shloka / verse block */
+    .shloka-block {
+      border-left: 4px solid var(--brand);
+      background: var(--surface);
+      padding: 18px 22px;
+      margin: 24px 0;
+      position: relative;
+    }
+    .shloka-block::before {
+      content: '॥';
+      position: absolute;
+      top: 12px;
+      right: 16px;
+      font-family: var(--font-dev);
+      font-size: 22px;
+      color: var(--brand-dim);
+    }
+    .shloka-line {
+      font-family: var(--font-dev);
+      font-size: 18px;
+      color: var(--brand);
+      line-height: 1.8;
+      display: block;
+    }
+    .shloka-trans {
+      font-size: 13px;
+      color: var(--text-3);
+      letter-spacing: 0.5px;
+      margin-top: 10px;
+      display: block;
+      font-style: italic;
+    }
+
+    /* Definition box */
+    .def-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      margin: 20px 0;
+    }
+    @media(max-width:560px){ .def-grid { grid-template-columns: 1fr; } }
+    .def-card {
+      border: var(--border-dim);
+      background: var(--surface);
+      padding: 14px 16px;
+      box-shadow: var(--shadow-sm);
+    }
+    .def-term {
+      font-family: var(--font-dev);
+      font-size: 22px;
+      color: var(--brand);
+      display: block;
+      margin-bottom: 4px;
+    }
+    .def-roman {
+      font-size: 12px;
+      color: var(--cyan);
+      letter-spacing: 1px;
+      display: block;
+      margin-bottom: 8px;
+    }
+    .def-body {
+      font-size: 13px;
+      color: var(--text-2);
+      line-height: 1.6;
+    }
+    .def-letters {
+      font-family: var(--font-dev);
+      font-size: 14px;
+      color: var(--text);
+      margin-top: 6px;
+      line-height: 1.8;
+      display: block;
+    }
+
+    /* Rule card */
+    .rule-card {
+      border: var(--border-brand);
+      background: var(--surface);
+      margin: 28px 0;
+      box-shadow: var(--shadow);
+      overflow: hidden;
+    }
+    .rule-header {
+      background: var(--brand-dark);
+      border-bottom: var(--border-brand);
+      padding: 10px 18px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+    .rule-id {
+      font-size: 11px;
+      color: #E8DEB8;
+      letter-spacing: 2px;
+    }
+    .rule-sutra-rom {
+      font-size: 13px;
+      color: var(--text-2);
+      letter-spacing: 0.5px;
+    }
+    .rule-body { padding: 18px 20px; }
+    .rule-sutra-dev {
+      font-family: var(--font-dev);
+      font-size: 24px;
+      color: var(--brand);
+      display: block;
+      margin-bottom: 10px;
+      text-shadow: 0 0 8px var(--brand);
+    }
+    .rule-desc {
+      font-size: 14px;
+      color: var(--text-2);
+      line-height: 1.75;
+      margin-bottom: 0;
+    }
+
+    /* Example table */
+    .example-block {
+      background: var(--surface2);
+      border: var(--border-dim);
+      margin: 16px 0;
+      overflow: hidden;
+    }
+    .example-header {
+      font-size: 11px;
+      color: var(--text-3);
+      letter-spacing: 2px;
+      padding: 6px 14px;
+      background: var(--surface3);
+      border-bottom: 1px solid var(--border);
+    }
+    .example-header::before { content: '$ '; color: var(--brand-dim); }
+    .example-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 14px;
+    }
+    .example-table tr { border-bottom: 1px solid var(--border); }
+    .example-table tr:last-child { border-bottom: none; }
+    .example-table td {
+      padding: 10px 14px;
+      color: var(--text-2);
+      vertical-align: top;
+    }
+    .example-table td:first-child { color: var(--text-3); font-size: 12px; letter-spacing: 1px; white-space: nowrap; width: 80px; }
+    .example-table .dev { font-family: var(--font-dev); font-size: 17px; color: var(--text); }
+    .example-table .arrow { color: var(--brand-dim); font-size: 14px; }
+    .example-table .result { font-family: var(--font-dev); font-size: 17px; color: var(--ok); }
+    .example-table .note { font-size: 12px; color: var(--text-3); letter-spacing: 0.5px; }
+
+    /* Corollary block */
+    .corollary {
+      border-left: 3px solid var(--cyan);
+      background: var(--surface);
+      padding: 14px 18px;
+      margin: 14px 0;
+    }
+    .corollary-label {
+      font-size: 11px;
+      color: var(--cyan);
+      letter-spacing: 2px;
+      margin-bottom: 6px;
+      display: block;
+    }
+    .corollary-label::before { content: '↳ '; }
+    .corollary-text {
+      font-size: 14px;
+      color: var(--text-2);
+      line-height: 1.7;
+    }
+
+    /* Varga table */
+    .varga-wrap { margin: 20px 0; overflow-x: auto; }
+    .varga-table {
+      border-collapse: collapse;
+      min-width: 480px;
+      font-size: 13px;
+    }
+    .varga-table th {
+      font-size: 11px;
+      color: var(--brand);
+      letter-spacing: 1.5px;
+      background: var(--surface3);
+      border: 1px solid var(--border);
+      padding: 8px 14px;
+      text-align: left;
+      font-weight: normal;
+    }
+    .varga-table td {
+      border: 1px solid var(--border);
+      padding: 10px 14px;
+      color: var(--text-2);
+      background: var(--surface);
+    }
+    .varga-table td.varga-name {
+      font-family: var(--font-dev);
+      font-size: 18px;
+      color: var(--brand);
+      background: var(--surface2);
+      width: 80px;
+      text-align: center;
+    }
+    .varga-table td.varga-letters {
+      font-family: var(--font-dev);
+      font-size: 18px;
+      color: var(--text);
+      letter-spacing: 4px;
+    }
+    .varga-table td.varga-nasal {
+      font-family: var(--font-dev);
+      font-size: 18px;
+      color: var(--ok);
+      width: 60px;
+      text-align: center;
+    }
+
+    /* Step-by-step process box */
+    .process-box {
+      border: var(--border-dim);
+      background: var(--surface);
+      padding: 18px 20px;
+      margin: 16px 0;
+    }
+    .process-box-title {
+      font-size: 11px;
+      color: var(--text-3);
+      letter-spacing: 2px;
+      margin-bottom: 14px;
+    }
+    .process-box-title::before { content: '// '; }
+    .process-step {
+      display: flex;
+      gap: 14px;
+      margin-bottom: 12px;
+      align-items: flex-start;
+    }
+    .process-step:last-child { margin-bottom: 0; }
+    .step-num {
+      width: 24px;
+      height: 24px;
+      background: var(--brand-dark);
+      border: 1px solid var(--brand-dim);
+      color: #E8DEB8;
+      font-size: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+    .step-text {
+      font-size: 14px;
+      color: var(--text-2);
+      line-height: 1.6;
+      padding-top: 2px;
+    }
+    .step-text .dev { font-family: var(--font-dev); font-size: 16px; color: var(--brand); }
+
+    /* Pull quote */
+    .pull-quote {
+      border: var(--border-brand);
+      background: var(--brand-dark);
+      padding: 20px 24px;
+      margin: 28px 0;
+      text-align: center;
+      box-shadow: var(--shadow);
+    }
+    .pull-quote-text {
+      font-family: var(--font-logo);
+      font-size: 22px;
+      color: #E8DEB8;
+      letter-spacing: 1px;
+      line-height: 1.5;
+    }
+    .pull-quote-src {
+      font-size: 12px;
+      color: var(--text-3);
+      letter-spacing: 1.5px;
+      margin-top: 10px;
+      display: block;
+    }
+
+    /* Summary chip row */
+    .summary-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin: 24px 0;
+    }
+    .summary-chip {
+      border: var(--border-brand);
+      background: var(--brand-dark);
+      padding: 8px 16px;
+      font-size: 13px;
+      color: #E8DEB8;
+      letter-spacing: 1px;
+    }
+    .summary-chip .chip-rule {
+      font-family: var(--font-dev);
+      font-size: 16px;
+      display: block;
+      margin-bottom: 2px;
+    }
+    .summary-chip .chip-desc {
+      font-size: 11px;
+      color: var(--text-3);
+      letter-spacing: 0.5px;
+    }
+
+    /* Footer card */
+    .blog-footer-card {
+      border: var(--border-dim);
+      background: var(--surface2);
+      padding: 20px 22px;
+      margin-top: 48px;
+      display: flex;
+      align-items: flex-start;
+      gap: 16px;
+    }
+    .blog-footer-icon {
+      font-size: 32px;
+      flex-shrink: 0;
+    }
+    .blog-footer-title {
+      font-size: 14px;
+      color: var(--text);
+      letter-spacing: 1px;
+      margin-bottom: 6px;
+    }
+    .blog-footer-body {
+      font-size: 13px;
+      color: var(--text-2);
+      line-height: 1.6;
+    }
+    .blog-footer-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      margin-top: 14px;
+      padding: 8px 20px;
+      background: var(--brand);
+      color: var(--bg);
+      border: var(--border-brand);
+      font-family: var(--font-ui);
+      font-size: 14px;
+      letter-spacing: 1px;
+      box-shadow: var(--shadow-sm);
+      cursor: pointer;
+      text-decoration: none;
+      transition: all .1s;
+    }
+    .blog-footer-btn:hover { opacity: 0.88; }
+    .blog-footer-btn:active { transform: translate(3px,3px); box-shadow: none; }
+
+    /* Responsive — mobile (≤ 600px) */
+    @media(max-width:600px) {
+      /* Container & hero */
+      .blog-wrap          { padding: 16px 14px 48px; }
+      .blog-hero          { padding: 20px 16px 16px; }
+      .blog-hero::before  { font-size: 80px; right: 10px; }
+
+      /* Typography */
+      .blog-title         { font-size: 26px; }
+      .blog-subtitle      { font-size: 14px; max-width: none; }
+      .blog-meta          { gap: 10px; }
+      .blog-section-title { font-size: 22px; }
+      .blog-body p        { font-size: 14px; }
+
+      /* Shloka */
+      .shloka-block       { padding: 14px 14px 14px 16px; }
+      .shloka-line        { font-size: 16px; }
+
+      /* Rule card */
+      .rule-header        { flex-direction: column; gap: 4px; }
+      .rule-sutra-dev     { font-size: 20px; }
+      .rule-body          { padding: 14px 14px; }
+
+      /* Example tables — enable horizontal scroll */
+      .example-block      { overflow-x: auto; overflow-y: hidden; }
+      .example-table      { min-width: 420px; font-size: 13px; }
+
+      /* Corollary */
+      .corollary          { padding: 12px 14px; }
+
+      /* Process box */
+      .process-box        { padding: 14px 14px; }
+
+      /* Pull quote */
+      .pull-quote         { padding: 14px 16px; }
+      .pull-quote-text    { font-size: 18px; }
+
+      /* Summary chips — stack full-width */
+      .summary-chip       { flex: 1 1 100%; }
+
+      /* Footer CTA — stack vertically */
+      .blog-footer-card   { flex-direction: column; gap: 10px; padding: 16px 16px; }
+    }
+
+    /* Portrait mobile: the global CSS locks body into a flex viewport for the main app's
+       screen-based layout. Blog pages are long-form documents — restore normal scrolling. */
+    @media(max-width:480px) and (orientation:portrait) {
+      html body {
+        height: auto;
+        overflow-x: hidden;
+        overflow-y: auto;
+        display: block;
+        padding-bottom: calc(74px + env(safe-area-inset-bottom, 0px));
+      }
+    }
+  </style>
+</head>
+<body>
+
+<header class="topbar">
+  <div class="logo">
+    <div class="logo-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 46" aria-hidden="true"><path fill="currentColor" d="M25.946 44.938c-.664.845-2.021.375-2.021-.698V33.937a2.26 2.26 0 0 0-2.262-2.262H10.287c-.92 0-1.456-1.04-.92-1.788l7.48-10.471c1.07-1.497 0-3.578-1.842-3.578H1.237c-.92 0-1.456-1.04-.92-1.788L10.013.474c.214-.297.556-.474.92-.474h28.894c.92 0 1.456 1.04.92 1.788l-7.48 10.471c-1.07 1.498 0 3.579 1.842 3.579h11.377c.943 0 1.473 1.088.89 1.83L25.947 44.94z"/></svg></div>
+    <div>
+      <div class="logo-text">SANSKRIT.EXE <span class="beta-tag">BETA</span></div>
+      <div class="logo-sub" id="logo-sub">वाग्देव्यै नमः</div>
+    </div>
+  </div>
+  <div class="topbar-right">
+    <div class="streak-badge" tabindex="0"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 12 16" class="streak-flame" aria-hidden="true" fill="currentColor"><path fill-rule="evenodd" d="M6 0C3.5 3 1 7 1 11c0 3.5 2.2 5.5 5 5.5s5-2 5-5.5C11 7 8.5 3 6 0ZM6 6C4.5 9 3.5 11 3.5 13c0 1.5 1.1 2.5 2.5 2.5s2.5-1 2.5-2.5C8.5 11 7.5 9 6 6Z"/></svg><span id="streak-count">0</span>×</div>
+    <button class="icon-btn" id="sound-toggle-btn" onclick="window.toggleSound && window.toggleSound()">🔊</button>
+    <button class="prefs-btn" onclick="window.openPrefs && window.openPrefs()">⚙ <span class="prefs-label">PREFS</span></button>
+  </div>
+</header>
+<script>document.getElementById('streak-count').textContent=parseInt(localStorage.getItem('sk_streak'),10)||0;</script>
+
+<div class="blog-wrap">
+
+  <nav class="blog-breadcrumb">
+    <a href="/">HOME</a>
+    <span>›</span>
+    <a href="/blog">BLOGS</a>
+    <span>›</span>
+    व्याकरणम्
+  </nav>
+
+  <!-- HERO -->
+  <div class="blog-hero">
+    <div class="blog-tag-row">
+      <span class="blog-category">GRAMMAR</span>
+      <span class="blog-tag">HISTORY</span>
+      <span class="blog-tag">VEDANGA</span>
+      <span class="blog-tag">PANINI</span>
+    </div>
+    <div class="blog-title cursor">व्याकरणम्</div>
+    <div class="blog-subtitle">The Ancient Science of Language — origin, purpose, and the genius of Pāṇini</div>
+    <div class="blog-meta">
+      <div class="blog-meta-item">GRAMMAR · HISTORY</div>
+      <div class="blog-meta-item">8 MIN READ</div>
+      <div class="blog-meta-item">BEGINNER</div>
+    </div>
+  </div>
+
+  <!-- BODY -->
+  <div class="blog-body">
+
+    <!-- INVOCATION -->
+    <div class="shloka-block">
+      <span class="shloka-line">वागर्थाविव सम्पृक्तौ वागर्थप्रतिपत्तये।</span>
+      <span class="shloka-line">जगतः पितरौ वन्दे पार्वतीपरमेश्वरौ॥</span>
+      <span class="shloka-trans">For the proper understanding of speech and meaning, I bow to Pārvatī and Parameśvara, the parents of the universe, who are united as inseparably as word and meaning. — Kālidāsa, Raghuvaṃśa 1.1</span>
+    </div>
+
+    <div class="shloka-block">
+      <span class="shloka-line">येन धौता गिरः पुंसां विमलैश्शब्दवारिभिः।</span>
+      <span class="shloka-line">तमश्चाज्ञानजं भिन्नं तस्मै पाणिनये नमः।।</span>
+      <span class="shloka-trans">Salutations to Pāṇini, by whom the speech of people was purified through the clear waters of words, and the darkness born of ignorance was dispelled.</span>
+    </div>
+
+    <p>
+      These two verses frame everything. The first, by Kālidāsa, reminds us that speech and meaning are inseparable — as Pārvatī and Parameśvara are inseparable. The second reminds us that grammar is not bureaucratic bookkeeping. It is purification. It is the removal of confusion. To understand how this discipline came to be — and why it was considered sacred — we must go back to the beginning.
+    </p>
+
+    <!-- ORIGIN -->
+    <div class="blog-section">
+      <div class="blog-section-tag">ORIGIN</div>
+      <div class="blog-section-title">The Origin of Vyākaraṇa</div>
+    </div>
+
+    <p>
+      In ancient times, <strong>Indra</strong>, the king of the Deva-s, desired to master all words used in the world. For this purpose, he approached <strong>Bṛhaspati</strong>, the guru of the Deva-s. Bṛhaspati began teaching him every word individually, one after another. Even after a <em>thousand divine years</em>, the task remained unfinished.
+    </p>
+
+    <p>
+      Seeing the impossibility of memorising every single word separately, Indra took a different approach. He modeled words so that they could be understood by breaking them into smaller meaningful parts: <strong>bases</strong> (<em>prakṛti</em>) and <strong>suffixes</strong> (<em>pratyaya</em>). By learning these smaller building blocks and the rules governing them, one could understand <em>countless words systematically</em> — rather than memorising each one in isolation.
+    </p>
+
+    <div class="corollary">
+      <span class="corollary-label">THE KEY INSIGHT</span>
+      <p class="corollary-text">
+        Every Sanskrit word can be reduced to a <strong>prakṛti</strong> (base/root) and one or more <strong>pratyaya</strong>-s (suffixes). The word <span style="font-family:var(--font-dev);font-size:16px;color:var(--brand);">पठति</span> ("he reads") = <span style="font-family:var(--font-dev);font-size:16px;color:var(--brand);">पठ्</span> (root: to read) + <span style="font-family:var(--font-dev);font-size:16px;color:var(--brand);">ति</span> (suffix: third person singular present). Master the roots and the rules — and all words become accessible.
+      </p>
+    </div>
+
+    <p>
+      This process of analysing and refining language came to be known as <strong>Vyākaraṇa</strong> — literally, "the act of separating apart" or grammar. And because language underwent this refinement (<em>saṁskāra</em>), the language itself became known as <strong>Saṁskṛta</strong> — <em>the refined language</em>.
+    </p>
+
+    <!-- RISE OF PANINI -->
+    <div class="blog-section">
+      <div class="blog-section-tag">HISTORY</div>
+      <div class="blog-section-title">The Rise of Pāṇini</div>
+    </div>
+
+    <p>
+      Over time, many grammatical traditions arose. The <em>Aindra</em> school traced its origins to Indra himself. The <em>Cāndra</em> school, associated with the grammarian Candragomin, offered its own systematic treatment. Others followed. Each attempted to capture the full architecture of Sanskrit in a set of teachable rules.
+    </p>
+
+    <p>
+      However, the system taught by the great grammarian <strong>Pāṇini</strong> became the most celebrated of all — rendering the earlier traditions largely superfluous by the sheer precision and elegance of its design.
+    </p>
+
+    <div class="rule-card">
+      <div class="rule-header">
+        <span class="rule-id">THE MASTERPIECE</span>
+        <span class="rule-sutra-rom">aṣṭādhyāyī — "The Eight Chapters"</span>
+      </div>
+      <div class="rule-body">
+        <span class="rule-sutra-dev">अष्टाध्यायी</span>
+        <p class="rule-desc">
+          Composed by Pāṇini around the <strong>4th century BCE</strong>, the Aṣṭādhyāyī is one of the greatest intellectual achievements of the ancient world. It presents an extraordinarily precise and compact system that explains almost all Sanskrit words used both in <em>ordinary speech</em> and in the <em>vedabhāga</em> (Vedic corpus). The text consists of a little over <strong>4,000 sūtra-s</strong> — each extremely brief, carefully arranged so that not a single syllable is unnecessary.
+        </p>
+      </div>
+    </div>
+
+    <p>
+      The Aṣṭādhyāyī is not a dictionary and not a textbook in any modern sense. It is a generative grammar — a compact machine. Given a root and the intended meaning, its rules produce the correct word-form with surgical reliability. Linguists in the 20th century recognised it as the world's first formal grammar and a precursor to modern computational linguistics.
+    </p>
+
+    <!-- SUTRAS -->
+    <div class="blog-section">
+      <div class="blog-section-tag">GRAMMAR</div>
+      <div class="blog-section-title">What Are Sūtras?</div>
+    </div>
+
+    <p>
+      The Aṣṭādhyāyī is composed of <strong>sūtra-s</strong> — concise aphorisms that define the rules and principles governing language. The word <em>sūtra</em> (<span style="font-family:var(--font-dev);font-size:16px;color:var(--brand);">सूत्र</span>) literally means "thread" — each rule is a thread in the larger fabric of the grammar.
+    </p>
+
+    <p>
+      Traditionally, these sūtra-s are understood under six broad categories. Each category plays a distinct role in making the system work:
+    </p>
+
+    <div class="def-grid">
+      <div class="def-card">
+        <span class="def-term">सञ्ज्ञा</span>
+        <span class="def-roman">Sañjñā — Technical Definitions</span>
+        <div class="def-body">
+          A <em>sañjñā</em> is a technical label or designation. Pāṇini assigns special names to groups of sounds, words, or suffixes so that later rules can refer to them efficiently without repeating the full list each time.
+        </div>
+      </div>
+      <div class="def-card">
+        <span class="def-term">परिभाषा</span>
+        <span class="def-roman">Paribhāṣā — Interpretive Principles</span>
+        <div class="def-body">
+          A <em>paribhāṣā</em> is a guiding principle that explains <em>how</em> grammatical rules should be interpreted and applied — especially when multiple rules seem simultaneously relevant.
+        </div>
+      </div>
+      <div class="def-card">
+        <span class="def-term">विधिः</span>
+        <span class="def-roman">Vidhi — Operational Rules</span>
+        <div class="def-body">
+          <em>Vidhi</em>-s are direct rules that prescribe what grammatical operation should occur: adding a suffix, deleting a sound, modifying a vowel. The bulk of the Aṣṭādhyāyī consists of vidhi-s.
+        </div>
+      </div>
+      <div class="def-card">
+        <span class="def-term">नियमः</span>
+        <span class="def-roman">Niyama — Restrictive Rules</span>
+        <div class="def-body">
+          <em>Niyama</em>-s specify exceptions or limitations to broader grammatical rules, ensuring that a general vidhi is not applied where it would produce an incorrect form.
+        </div>
+      </div>
+      <div class="def-card">
+        <span class="def-term">अतिदेशः</span>
+        <span class="def-roman">Atideśa — Extension of Rules</span>
+        <div class="def-body">
+          <em>Atideśa</em> extends a rule established in one grammatical context to another analogous context — avoiding the need to restate the rule and keeping the grammar elegantly non-redundant.
+        </div>
+      </div>
+      <div class="def-card">
+        <span class="def-term">अधिकारः</span>
+        <span class="def-roman">Adhikāra — Governing Headings</span>
+        <div class="def-body">
+          <em>Adhikāra</em>-s are governing statements that extend their scope over all the rules that follow, providing shared context for entire sections and allowing each individual sūtra to remain brief.
+        </div>
+      </div>
+    </div>
+
+    <p>
+      Together these six types interlock to form a self-consistent, non-redundant system. The sañjñā-s create the vocabulary; the paribhāṣā-s define the logic; the vidhi-s do the work; the niyama-s handle exceptions; the atideśa-s generalise; the adhikāra-s provide context. No type is superfluous.
+    </p>
+
+    <!-- WHY IT MATTERS -->
+    <div class="blog-section">
+      <div class="blog-section-tag">SIGNIFICANCE</div>
+      <div class="blog-section-title">Why Vyākaraṇa Matters</div>
+    </div>
+
+    <p>
+      In the Hindu tradition, Vyākaraṇa is not merely an academic discipline. It is one of the <strong>six Vedāṅga-s</strong> — the six limbs of the Vedas — disciplines without which the Vedas cannot be correctly preserved, recited, or understood.
+    </p>
+
+    <div class="corollary">
+      <span class="corollary-label">THE SIX VEDĀṄGA-S</span>
+      <p class="corollary-text">
+        <strong>Śikṣā</strong> (phonetics &amp; pronunciation) ·
+        <strong>Chandas</strong> (metre) ·
+        <strong>Vyākaraṇa</strong> (grammar) ·
+        <strong>Nirukta</strong> (etymology &amp; word explanation) ·
+        <strong>Jyotiṣa</strong> (astronomy &amp; calendar) ·
+        <strong>Kalpa</strong> (ritual procedure)
+        <br><br>
+        Vyākaraṇa is traditionally called <em>the mouth of the Vedas</em> — without correct grammar, the words of the Vedas cannot be spoken, understood, or transmitted intact.
+      </p>
+    </div>
+
+    <p>
+      Correct pronunciation, clarity of meaning, and proper interpretation all depend upon grammar. A single mispronounced syllable or an incorrectly formed word can alter meaning entirely. The sages therefore revered Vyākaraṇa as a <em>sacred science</em> — not because grammar is holy in itself, but because it is the guardian of the words that are.
+    </p>
+
+    <p>
+      This is the inheritance Pāṇini systematised. Not a manual for pedants. A tool for preserving something irreplaceable — the precision of a language built to carry the most exact expression of thought human beings had yet attempted.
+    </p>
+
+    <!-- CLOSING -->
+    <div class="pull-quote">
+      <div class="pull-quote-text">इति शम्।</div>
+      <span class="pull-quote-src">thus, auspiciousness</span>
+    </div>
+
+    <!-- FOOTER CTA -->
+    <div class="blog-footer-card">
+      <div class="blog-footer-icon">◈</div>
+      <div>
+        <div class="blog-footer-title">SEE PĀṆINI'S RULES IN ACTION</div>
+        <div class="blog-footer-body">
+          The Anusvāra article walks through three specific sūtra-s from the Aṣṭādhyāyī — the rules that govern the humble dot (ं) — showing exactly how Pāṇini's system operates on real Sanskrit words.
+        </div>
+        <a class="blog-footer-btn" href="/blog/anusvara">▶ READ: अनुस्वारप्रकरण</a>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<div class="bottom-bar-wrap">
+  <div class="bottom-bar-tab" id="bottom-bar-tab" onclick="window.toggleBottomBar()" title="Toggle bottom bar">
+    <span id="bottom-bar-tab-icon">▼</span><span id="bottom-bar-tab-label" class="bottom-bar-tab-label">CLOSE</span>
+  </div>
+  <div class="explore-dropdown" id="explore-dropdown">
+    <button class="explore-dropdown-item" onclick="window.closeExploreDropdown();window.openComingSoon('About Us','◈','about us','Learn about the team behind SANSKRIT.EXE and our mission to make ancient languages accessible — coming soon.')"><span>◈</span> ABOUT US</button>
+    <button class="explore-dropdown-item" onclick="window.closeExploreDropdown();window.openComingSoon('Our Vision','◉','our vision','Our roadmap for building the most comprehensive Sanskrit learning platform on the web — coming soon.')"><span>◉</span> OUR VISION</button>
+    <button class="explore-dropdown-item" onclick="window.closeExploreDropdown();location.href='/blog'"><span>◇</span> BLOGS</button>
+    <button class="explore-dropdown-item" onclick="window.closeExploreDropdown();window.openComingSoon('Other Products','⬡','other products','Explore our other language and education tools — coming soon.')"><span>⬡</span> OTHER PRODUCTS</button>
+  </div>
+  <footer class="bottom-bar" id="bottom-bar">
+    <button class="bottom-bar-link bl-desktop" onclick="window.openComingSoon('About Us','◈','about us','Learn about the team behind SANSKRIT.EXE and our mission to make ancient languages accessible — coming soon.')"><span class="bl-icon">◈</span><span class="bl-label">ABOUT US</span></button>
+    <button class="bottom-bar-link bl-desktop" onclick="window.openComingSoon('Our Vision','◉','our vision','Our roadmap for building the most comprehensive Sanskrit learning platform on the web — coming soon.')"><span class="bl-icon">◉</span><span class="bl-label">OUR VISION</span></button>
+    <button class="bottom-bar-link bl-desktop" onclick="location.href='/blog'"><span class="bl-icon">◇</span><span class="bl-label">BLOGS</span></button>
+    <button class="bottom-bar-link bl-desktop" onclick="window.openComingSoon('Other Products','⬡','other products','Explore our other language and education tools — coming soon.')"><span class="bl-icon">⬡</span><span class="bl-label">OTHER PRODUCTS</span></button>
+    <button class="bottom-bar-link bl-mobile-only" id="explore-btn" onclick="window.toggleExploreDropdown()"><span class="bl-icon">◈</span><span class="bl-label">EXPLORE ▾</span></button>
+    <button class="bottom-bar-link donate-link" onclick="window.openComingSoon('Donate','♥','donate','Help keep this project alive and free for everyone. Every contribution matters — coming soon.')"><span class="bl-icon">♥</span><span class="bl-label">DONATE</span></button>
+  </footer>
+</div>
+
+<script>
+  (function(){
+    var bb=document.getElementById('bottom-bar');
+    var tabIcon=document.getElementById('bottom-bar-tab-icon');
+    var tabLabel=document.getElementById('bottom-bar-tab-label');
+    var collapsed=localStorage.getItem('sk_bar')==='0';
+    if(collapsed){bb.classList.add('collapsed');document.body.classList.add('bar-collapsed');tabIcon.textContent='▲';tabLabel.textContent='OPEN';}
+  })();
+</script>
+<script type="module">
+  import { injectGlobals } from '/src/js/components.js';
+  injectGlobals();
+</script>
+</body>
+</html>
