@@ -88,6 +88,53 @@ export function injectGlobals() {
   </div>
 </div>
 
+<!-- PRIVACY MODAL -->
+<div class="modal-overlay" id="privacy-modal">
+  <div class="modal-box">
+    <div class="modal-header">
+      <span class="modal-header-title">PRIVACY POLICY</span>
+      <button class="modal-close-btn" onclick="window.closePrivacy()">✕</button>
+    </div>
+    <div class="modal-scrollable">
+      <div class="pref-section">
+        <div class="pref-section-title">LAST UPDATED: 2026-05-27</div>
+        <p class="priv-hl"><strong>We collect nothing.</strong> All your progress lives in your browser's localStorage — on your device, never transmitted to us.</p>
+      </div>
+      <div class="pref-section">
+        <div class="pref-section-title">DATA STORED LOCALLY</div>
+        <ul class="priv-list">
+          <li>Lesson progress &amp; completed modules</li>
+          <li>Daily streak &amp; last-active date</li>
+          <li>Achievement badges earned</li>
+          <li>Daily quest completions</li>
+          <li>Answer history &amp; accuracy stats</li>
+          <li>UI preferences (theme, sound)</li>
+        </ul>
+      </div>
+      <div class="pref-section">
+        <div class="pref-section-title">ANALYTICS &amp; TRACKING</div>
+        <p class="priv-p">No analytics, no tracking pixels, no fingerprinting, no advertising networks, no cookies.</p>
+      </div>
+      <div class="pref-section">
+        <div class="pref-section-title">THIRD-PARTY SERVICES</div>
+        <p class="priv-p">Google Fonts CDN serves our typefaces. Your browser contacts Google's servers to fetch these files — Google may log your IP per their own policy. No other external resources.</p>
+      </div>
+      <div class="pref-section">
+        <div class="pref-section-title">YOUR CONTROL</div>
+        <ul class="priv-list">
+          <li>View: DevTools → Application → Local Storage</li>
+          <li>Delete: clear localStorage for this site</li>
+          <li>Incognito mode leaves no trace after the session</li>
+        </ul>
+      </div>
+      <div class="pref-section">
+        <div class="pref-section-title">CONTACT</div>
+        <p class="priv-p">Questions? contact@sanskrit.exe</p>
+      </div>
+    </div>
+  </div>
+</div>
+
 <!-- COOKIE BAR -->
 <div class="cookie-bar" id="cookie-bar">
   <span class="cookie-bar-text">This site uses localStorage to save your progress and preferences. No data leaves your device.</span>
@@ -114,12 +161,17 @@ export function injectGlobals() {
     Prefs.updateUI();
   };
   window.closePrefs = () => document.getElementById('prefs-modal').classList.remove('open');
+  window.openPrivacy = () => document.getElementById('privacy-modal').classList.add('open');
+  window.closePrivacy = () => document.getElementById('privacy-modal').classList.remove('open');
   window.setTheme = (mode) => Theme.apply(mode);
   window.setFontSize = (s) => Prefs.setFontSize(s);
   window.setScript = (s) => Prefs.setScript(s);
 
   document.getElementById('prefs-modal')?.addEventListener('click', e => {
     if (e.target === e.currentTarget) window.closePrefs();
+  });
+  document.getElementById('privacy-modal')?.addEventListener('click', e => {
+    if (e.target === e.currentTarget) window.closePrivacy();
   });
 
   window.openDeleteOverlay = () => {
@@ -276,6 +328,8 @@ export function injectGlobals() {
     if (e.key !== 'Escape') return;
     const prefsModal = document.getElementById('prefs-modal');
     if (prefsModal?.classList.contains('open')) { window.closePrefs(); return; }
+    const privacyModal = document.getElementById('privacy-modal');
+    if (privacyModal?.classList.contains('open')) { window.closePrivacy(); return; }
     const deleteOverlay = document.getElementById('delete-overlay');
     if (deleteOverlay?.classList.contains('active')) { window.closeDeleteOverlay(); return; }
     const comingSoon = document.getElementById('coming-soon-overlay');
