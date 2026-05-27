@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover"/>
+  <meta name="description" content="Privacy policy for SANSKRIT.EXE — how your data is stored and protected."/>
+  <meta name="application-name" content="SANSKRIT.EXE"/>
+  <meta name="theme-color" content="#06060A"/>
+  <meta property="og:title" content="Privacy Policy | SANSKRIT.EXE"/>
+  <meta property="og:description" content="Privacy policy for SANSKRIT.EXE — how your data is stored and protected."/>
+  <meta property="og:type" content="website"/>
+  <meta property="og:site_name" content="SANSKRIT.EXE"/>
+  <meta property="og:locale" content="en_US"/>
+  <meta property="og:url" content="https://sanskrit-terminal.vercel.app/privacy"/>
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg"/>
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png"/>
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"/>
+  <link rel="shortcut icon" href="/favicon.ico"/>
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"/>
+  <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#F0A500"/>
+  <link rel="manifest" href="/site.webmanifest"/>
+  <title>Privacy Policy | SANSKRIT.EXE</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" crossorigin>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="dns-prefetch" href="https://fonts.googleapis.com">
+  <link rel="dns-prefetch" href="https://fonts.gstatic.com">
+  <link href="https://fonts.googleapis.com/css2?family=VT323&family=Share+Tech+Mono&family=Noto+Sans+Devanagari:wght@400&display=swap" rel="stylesheet"/>
+  <script>(function(){var t=localStorage.getItem('sk_theme');if(t==='light'||t==='dark'){document.documentElement.setAttribute('data-theme',t);}else{document.documentElement.setAttribute('data-theme',window.matchMedia('(prefers-color-scheme: light)').matches?'light':'dark');}})();</script>
+  <link rel="stylesheet" href="/src/css/style.css">
+  <style>
+    .privacy-wrap {
+      max-width: 720px;
+      margin: 0 auto;
+      padding: 32px 20px 80px;
+    }
+
+    .privacy-breadcrumb {
+      font-size: 12px;
+      color: var(--text-3);
+      letter-spacing: 1.5px;
+      margin-bottom: 28px;
+    }
+    .privacy-breadcrumb a {
+      color: var(--brand-dim);
+      text-decoration: none;
+      transition: color .1s;
+    }
+    .privacy-breadcrumb a:hover { color: var(--brand); }
+    .privacy-breadcrumb span { color: var(--text-3); margin: 0 6px; }
+
+    .privacy-hero {
+      border: var(--border-brand);
+      background: var(--surface2);
+      padding: 32px 28px 28px;
+      margin-bottom: 40px;
+      box-shadow: var(--shadow);
+      position: relative;
+      overflow: hidden;
+    }
+    .privacy-hero::before {
+      content: '◎';
+      position: absolute;
+      right: 24px;
+      top: 50%;
+      transform: translateY(-50%);
+      font-size: 140px;
+      color: var(--brand-glow);
+      line-height: 1;
+      pointer-events: none;
+    }
+    [data-theme="light"] .privacy-hero::before { color: rgba(107,58,0,0.06); }
+
+    .privacy-tag-row {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 12px;
+    }
+    .privacy-category {
+      font-size: 11px;
+      color: #E8DEB8;
+      letter-spacing: 2px;
+      background: var(--brand-dark);
+      padding: 3px 10px;
+      border: 1px solid var(--brand-dim);
+    }
+    .privacy-updated {
+      font-size: 11px;
+      color: var(--text-3);
+      letter-spacing: 1px;
+      background: var(--surface3);
+      padding: 3px 8px;
+      border: 1px solid var(--border);
+    }
+    .privacy-title {
+      font-family: var(--font-logo);
+      font-size: 40px;
+      color: var(--brand);
+      line-height: 1.15;
+      margin-bottom: 8px;
+      text-shadow: 0 0 18px var(--brand);
+      animation: flicker 9s infinite;
+    }
+    .privacy-subtitle {
+      font-size: 15px;
+      color: var(--text-2);
+      line-height: 1.65;
+      max-width: 520px;
+    }
+
+    .privacy-section {
+      margin-top: 40px;
+      margin-bottom: 16px;
+    }
+    .privacy-section-tag {
+      font-size: 11px;
+      color: var(--text-3);
+      letter-spacing: 2px;
+      margin-bottom: 6px;
+    }
+    .privacy-section-tag::before { content: '> '; color: var(--brand-dim); }
+    .privacy-section-title {
+      font-family: var(--font-logo);
+      font-size: 26px;
+      color: var(--brand);
+      letter-spacing: 2px;
+      text-shadow: 0 0 10px var(--brand);
+      line-height: 1.2;
+    }
+
+    .privacy-body { line-height: 1.85; }
+    .privacy-body p {
+      font-size: 15px;
+      color: var(--text-2);
+      margin-bottom: 16px;
+    }
+    .privacy-body strong { color: var(--text); }
+
+    .privacy-card {
+      border: var(--border-dim);
+      background: var(--surface);
+      padding: 18px 20px;
+      margin: 20px 0;
+      box-shadow: var(--shadow-sm);
+    }
+    .privacy-card-title {
+      font-size: 12px;
+      color: var(--text-3);
+      letter-spacing: 2px;
+      margin-bottom: 10px;
+    }
+    .privacy-card-title::before { content: '// '; color: var(--brand-dim); }
+    .privacy-list {
+      margin: 0;
+      padding: 0;
+      list-style: none;
+    }
+    .privacy-list li {
+      font-size: 14px;
+      color: var(--text-2);
+      padding: 5px 0;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      gap: 10px;
+    }
+    .privacy-list li:last-child { border-bottom: none; }
+    .privacy-list li::before { content: '◦'; color: var(--brand-dim); flex-shrink: 0; }
+
+    .privacy-highlight {
+      border-left: 4px solid var(--brand);
+      background: var(--surface);
+      padding: 14px 18px;
+      margin: 20px 0;
+      font-size: 14px;
+      color: var(--text-2);
+      line-height: 1.7;
+    }
+    .privacy-highlight strong { color: var(--brand); }
+
+    @media(max-width:600px) {
+      .privacy-wrap { padding: 16px 14px 64px; }
+      .privacy-hero { padding: 20px 16px 16px; }
+      .privacy-hero::before { font-size: 80px; right: 10px; }
+      .privacy-title { font-size: 28px; }
+      .privacy-subtitle { font-size: 14px; }
+      .privacy-section-title { font-size: 20px; }
+      .privacy-body p { font-size: 14px; }
+    }
+
+    @media(max-width:480px) and (orientation:portrait) {
+      html body {
+        height: auto;
+        overflow-x: hidden;
+        overflow-y: auto;
+        display: block;
+        padding-bottom: calc(74px + env(safe-area-inset-bottom, 0px));
+      }
+    }
+  </style>
+</head>
+<body>
+
+<header class="topbar">
+  <a class="logo" href="/">
+    <div class="logo-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 46" aria-hidden="true"><path fill="currentColor" d="M25.946 44.938c-.664.845-2.021.375-2.021-.698V33.937a2.26 2.26 0 0 0-2.262-2.262H10.287c-.92 0-1.456-1.04-.92-1.788l7.48-10.471c1.07-1.497 0-3.578-1.842-3.578H1.237c-.92 0-1.456-1.04-.92-1.788L10.013.474c.214-.297.556-.474.92-.474h28.894c.92 0 1.456 1.04.92 1.788l-7.48 10.471c-1.07 1.498 0 3.579 1.842 3.579h11.377c.943 0 1.473 1.088.89 1.83L25.947 44.94z"/></svg></div>
+    <div>
+      <div class="logo-text">SANSKRIT.EXE <span class="beta-tag">BETA</span></div>
+      <div class="logo-sub">वाग्देव्यै नमः</div>
+    </div>
+  </a>
+  <div class="topbar-right">
+    <div class="streak-badge" tabindex="0"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 12 16" class="streak-flame" aria-hidden="true" fill="currentColor"><path fill-rule="evenodd" d="M6 0C3.5 3 1 7 1 11c0 3.5 2.2 5.5 5 5.5s5-2 5-5.5C11 7 8.5 3 6 0ZM6 6C4.5 9 3.5 11 3.5 13c0 1.5 1.1 2.5 2.5 2.5s2.5-1 2.5-2.5C8.5 11 7.5 9 6 6Z"/></svg><span id="streak-count">0</span>×</div>
+    <button class="icon-btn" id="sound-toggle-btn" onclick="window.toggleSound && window.toggleSound()">🔊</button>
+    <button class="prefs-btn" onclick="window.openPrefs && window.openPrefs()">⚙ <span class="prefs-label">PREFS</span></button>
+  </div>
+</header>
+<script>document.getElementById('streak-count').textContent=parseInt(localStorage.getItem('sk_streak'),10)||0;</script>
+
+<div class="privacy-wrap">
+
+  <nav class="privacy-breadcrumb">
+    <a href="/">HOME</a>
+    <span>›</span>
+    PRIVACY
+  </nav>
+
+  <div class="privacy-hero">
+    <div class="privacy-tag-row">
+      <span class="privacy-category">LEGAL</span>
+      <span class="privacy-updated">LAST UPDATED: 2026-05-27</span>
+    </div>
+    <div class="privacy-title">PRIVACY POLICY</div>
+    <div class="privacy-subtitle">
+      SANSKRIT.EXE is built on a simple principle: your learning data belongs to you, on your device. We do not collect, transmit, or store any personal information on external servers.
+    </div>
+  </div>
+
+  <div class="privacy-body">
+
+    <div class="privacy-section">
+      <div class="privacy-section-tag">SECTION 01</div>
+      <div class="privacy-section-title">DATA WE COLLECT</div>
+    </div>
+
+    <div class="privacy-highlight">
+      <strong>We collect nothing.</strong> SANSKRIT.EXE has no servers, no accounts, no sign-in, and no data transmission. Every piece of information about your progress exists only in your browser's localStorage — on your device, under your control.
+    </div>
+
+    <p>The following data is stored locally in your browser using the Web Storage API (<code>localStorage</code>):</p>
+
+    <div class="privacy-card">
+      <div class="privacy-card-title">LOCAL STORAGE KEYS</div>
+      <ul class="privacy-list">
+        <li>Lesson progress and completed modules</li>
+        <li>Daily streak count and last-active date</li>
+        <li>Achievement badges earned</li>
+        <li>Daily quest completions</li>
+        <li>Answer history and accuracy statistics</li>
+        <li>UI preferences (theme, sound settings)</li>
+      </ul>
+    </div>
+
+    <p>This data never leaves your browser. It is not accessible to us or to any third party. Clearing your browser's localStorage will permanently erase it.</p>
+
+    <div class="privacy-section">
+      <div class="privacy-section-tag">SECTION 02</div>
+      <div class="privacy-section-title">ANALYTICS &amp; TRACKING</div>
+    </div>
+
+    <p>SANSKRIT.EXE uses <strong>no analytics software, no tracking pixels, no fingerprinting, and no advertising networks.</strong> We do not use Google Analytics, Meta Pixel, Hotjar, or any equivalent service. There are no cookies set by this application.</p>
+
+    <div class="privacy-section">
+      <div class="privacy-section-tag">SECTION 03</div>
+      <div class="privacy-section-title">THIRD-PARTY SERVICES</div>
+    </div>
+
+    <p>The only third-party service used is <strong>Google Fonts</strong>, which serves the typefaces (VT323, Share Tech Mono, Noto Sans Devanagari) used across the interface. When your browser loads the page, it requests these font files from Google's CDN servers. Google may log this request, which includes your IP address, in accordance with their own privacy policy.</p>
+
+    <p>No other external resources, CDNs, or APIs are contacted by this application.</p>
+
+    <div class="privacy-section">
+      <div class="privacy-section-tag">SECTION 04</div>
+      <div class="privacy-section-title">YOUR RIGHTS &amp; CONTROL</div>
+    </div>
+
+    <p>Since all data is stored locally on your device, you have complete control:</p>
+
+    <div class="privacy-card">
+      <div class="privacy-card-title">WHAT YOU CAN DO</div>
+      <ul class="privacy-list">
+        <li>View your data in your browser's DevTools under Application → Local Storage</li>
+        <li>Delete all data by clearing your browser's localStorage for this site</li>
+        <li>Use the app in private/incognito mode — no data persists after the session</li>
+      </ul>
+    </div>
+
+    <p>There is no account to delete, no server-side record to request, and no data erasure process to initiate — because we never had your data to begin with.</p>
+
+    <div class="privacy-section">
+      <div class="privacy-section-tag">SECTION 05</div>
+      <div class="privacy-section-title">CONTACT</div>
+    </div>
+
+    <p>Questions about this policy? Reach us at <strong>contact@sanskrit.exe</strong>. We will respond as soon as we can.</p>
+
+  </div>
+
+</div>
+
+<div class="bottom-bar-wrap">
+  <div class="bottom-bar-tab" id="bottom-bar-tab" onclick="window.toggleBottomBar()" title="Toggle bottom bar">
+    <span id="bottom-bar-tab-icon">▼</span><span id="bottom-bar-tab-label" class="bottom-bar-tab-label">CLOSE</span>
+  </div>
+  <div class="explore-dropdown" id="explore-dropdown">
+    <button class="explore-dropdown-item" onclick="window.closeExploreDropdown();window.openComingSoon('About Us','◈','about us','Learn about the team behind SANSKRIT.EXE and our mission to make ancient languages accessible — coming soon.')"><span>◈</span> ABOUT US</button>
+    <button class="explore-dropdown-item" onclick="window.closeExploreDropdown();location.href='/privacy'"><span>◎</span> PRIVACY</button>
+    <button class="explore-dropdown-item" onclick="window.closeExploreDropdown();location.href='/blog'"><span>◇</span> BLOGS</button>
+    <button class="explore-dropdown-item" onclick="window.closeExploreDropdown();window.openComingSoon('Other Products','⬡','other products','Explore our other language and education tools — coming soon.')"><span>⬡</span> OTHER PRODUCTS</button>
+  </div>
+  <footer class="bottom-bar" id="bottom-bar">
+    <button class="bottom-bar-link bl-desktop" onclick="window.openComingSoon('About Us','◈','about us','Learn about the team behind SANSKRIT.EXE and our mission to make ancient languages accessible — coming soon.')"><span class="bl-icon">◈</span><span class="bl-label">ABOUT US</span></button>
+    <button class="bottom-bar-link bl-desktop" onclick="location.href='/privacy'"><span class="bl-icon">◎</span><span class="bl-label">PRIVACY</span></button>
+    <button class="bottom-bar-link bl-desktop" onclick="location.href='/blog'"><span class="bl-icon">◇</span><span class="bl-label">BLOGS</span></button>
+    <button class="bottom-bar-link bl-desktop" onclick="window.openComingSoon('Other Products','⬡','other products','Explore our other language and education tools — coming soon.')"><span class="bl-icon">⬡</span><span class="bl-label">OTHER PRODUCTS</span></button>
+    <button class="bottom-bar-link bl-mobile-only" id="explore-btn" onclick="window.toggleExploreDropdown()"><span class="bl-icon">◈</span><span class="bl-label">EXPLORE</span><span class="explore-chevron">▾</span></button>
+    <button class="bottom-bar-link donate-link" onclick="window.openComingSoon('Donate','♥','donate','Help keep this project alive and free for everyone. Every contribution matters — coming soon.')"><span class="bl-icon">♥</span><span class="bl-label">DONATE</span></button>
+  </footer>
+</div>
+
+<script>
+  (function(){
+    var bb=document.getElementById('bottom-bar');
+    var tabIcon=document.getElementById('bottom-bar-tab-icon');
+    var tabLabel=document.getElementById('bottom-bar-tab-label');
+    var collapsed=localStorage.getItem('sk_bar')==='0';
+    if(collapsed){bb.classList.add('collapsed');document.body.classList.add('bar-collapsed');tabIcon.textContent='▲';tabLabel.textContent='OPEN';}
+  })();
+</script>
+<script type="module">
+  import { injectGlobals } from '/src/js/components.js';
+  injectGlobals();
+</script>
+</body>
+</html>
