@@ -414,15 +414,28 @@ export function injectGlobals() {
     if (prefsBtn) prefsBtn.textContent = isFs ? '⊡ EXIT FULL' : '⛶ FULLSCREEN';
     const isMobile = window.matchMedia('(max-width: 768px)').matches;
     document.documentElement.classList.toggle('mobile-fs', isFs && isMobile);
+    if (!isFs) {
+      // Delay so navigation-triggered exits (timer cancelled on unload) don't clear the pref
+      setTimeout(() => { if (!document.fullscreenElement) localStorage.setItem('sk_fullscreen', 'false'); }, 200);
+    }
   };
   window.toggleFullscreen = () => {
     if (!document.fullscreenElement) {
       document.documentElement.requestFullscreen?.();
+      localStorage.setItem('sk_fullscreen', 'true');
     } else {
       document.exitFullscreen?.();
     }
   };
   document.addEventListener('fullscreenchange', _updateFullscreenUI);
+  if (localStorage.getItem('sk_fullscreen') === 'true' && !document.fullscreenElement) {
+    const _reenter = () => {
+      document.documentElement.requestFullscreen?.().catch(() => { localStorage.removeItem('sk_fullscreen'); });
+    };
+    document.addEventListener('click',      _reenter, { once: true });
+    document.addEventListener('keydown',    _reenter, { once: true });
+    document.addEventListener('touchstart', _reenter, { once: true });
+  }
 
   document.addEventListener('keydown', (e) => {
     if (e.key !== 'Escape') return;
