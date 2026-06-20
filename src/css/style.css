@@ -790,10 +790,6 @@ body.vk-mobile-open #screen-lesson{padding-bottom:310px;}
   .modal-overlay{padding:46px 8px 8px;}
   .modal-box{max-height:calc(100vh - 54px);}
 
-  /* FULLSCREEN — defeat mobile-fs specificity in landscape */
-  html.mobile-fs .topbar{padding-top:5px;padding-bottom:5px;}
-  html.mobile-fs .bottom-bar-wrap{padding-bottom:env(safe-area-inset-bottom,0px);}
-
   /* LANDSCAPE SAFE AREAS — notch/island side insets */
   .topbar{padding-left:calc(18px + env(safe-area-inset-left,0px));padding-right:calc(18px + env(safe-area-inset-right,0px));}
   .main{padding-left:calc(10px + env(safe-area-inset-left,0px));}
@@ -892,10 +888,6 @@ body.vk-mobile-open #screen-lesson{padding-bottom:310px;}
 @media(max-width:480px){.streak-warning-banner{flex-wrap:wrap;}.swb-btn{width:100%;}}
 
 /* ── END RETENTION SYSTEM ─────────────────────────────────────────── */
-
-/* Mobile fullscreen letterbox: preserve space where native bars were */
-html.mobile-fs .topbar{padding-top:24px;}
-html.mobile-fs .bottom-bar-wrap{padding-bottom:20px;}
 
 /* Portrait mobile: lock viewport, scroll only within module list */
 @media(max-width:480px) and (orientation:portrait){

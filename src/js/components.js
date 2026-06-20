@@ -54,7 +54,6 @@ export function injectGlobals() {
         <div class="pref-section-title">APP</div>
         <div class="app-pref-row">
           <button class="app-pref-btn pwa-install-btn" onclick="window.installApp()" style="display:none">⬇ INSTALL APP</button>
-          <button class="app-pref-btn" id="prefs-fullscreen-btn" onclick="window.toggleFullscreen()">⛶ FULLSCREEN</button>
         </div>
       </div>
     </div>
@@ -406,36 +405,6 @@ export function injectGlobals() {
     document.querySelectorAll('.pwa-install-btn').forEach(b => b.style.display = 'none');
     window.dismissInstallBanner();
   });
-
-  // Fullscreen
-  const _updateFullscreenUI = () => {
-    const isFs = !!document.fullscreenElement;
-    const prefsBtn = document.getElementById('prefs-fullscreen-btn');
-    if (prefsBtn) prefsBtn.textContent = isFs ? '⊡ EXIT FULL' : '⛶ FULLSCREEN';
-    const isMobile = window.matchMedia('(max-width: 768px)').matches;
-    document.documentElement.classList.toggle('mobile-fs', isFs && isMobile);
-    if (!isFs) {
-      // Delay so navigation-triggered exits (timer cancelled on unload) don't clear the pref
-      setTimeout(() => { if (!document.fullscreenElement) localStorage.setItem('sk_fullscreen', 'false'); }, 200);
-    }
-  };
-  window.toggleFullscreen = () => {
-    if (!document.fullscreenElement) {
-      document.documentElement.requestFullscreen?.();
-      localStorage.setItem('sk_fullscreen', 'true');
-    } else {
-      document.exitFullscreen?.();
-    }
-  };
-  document.addEventListener('fullscreenchange', _updateFullscreenUI);
-  if (localStorage.getItem('sk_fullscreen') === 'true' && !document.fullscreenElement) {
-    const _reenter = () => {
-      document.documentElement.requestFullscreen?.().catch(() => { localStorage.removeItem('sk_fullscreen'); });
-    };
-    document.addEventListener('click',      _reenter, { once: true });
-    document.addEventListener('keydown',    _reenter, { once: true });
-    document.addEventListener('touchstart', _reenter, { once: true });
-  }
 
   document.addEventListener('keydown', (e) => {
     if (e.key !== 'Escape') return;
