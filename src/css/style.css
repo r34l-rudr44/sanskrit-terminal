@@ -69,6 +69,10 @@ a.logo:focus-visible{outline:2px solid var(--brand);outline-offset:2px;}
 .prefs-label{display:inline;}
 @media(max-width:520px){.prefs-label{display:none;}}
 .app{display:flex;position:relative;min-height:calc(100vh - 61px);}
+/* Sidebar intentionally hidden — all rendering logic in home.js (renderSidebar,
+   restoreSidebarState, toggleSidebar) is intact and functional. Re-enable by
+   changing display:none → display:flex here and in the two responsive blocks
+   below (~line 134 and ~line 810). */
 .sidebar-wrap{display:none;flex-direction:row;align-items:stretch;position:absolute;left:0;top:0;bottom:0;z-index:40;}
 .sidebar{width:270px;min-width:270px;padding:16px 12px;background:var(--surface);overflow-y:auto;overflow-x:hidden;position:sticky;top:61px;max-height:calc(100vh - 61px);align-self:flex-start;transition:width .24s ease,min-width .24s ease,padding .24s ease,opacity .2s ease;scrollbar-width:thin;scrollbar-color:var(--brand-dark) var(--surface);padding-bottom:calc(114px + env(safe-area-inset-bottom,0px));}
 .sidebar::-webkit-scrollbar{width:6px;}.sidebar::-webkit-scrollbar-track{background:var(--surface);}.sidebar::-webkit-scrollbar-thumb{background:var(--brand-dark);}
@@ -806,7 +810,7 @@ body.vk-mobile-open #screen-lesson{padding-bottom:310px;}
 
 /* Tablets & small desktops (481px – 768px) */
 @media(min-width:481px) and (max-width:768px){
-  .sidebar-wrap{display:none;}
+  .sidebar-wrap{display:none;} /* sidebar hidden — see note at top of sidebar block */
   .main{padding:16px 14px;}
   .hero-title{font-size:28px;}
   .options-grid{grid-template-columns:1fr;}

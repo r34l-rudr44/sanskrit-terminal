@@ -157,6 +157,7 @@ export function updateStats() {
   }
 }
 
+/* Sidebar rendering — kept for future use; UI is currently hidden via CSS (display:none on .sidebar-wrap). */
 export function renderSidebar() {
   const sb = document.getElementById('sidebar-inner');
   if(!sb) return;
