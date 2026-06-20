@@ -388,11 +388,6 @@ export function injectGlobals() {
     if (donateModal?.classList.contains('open')) { window.closeDonate(); return; }
     const deleteOverlay = document.getElementById('delete-overlay');
     if (deleteOverlay?.classList.contains('active')) { window.closeDeleteOverlay(); return; }
-    const comingSoon = document.getElementById('coming-soon-overlay');
-    if (comingSoon?.classList.contains('active')) {
-      comingSoon.classList.remove('active');
-      document.body.style.overflow = '';
-    }
   });
 
   // Handle Boot Sequence for Home Only
