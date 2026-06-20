@@ -14,6 +14,7 @@ export function injectGlobals() {
   </a>
   <div class="topbar-right">
     <div class="streak-badge" tabindex="0"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 12 16" class="streak-flame" aria-hidden="true" fill="currentColor"><path fill-rule="evenodd" d="M6 0C3.5 3 1 7 1 11c0 3.5 2.2 5.5 5 5.5s5-2 5-5.5C11 7 8.5 3 6 0ZM6 6C4.5 9 3.5 11 3.5 13c0 1.5 1.1 2.5 2.5 2.5s2.5-1 2.5-2.5C8.5 11 7.5 9 6 6Z"/></svg><span id="streak-count">${streak}</span>×</div>
+    <a class="prefs-btn" href="/progress.html">◈ <span class="prefs-label">PROGRESS</span></a>
     <button class="icon-btn" id="sound-toggle-btn" onclick="window.toggleSound && window.toggleSound()">🔊</button>
     <button class="prefs-btn" onclick="window.openPrefs && window.openPrefs()">⚙ <span class="prefs-label">PREFS</span></button>
   </div>`;

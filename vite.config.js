@@ -58,6 +58,7 @@ export default defineConfig({
         main: resolve(__dirname, 'index.html'),
         lesson: resolve(__dirname, 'lesson.html'),
         path: resolve(__dirname, 'path.html'),
+        progress: resolve(__dirname, 'progress.html'),
         blog: resolve(__dirname, 'blog/index.html'),
         'blog-anusvara': resolve(__dirname, 'blog/anusvara.html'),
         'blog-vyakarana': resolve(__dirname, 'blog/vyakarana.html'),
