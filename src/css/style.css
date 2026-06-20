@@ -46,7 +46,7 @@ button{font-family:var(--font-ui);cursor:pointer;touch-action:manipulation;}
 @keyframes scanOut  {from{opacity:1;clip-path:inset(0 0 0% 0)}to{opacity:0;clip-path:inset(0 0 100% 0)}}
 .cursor::after{content:'█';animation:blink 1s step-end infinite;color:var(--brand);font-size:0.8em;margin-left:3px;}
 
-.topbar{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:10px 18px;padding-top:max(10px,env(safe-area-inset-top,0px));background:var(--surface);border-bottom:var(--border-brand);position:sticky;top:0;z-index:100;animation:flicker 11s infinite;}
+.topbar{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:10px 18px;padding-top:max(10px,env(safe-area-inset-top,0px));background:var(--surface);border-bottom:var(--border-brand);position:sticky;top:0;z-index:100;animation:flicker 11s infinite;min-height:64px;}
 .logo{display:flex;align-items:center;gap:10px;}
 a.logo{text-decoration:none;color:inherit;}
 a.logo:focus-visible{outline:2px solid var(--brand);outline-offset:2px;}
