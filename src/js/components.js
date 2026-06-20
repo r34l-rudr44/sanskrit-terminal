@@ -50,12 +50,6 @@ export function injectGlobals() {
           <button class="btn-danger" onclick="window.openDeleteOverlay()">🗑 DELETE</button>
         </div>
       </div>
-      <div class="pref-section">
-        <div class="pref-section-title">APP</div>
-        <div class="app-pref-row">
-          <button class="app-pref-btn pwa-install-btn" onclick="window.installApp()" style="display:none">⬇ INSTALL APP</button>
-        </div>
-      </div>
     </div>
   </div>
 </div>

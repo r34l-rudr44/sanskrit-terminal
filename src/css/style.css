@@ -489,12 +489,6 @@ body.bar-collapsed{padding-bottom:calc(62px + env(safe-area-inset-bottom,0px));}
 .btn-danger{flex-shrink:0;padding:8px 14px;background:var(--err-bg);color:var(--err);border:2px solid var(--err);font-size:15px;cursor:pointer;white-space:nowrap;transition:all .1s;box-shadow:var(--shadow-err);}
 .btn-danger:hover{background:var(--err);color:var(--bg);}
 .btn-danger:active{transform:translate(3px,3px);box-shadow:none;}
-.app-pref-row{display:flex;gap:8px;flex-wrap:wrap;}
-.app-pref-btn{flex:1;padding:9px 14px;border:var(--border-dim);background:var(--surface3);font-family:var(--font-ui);font-size:14px;color:var(--text-2);cursor:pointer;letter-spacing:1px;transition:all .1s;white-space:nowrap;text-align:center;}
-.app-pref-btn:hover{border-color:var(--brand);color:var(--brand);}
-.app-pref-btn:active{transform:translate(2px,2px);}
-.app-pref-btn.pwa-install-btn{border-color:var(--brand-dim);color:var(--brand);}
-
 .delete-overlay{display:none;position:fixed;inset:0;z-index:9000;background:var(--overlay-bg);align-items:center;justify-content:center;}
 .delete-overlay.active{display:flex;animation:scanIn .2s ease;}
 .delete-box{background:var(--surface);border:2px solid var(--err);box-shadow:0 0 40px rgba(255,77,77,0.25),4px 4px 0 var(--err-dim);max-width:420px;width:92%;padding:0;overflow:hidden;}
