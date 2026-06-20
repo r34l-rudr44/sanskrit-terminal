@@ -123,19 +123,12 @@ a.logo:focus-visible{outline:2px solid var(--brand);outline-offset:2px;}
 .sidebar-prefs-btn:hover{border-color:var(--brand);color:var(--brand);background:var(--surface2);box-shadow:var(--shadow-sm);}
 .sidebar-prefs-btn:active{transform:translate(3px,3px);box-shadow:none;}
 .main{flex:1;padding:24px 20px;max-width:700px;margin:0 auto;width:100%;}
-.mobile-days{display:none;gap:6px;overflow-x:auto;padding:10px 12px;border-bottom:var(--border-brand);background:var(--surface);scrollbar-width:none;}
-.mobile-days::-webkit-scrollbar{display:none;}
-.mobile-pill{flex-shrink:0;padding:6px 14px;border:var(--border-dim);background:var(--surface2);font-size:14px;cursor:pointer;color:var(--text-2);white-space:nowrap;transition:all .1s;}
-.mobile-pill:hover,.mobile-pill.active{border-color:var(--brand);color:var(--brand);background:var(--surface3);box-shadow:var(--shadow-sm);}
-.mobile-pill.completed{border-color:var(--ok);color:var(--ok);}
-.mobile-pill.test-pill{border-style:dashed;}
-.mobile-pill.locked{opacity:.4;pointer-events:none;}
 /* INTENTIONAL: On small phones (<480px) the sidebar and mobile-days strip are hidden.
    The module directory is instead presented as a horizontal snap-scroll carousel
    (#home-module-list, see ~line 573) which suits single-thumb navigation better than
    a persistent side panel. Do NOT restore the sidebar here without replacing the
    carousel pattern — the two are mutually exclusive on narrow viewports. */
-@media(max-width:480px){.sidebar-wrap{display:none;}.mobile-days{display:none!important;}}
+@media(max-width:480px){.sidebar-wrap{display:none;}}
 .bottom-bar-wrap{position:fixed;bottom:0;left:0;right:0;z-index:200;display:flex;flex-direction:column;align-items:stretch;padding-bottom:env(safe-area-inset-bottom,0px);}
 .bottom-bar-tab {position:absolute;bottom:100%;right:20px;display: flex;align-items: center;justify-content:center;gap:4px;width: 80px;height: 22px;background: var(--surface);border: var(--border-brand);border-bottom: none;cursor: pointer;color: var(--brand);font-size: 10px;letter-spacing: 2px;border-radius: 6px 6px 0 0;transition: background .12s, box-shadow .12s;box-shadow: 0 -3px 0 var(--brand-dark);z-index: 100;}
 .bottom-bar-tab-label{font-size:8px;letter-spacing:1.5px;color:var(--text-3);}
