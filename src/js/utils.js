@@ -72,7 +72,6 @@ export const Theme = (() => {
 })();
 
 export const Prefs = (() => {
-  const FONT_SIZES = { sm:{q:'17px',input:'15px',tile:'14px'}, md:{q:'22px',input:'18px',tile:'17px'}, lg:{q:'27px',input:'22px',tile:'21px'} };
   const SCRIPT_MAP = {
     deva:   {placeholder:'देवनागरी में टाइप करें…', hint:'// type in Devanagari script (e.g. रामः)'},
     iast:   {placeholder:'Type in IAST…',            hint:'// IAST — e.g. rāmaḥ vanam gacchati'},
@@ -85,16 +84,9 @@ export const Prefs = (() => {
     itrans: 'vAgdevyai namaH',
     hk:     'vAgdevyai namaH'
   };
-  let fontSize = localStorage.getItem('sk_fs') || 'md';
   let script   = localStorage.getItem('sk_script') || 'deva';
-  
-  function applyFontSize() {
-    const f = FONT_SIZES[fontSize] || FONT_SIZES.md;
-    const r = document.documentElement.style;
-    r.setProperty('--q-size', f.q); r.setProperty('--inp-size', f.input); r.setProperty('--tile-size', f.tile);
-  }
+
   function updateUI() {
-    ['sm','md','lg'].forEach(s => document.getElementById('fs-'+s)?.classList.toggle('active', fontSize === s));
     ['deva','iast','itrans','hk'].forEach(s => document.getElementById('script-'+s)?.classList.toggle('active', script === s));
     const tagEl = document.getElementById('logo-sub');
     if (tagEl) tagEl.textContent = TAGLINE[script] || TAGLINE.deva;
@@ -102,7 +94,6 @@ export const Prefs = (() => {
     document.getElementById('theme-dark')?.classList.toggle('active', theme === 'dark');
     document.getElementById('theme-light')?.classList.toggle('active', theme === 'light');
   }
-  function setFontSize(size) { fontSize = size; localStorage.setItem('sk_fs', size); applyFontSize(); updateUI(); }
   function setScript(s)   {
     script = s;
     localStorage.setItem('sk_script', s);
@@ -110,6 +101,6 @@ export const Prefs = (() => {
     window.dispatchEvent(new CustomEvent('sk:script-change', { detail: { script: s } }));
   }
   function getScriptHint() { return SCRIPT_MAP[script] || SCRIPT_MAP.deva; }
-  function init() { applyFontSize(); updateUI(); }
-  return { init, setFontSize, setScript, getScriptHint, updateUI };
+  function init() { updateUI(); }
+  return { init, setScript, getScriptHint, updateUI };
 })();

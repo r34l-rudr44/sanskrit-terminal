@@ -94,16 +94,6 @@ Fonts imported from Google Fonts in `index.html` and `lesson.html` (line 35 in e
 | Display / logo | VT323 | 400 | `--font-logo` | App title, section headings, score displays |
 | Sanskrit script | Noto Sans Devanagari | 400 | `--font-dev` | Vocabulary, Sanskrit examples, lesson content |
 
-### 3.1 Font Size Tokens
-
-Defined in `src/css/style.css` `:root`:
-
-| Token | Value | Use |
-|---|---|---|
-| `--q-size` | `22px` | Question / prompt text |
-| `--inp-size` | `18px` | Input fields, answer text |
-| `--tile-size` | `17px` | Word tile text |
-
 ---
 
 ## 4. Logo Mark & Favicons

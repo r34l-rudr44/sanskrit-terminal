@@ -32,25 +32,6 @@ test('Theme: light preference persists across page reload', async ({ page }) => 
   await expect(page.locator('html')).toHaveAttribute('data-theme', 'light');
 });
 
-// ── Font size ─────────────────────────────────────────────────────────────────
-
-test('Font size: selecting large saves sk_fs=lg to localStorage', async ({ page }) => {
-  await openPrefs(page);
-  await page.locator('#fs-lg').click();
-
-  const fs = await page.evaluate(() => localStorage.getItem('sk_fs'));
-  expect(fs).toBe('lg');
-});
-
-test('Font size: preference persists across reload', async ({ page }) => {
-  await openPrefs(page);
-  await page.locator('#fs-lg').click();
-  await page.reload();
-
-  const fs = await page.evaluate(() => localStorage.getItem('sk_fs'));
-  expect(fs).toBe('lg');
-});
-
 // ── Script selection ──────────────────────────────────────────────────────────
 
 test('Script: selecting IAST saves sk_script=iast and marks button active', async ({ page }) => {

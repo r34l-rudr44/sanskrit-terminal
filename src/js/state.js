@@ -31,7 +31,7 @@ export function checkStreak() {
 
 export function confirmClearCache() {
   ['sk_completed_v2','sk_mod_tests','sk_streak','sk_total_q','sk_total_c','sk_last_date',
-   'sk_booted','sk_theme','sk_fs','sk_script','sk_sound','sk_sidebar','sk_cookie_ack',
+   'sk_booted','sk_theme','sk_script','sk_sound','sk_sidebar','sk_cookie_ack',
    'sk_lesson_progress','sk_session_count','sk_last_session_score','sk_last_seen_date',
    'sk_achievements','sk_daily_quest','sk_quest_streak','sk_lesson_scores',
    'sk_notif_asked','sk_notif_granted','sk_notif_shown_date','sk_ach_open'

@@ -35,14 +35,6 @@ export function injectGlobals() {
         </div>
       </div>
       <div class="pref-section">
-        <div class="pref-section-title">CONTENT_SIZE</div>
-        <div class="font-size-group">
-          <button class="fs-btn" id="fs-sm"  onclick="window.setFontSize('sm')"><span class="fs-sample" style="font-size:16px">अ</span><span class="fs-label">SMALL</span></button>
-          <button class="fs-btn active" id="fs-md" onclick="window.setFontSize('md')"><span class="fs-sample" style="font-size:22px">अ</span><span class="fs-label">MEDIUM</span></button>
-          <button class="fs-btn" id="fs-lg"  onclick="window.setFontSize('lg')"><span class="fs-sample" style="font-size:28px">अ</span><span class="fs-label">LARGE</span></button>
-        </div>
-      </div>
-      <div class="pref-section">
         <div class="pref-section-title">INPUT_SCRIPT</div>
         <div class="script-options">
           <button class="script-btn active" id="script-deva"   onclick="window.setScript('deva')"><span class="script-btn-name">Devanagari</span><span class="script-btn-sample">रामः गच्छति</span></button>
@@ -264,7 +256,6 @@ export function injectGlobals() {
   window.openDonate = () => document.getElementById('donate-modal').classList.add('open');
   window.closeDonate = () => document.getElementById('donate-modal').classList.remove('open');
   window.setTheme = (mode) => Theme.apply(mode);
-  window.setFontSize = (s) => Prefs.setFontSize(s);
   window.setScript = (s) => Prefs.setScript(s);
 
   document.getElementById('prefs-modal')?.addEventListener('click', e => {
