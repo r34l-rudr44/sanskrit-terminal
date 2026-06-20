@@ -31,6 +31,52 @@ export function checkAndGrantAchievements(state, ctx = {}) {
   return newlyEarned;
 }
 
+export function showAchievementsModal() {
+  let earned;
+  try { earned = new Set(JSON.parse(localStorage.getItem('sk_achievements') || '[]')); } catch { earned = new Set(); }
+  const questStreak = parseInt(localStorage.getItem('sk_quest_streak') || '0');
+
+  const existing = document.getElementById('achievements-modal');
+  if (existing) { existing.classList.add('open'); document.body.style.overflow = 'hidden'; return; }
+
+  const overlay = document.createElement('div');
+  overlay.className = 'modal-overlay';
+  overlay.id = 'achievements-modal';
+  overlay.innerHTML = `
+    <div class="modal-box">
+      <div class="modal-header">
+        <span class="modal-header-title">ACHIEVEMENTS</span>
+        <button class="modal-close-btn" id="ach-modal-close-btn">✕</button>
+      </div>
+      <div class="modal-scrollable">
+        <div class="ach-modal-grid">
+          ${ACHIEVEMENTS.map(a => {
+            const done = earned.has(a.id);
+            return `<div class="ach-modal-item${done ? ' ach-modal-item--earned' : ''}">
+              <span class="ach-modal-icon">${a.icon}</span>
+              <div class="ach-modal-info">
+                <div class="ach-modal-title">${a.title}</div>
+                <div class="ach-modal-desc">${a.desc}</div>
+              </div>
+              ${done ? '<span class="ach-modal-check">✓</span>' : ''}
+            </div>`;
+          }).join('')}
+        </div>
+        <div class="ach-modal-footer">QUEST_STREAK: ${questStreak}</div>
+      </div>
+    </div>`;
+  document.body.appendChild(overlay);
+  overlay.classList.add('open');
+  document.body.style.overflow = 'hidden';
+  overlay.querySelector('#ach-modal-close-btn').addEventListener('click', () => {
+    overlay.classList.remove('open');
+    document.body.style.overflow = '';
+  });
+  overlay.addEventListener('click', (e) => {
+    if (e.target === overlay) { overlay.classList.remove('open'); document.body.style.overflow = ''; }
+  });
+}
+
 export function showAchievementToasts(achievements) {
   if (!achievements.length) return;
   achievements.forEach((ach, i) => {

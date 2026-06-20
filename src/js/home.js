@@ -323,7 +323,7 @@ function init() {
   if (sessionCount > 0) {
     renderStreakWarning(streakStatus);
     if (streakStatus === 'at_risk') maybeShowStreakReminder(state.streak);
-    renderReviewQueue(streakStatus);
+    renderReviewQueue(streakStatus); // suppressed when streak is at_risk — see review.js
   }
 
   localStorage.setItem('sk_last_seen_date', today);

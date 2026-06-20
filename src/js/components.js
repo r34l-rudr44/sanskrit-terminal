@@ -77,18 +77,6 @@ export function injectGlobals() {
   </div>
 </div>
 
-<!-- COMING SOON OVERLAY -->
-<div class="coming-soon-overlay" id="coming-soon-overlay" onclick="window.closeComingSoon(event)">
-  <div class="coming-soon-box">
-    <div class="cs-top"><span id="cs-section-label">FEATURE</span></div>
-    <span class="cs-icon" id="cs-icon">🚧</span>
-    <div class="cs-title">COMING SOON</div>
-    <div class="cs-section" id="cs-section-name"></div>
-    <div class="cs-text" id="cs-text"></div>
-    <button class="cs-close-btn" onclick="document.getElementById('coming-soon-overlay').classList.remove('active');document.body.style.overflow='';">✕ CLOSE</button>
-  </div>
-</div>
-
 <!-- PRIVACY MODAL -->
 <div class="modal-overlay" id="privacy-modal">
   <div class="modal-box">
@@ -342,21 +330,6 @@ export function injectGlobals() {
     if (dd.classList.contains('open')) closeExploreWithAnim(dd);
   };
   window.addEventListener('resize', debounce(syncExploreDropdown, 100));
-
-  window.openComingSoon = (name, icon, section, text) => {
-    document.getElementById('cs-section-label').textContent = section.toUpperCase();
-    document.getElementById('cs-icon').textContent = icon;
-    document.getElementById('cs-section-name').textContent = name;
-    document.getElementById('cs-text').textContent = text;
-    document.getElementById('coming-soon-overlay').classList.add('active');
-    document.body.style.overflow = 'hidden';
-  };
-  window.closeComingSoon = (e) => {
-    if (e.target.id === 'coming-soon-overlay') {
-      e.target.classList.remove('active');
-      document.body.style.overflow = '';
-    }
-  };
 
   window.cookieAccept = () => {
     localStorage.setItem('sk_cookie_ack', 'true');

@@ -183,18 +183,6 @@ body.bar-collapsed{padding-bottom:calc(62px + env(safe-area-inset-bottom,0px));}
 .install-accept-btn:active{transform:translate(3px,3px);box-shadow:none;}
 .install-dismiss-btn{padding:6px 12px;background:transparent;color:var(--text-3);border:var(--border-dim);font-family:var(--font-ui);font-size:12px;cursor:pointer;transition:all .1s;}
 .install-dismiss-btn:hover{color:var(--text-2);border-color:var(--text-2);}
-.coming-soon-overlay{display:none;position:fixed;inset:0;z-index:10000;background:var(--overlay-bg);align-items:center;justify-content:center;}
-.coming-soon-overlay.active{display:flex;animation:scanIn .2s ease;}
-.coming-soon-box{background:var(--surface);border:var(--border-brand);box-shadow:var(--shadow);max-width:400px;width:90%;text-align:center;padding:36px 32px;}
-.cs-top{font-size:11px;color:var(--text-3);letter-spacing:2px;margin-bottom:18px;}
-.cs-top::before{content:'> LOADING... ';color:var(--brand);}
-.cs-icon{font-size:48px;margin-bottom:14px;display:block;}
-.cs-title{font-family:var(--font-logo);font-size:36px;color:var(--brand);text-shadow:0 0 14px var(--brand);margin-bottom:8px;animation:flicker 7s infinite;}
-.cs-section{font-size:15px;color:var(--cyan);letter-spacing:2px;margin-bottom:12px;}
-.cs-text{font-size:14px;color:var(--text-2);line-height:1.7;margin-bottom:24px;}
-.cs-close-btn{display:inline-flex;align-items:center;gap:8px;padding:10px 28px;background:var(--brand);color:var(--bg);border:var(--border-brand);font-family:var(--font-ui);font-size:16px;box-shadow:var(--shadow-sm);cursor:pointer;transition:all .1s;}
-.cs-close-btn:hover{opacity:0.88;}
-.cs-close-btn:active{transform:translate(3px,3px);box-shadow:none;}
 .bl-desktop{}.bl-mobile-only{display:none!important;}
 .explore-dropdown{display:none;flex-direction:column;position:absolute;bottom:100%;left:0;min-width:0;background:var(--surface);border:var(--border-brand);border-bottom:none;box-shadow:-4px -4px 0 var(--brand-dark);z-index:201;}
 .explore-dropdown.open{display:flex;animation:scanIn .15s ease;}
@@ -678,8 +666,7 @@ body.vk-mobile-open #screen-lesson{padding-bottom:310px;}
   .bottom-bar-link{padding:10px 12px;font-size:12px;}
   .modal-box{width:100%;max-width:100%;}
   .modal-overlay{padding:55px 8px 8px;}
-  .coming-soon-box{padding:24px 16px;}
-  .delete-box{width:96%;}
+.delete-box{width:96%;}
   .cookie-bar{flex-direction:column;gap:8px;padding:10px 14px;}
   .cookie-bar-text{min-width:auto;}
   .install-banner{flex-direction:column;gap:8px;padding:10px 14px;}
@@ -845,6 +832,24 @@ body.vk-mobile-open #screen-lesson{padding-bottom:310px;}
 .stc-title{font-family:var(--font-logo);font-size:22px;color:var(--brand);letter-spacing:1px;margin-bottom:6px;}
 .stc-body{font-size:13px;color:var(--text-2);line-height:1.6;margin-bottom:10px;}
 .score-notif-btn{margin-top:4px;font-size:13px;padding:6px 14px;}
+.score-ach-btn{margin-top:6px;font-size:12px;padding:6px 14px;width:100%;}
+.quest-status{display:flex;align-items:center;gap:8px;margin:10px 0 4px;padding:8px 10px;border:1px solid var(--border);background:var(--surface3);font-size:12px;}
+.quest-status--done{border-color:var(--ok);background:var(--surface2);}
+.quest-status-label{color:var(--brand);letter-spacing:1px;flex-shrink:0;}
+.quest-status-title{font-family:var(--font-logo);color:var(--text);flex:1;font-size:13px;}
+.quest-status-state{color:var(--text-3);flex-shrink:0;}
+.quest-status--done .quest-status-state{color:var(--ok);}
+/* Achievement modal */
+.ach-modal-grid{display:flex;flex-direction:column;gap:2px;padding:12px 16px;}
+.ach-modal-item{display:flex;align-items:center;gap:12px;padding:10px 8px;border-bottom:1px solid var(--border);opacity:0.35;}
+.ach-modal-item--earned{opacity:1;}
+.ach-modal-icon{font-size:20px;flex-shrink:0;width:24px;text-align:center;}
+.ach-modal-info{flex:1;min-width:0;}
+.ach-modal-title{font-family:var(--font-logo);font-size:14px;color:var(--brand);letter-spacing:1px;}
+.ach-modal-desc{font-size:11px;color:var(--text-2);margin-top:2px;}
+.ach-modal-check{color:var(--ok);font-size:16px;flex-shrink:0;}
+.ach-modal-footer{font-size:11px;color:var(--text-3);letter-spacing:2px;padding:12px 24px 16px;border-top:1px solid var(--border);}
+.ach-modal-footer::before{content:'// ';color:var(--brand-dim);}
 
 /* Achievement toasts */
 @keyframes slideInRight{from{transform:translateX(120%);opacity:0}to{transform:translateX(0);opacity:1}}

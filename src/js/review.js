@@ -3,6 +3,7 @@ import { MODULES } from '../data/index.js';
 import { escapeHtml } from './utils.js';
 
 export function renderReviewQueue(streakStatus) {
+  // Intentional: streak-at-risk warning takes priority; showing both would split the user's attention away from the urgent CTA.
   if (streakStatus === 'at_risk' && state.streak >= 2) return;
 
   const container = document.getElementById('home-widgets');

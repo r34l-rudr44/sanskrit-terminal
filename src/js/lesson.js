@@ -2,8 +2,8 @@ import { MODULES, getModule, getDay } from '../data/index.js';
 import { state } from './state.js';
 import { Theme, Prefs, Audio, Effects, escapeHtml, debounce } from './utils.js';
 import { injectGlobals } from './components.js';
-import { checkAndGrantAchievements, showAchievementToasts } from './achievements.js';
-import { checkDailyQuest } from './quests.js';
+import { checkAndGrantAchievements, showAchievementToasts, showAchievementsModal } from './achievements.js';
+import { checkDailyQuest, getDailyQuest } from './quests.js';
 import { requestNotifPermission } from './notifications.js';
 
 let currentDay = null;
@@ -1123,9 +1123,17 @@ function _buildTomorrowCard(pct, sessionCount, streak, nextDay, nextMod, day) {
   const notifBtn = !notifAsked && 'Notification' in window
     ? `<button class="btn-secondary score-notif-btn" onclick="window._requestLessonNotif()">◎ SET REMINDER</button>`
     : '';
+  const { quest, data: questData } = getDailyQuest();
+  const questDone = questData.completed;
+  const questStatus = `<div class="quest-status${questDone ? ' quest-status--done' : ''}">
+    <span class="quest-status-label">◉ QUEST</span>
+    <span class="quest-status-title">${escapeHtml(quest.title)}</span>
+    <span class="quest-status-state">${questDone ? '✓' : '// in progress'}</span>
+  </div>`;
   return `<div class="score-tomorrow-card">
     <div class="stc-title">${escapeHtml(title)}</div>
     <div class="stc-body">${escapeHtml(body)}</div>
+    ${questStatus}
     ${notifBtn}
   </div>`;
 }
@@ -1222,10 +1230,12 @@ function finishLesson() {
     const nextBtn = nextDay
       ? `<button class="btn-primary" onclick="window.location.href='/lesson.html?mod=${nextMod.id}&day=${nextDay.id}'">NEXT LESSON →</button>`
       : `<button class="btn-primary" onclick="window.exitLesson()">⌂ HOME</button>`;
+    window._showAchievementsModal = () => showAchievementsModal();
     document.querySelector('.score-actions').innerHTML =
       `<button class="btn-secondary" onclick="window.retryLesson()">↺ RETRY</button>
        <button class="btn-secondary" onclick="window.exitLesson()">⌂ HOME</button>
-       ${nextBtn}`;
+       ${nextBtn}
+       <button class="btn-secondary score-ach-btn" onclick="window._showAchievementsModal()">◈ ACHIEVEMENTS</button>`;
 
     showScreen('score');
     if (pct >= 70 && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
