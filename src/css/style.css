@@ -953,7 +953,7 @@ body.vk-mobile-open #screen-lesson{padding-bottom:310px;}
 .progress-ach-header .section-title{margin:0;}
 .progress-ach-count{font-size:11px;color:var(--text-2);letter-spacing:1px;}
 .progress-page .ach-modal-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;padding:0;border:none;background:transparent;}
-.progress-page .ach-modal-item{border:var(--border-dim);border-bottom:var(--border-dim);background:var(--surface2);padding:14px 16px;gap:14px;transition:border-color .15s,box-shadow .15s;}
+.progress-page .ach-modal-item{border:var(--border-dim);background:var(--surface2);padding:14px 16px;gap:14px;transition:border-color .15s,box-shadow .15s;}
 .progress-page .ach-modal-item--earned{border-color:var(--brand-dim);}
 .progress-page .ach-modal-item--earned:hover{border-color:var(--brand);box-shadow:var(--shadow-sm),0 0 8px var(--brand-glow);}
 .progress-page .ach-modal-icon{font-size:22px;width:28px;}
@@ -968,7 +968,6 @@ body.vk-mobile-open #screen-lesson{padding-bottom:310px;}
   body[data-page="progress"]{overflow:auto;height:auto;display:block;padding-bottom:calc(114px + env(safe-area-inset-bottom,0px));}
 }
 @media(max-width:380px){
-  .progress-page .stats-row{grid-template-columns:repeat(2,1fr);}
   .progress-page .stat-card{padding:14px 10px;}
 }
 
