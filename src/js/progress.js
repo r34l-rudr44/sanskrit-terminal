@@ -10,6 +10,14 @@ const totalC = parseInt(localStorage.getItem('sk_total_c') || '0');
 const questStreak = parseInt(localStorage.getItem('sk_quest_streak') || '0');
 const earned = (() => { try { return new Set(JSON.parse(localStorage.getItem('sk_achievements') || '[]')); } catch { return new Set(); } })();
 
+const hintState = {
+  streak:               parseInt(localStorage.getItem('sk_streak') || '0'),
+  totalQuestions:       totalQ,
+  totalCorrectAll:      totalC,
+  completedDays:        completed,
+  completedModuleTests: (() => { try { return JSON.parse(localStorage.getItem('sk_mod_tests') || '[]'); } catch { return []; } })(),
+};
+
 // Stats
 const statDays = document.getElementById('stat-days');
 const statQ = document.getElementById('stat-questions');
@@ -52,11 +60,13 @@ achCount.textContent = `${earned.size} / ${ACHIEVEMENTS.length} UNLOCKED`;
 const achGrid = document.getElementById('achievements-grid');
 achGrid.innerHTML = ACHIEVEMENTS.map(a => {
   const done = earned.has(a.id);
-  return `<div class="ach-modal-item${done ? ' ach-modal-item--earned' : ''}">
+  const hintText = !done && a.hint ? a.hint(hintState) : null;
+  return `<div class="ach-modal-item ach-modal-item--${a.rarity}${done ? ' ach-modal-item--earned' : ''}">
     <span class="ach-modal-icon">${a.icon}</span>
     <div class="ach-modal-info">
       <div class="ach-modal-title">${a.title}</div>
       <div class="ach-modal-desc">${a.desc}</div>
+      ${hintText ? `<div class="ach-modal-hint">${hintText}</div>` : ''}
     </div>
     ${done ? '<span class="ach-modal-check">✓</span>' : ''}
   </div>`;

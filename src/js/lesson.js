@@ -1164,7 +1164,7 @@ function finishLesson() {
   localStorage.setItem('sk_last_session_score', pct);
 
   const lessonScores = (() => { try { return JSON.parse(localStorage.getItem('sk_lesson_scores') || '{}'); } catch { return {}; } })();
-  lessonScores[currentDay.id] = pct;
+  lessonScores[currentDay.id] = Math.max(pct, lessonScores[currentDay.id] ?? 0);
   localStorage.setItem('sk_lesson_scores', JSON.stringify(lessonScores));
 
   if (currentDay.isTest) {
