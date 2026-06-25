@@ -215,6 +215,7 @@ body.bar-collapsed{padding-bottom:calc(62px + env(safe-area-inset-bottom,0px));}
 .stat-card--empty:first-child::after{content:'DO A LESSON TO TRACK';font-size:9px;color:var(--text-3);letter-spacing:1px;display:block;margin-top:6px;}
 .stat-card--empty:nth-child(2)::after{content:'CUMULATIVE ACROSS SESSIONS';font-size:9px;color:var(--text-3);letter-spacing:1px;display:block;margin-top:6px;}
 .stat-card--empty:nth-child(3)::after{content:'CORRECT ÷ TOTAL × 100';font-size:9px;color:var(--text-3);letter-spacing:1px;display:block;margin-top:6px;}
+.stat-card--empty:nth-child(4)::after{content:'COMPLETE DAILY QUESTS';font-size:9px;color:var(--text-3);letter-spacing:1px;display:block;margin-top:6px;}
 .section-title{font-size:13px;color:var(--text-2);letter-spacing:2px;margin-bottom:12px;}
 .section-title::before{content:'// ';}
 .home-module-group{display:contents;}

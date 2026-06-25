@@ -28,8 +28,8 @@ if (totalQ > 0) {
 }
 if (questStreak > 0) {
   statQS.closest('.stat-card').classList.remove('stat-card--empty');
+  statQS.textContent = questStreak;
 }
-statQS.textContent = questStreak;
 
 // Daily quest
 const { quest, data } = getDailyQuest();
