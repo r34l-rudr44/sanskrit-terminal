@@ -961,7 +961,7 @@ body.vk-mobile-open #screen-lesson{padding-bottom:310px;}
 .progress-page .ach-modal-title{font-size:13px;}
 @media(max-width:600px){
   .progress-page{padding:16px 12px 60px;}
-  .progress-page .stats-row{grid-template-columns:repeat(2,1fr);}
+  .progress-page .stats-row{display:grid;grid-template-columns:repeat(2,1fr);}
   .progress-page .ach-modal-grid{grid-template-columns:1fr;}
   .progress-page .stat-num{font-size:36px;}
 }
