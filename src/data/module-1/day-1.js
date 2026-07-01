@@ -12,10 +12,10 @@ export const metadata = {
 
 export const briefing = {
   pre: {
-    title: "Pronouns — सर्वनामानि",
-    lead: "Sanskrit has three persons and three genders. Here are five common pronouns.<br><span class=\"devanagari\">संस्कृतमें हिन्दीके समान ही तीन पुरुष हैं किन्तु हिन्दीसे एक अतिरिक्त अर्थात् तीन लिङ्ग हैं। अभी इन पाँच सर्वनामोंको अर्थ आत्मसात करें।</span>",
+    title: "Pronouns सर्वनामानि",
+    lead: "Sanskrit has three persons and three genders. Here are five common pronouns.<br><span class=\"devanagari\">संस्कृतमें हिन्दीके समान ही तीन पुरुष हैं किन्तु हिन्दीसे एक अतिरिक्त अर्थात् तीन लिङ्ग हैं। अभी इन पाँच सर्वनामोंको अर्थ सहित आत्मसात करें।</span>",
     sections: [
-      { type:"table", label:"PRONOUNS सर्वनामानि", cols:["Devanagari","Meaning","Hindi"],
+      { type:"table", label:"Read पठ", cols:["Devanagari","Meaning","Hindi"],
         rows:[["सः","He","वह (पुं)"],["सा","She","वह (स्त्री)"],["तत्","It","वो (नपुं)"],["त्वम्","You","तुम"],["अहम्","I","मैं"]] },
       { type:"grammar", label:"GENDER_NOTE", text:"<strong>सः</strong> is masculine, <strong>सा</strong> is feminine, <strong>तत्</strong> is neuter. <strong>त्वम्</strong> and <strong>अहम्</strong> refer to persons and cover all genders. Alternate spellings: त्वं and अहं respectively.<br><span class=\"devanagari\"><strong>सः</strong> पुंलिङ्गमें है। <strong>सा</strong> स्त्रीलिङ्गमें तथा <strong>तत्</strong> नपुंसकलिङ्गी है। <strong>त्वम्</strong> और <strong>अहम्</strong> तीनों लिङ्गोंके सन्दर्भमें उपयोगी हैं। नियमानुसार त्वम् को त्वं तथा अहम् को अहं भी लिखा जाता है।</span>" }
     ]
