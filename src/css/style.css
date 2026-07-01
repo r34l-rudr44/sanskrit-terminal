@@ -906,7 +906,7 @@ body.vk-mobile-open #screen-lesson{padding-bottom:310px;}
 }
 
 /* Review queue widget */
-.review-widget{border:var(--border-brand);background:var(--surface);padding:14px 16px;}
+.review-widget{border:var(--border-brand);background:var(--surface);padding:14px 16px;margin-bottom:16px;}
 .review-widget-hdr{display:flex;align-items:baseline;gap:10px;margin-bottom:12px;}
 .review-widget-title{font-family:var(--font-logo);font-size:20px;color:var(--brand);letter-spacing:1px;}
 .review-widget-sub{font-size:11px;color:var(--text-3);letter-spacing:1px;}
@@ -917,6 +917,9 @@ body.vk-mobile-open #screen-lesson{padding-bottom:310px;}
 .review-item-title{font-size:13px;letter-spacing:1px;color:var(--text);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
 .review-item-score{font-size:11px;color:var(--err);letter-spacing:1px;margin-top:2px;}
 .review-item-btn{flex-shrink:0;font-size:11px;padding:5px 10px;}
+
+/* Spaced-recall (SRS) widget */
+.srs-start-btn{width:100%;text-align:center;}
 
 /* Learning path page */
 .path-page{max-width:900px;margin:0 auto;padding:24px 20px 80px;}

@@ -1,6 +1,28 @@
 import { state } from './state.js';
 import { MODULES } from '../data/index.js';
 import { escapeHtml } from './utils.js';
+import { getDueReviewCount } from './srs.js';
+
+export function renderDueReviewWidget(streakStatus) {
+  if (streakStatus === 'at_risk' && state.streak >= 2) return;
+
+  const container = document.getElementById('home-widgets');
+  if (!container) return;
+
+  const dueCount = getDueReviewCount();
+  if (dueCount === 0) return;
+
+  const widget = document.createElement('div');
+  widget.className = 'review-widget srs-widget';
+  widget.innerHTML = `
+    <div class="review-widget-hdr">
+      <span class="review-widget-title">SPACED_RECALL</span>
+      <span class="review-widget-sub">// ${dueCount} item${dueCount !== 1 ? 's' : ''} due today</span>
+    </div>
+    <button class="srs-start-btn btn-primary" onclick="window.location.href='/lesson.html?review=1'">► START REVIEW (${dueCount})</button>
+  `;
+  container.appendChild(widget);
+}
 
 export function renderReviewQueue(streakStatus) {
   // Intentional: streak-at-risk warning takes priority; showing both would split the user's attention away from the urgent CTA.

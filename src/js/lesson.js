@@ -5,6 +5,7 @@ import { injectGlobals } from './components.js';
 import { checkAndGrantAchievements, showAchievementToasts, showAchievementsModal } from './achievements.js';
 import { checkDailyQuest, getDailyQuest } from './quests.js';
 import { requestNotifPermission } from './notifications.js';
+import { makeReviewId, recordReviewOutcome, getDueReviewIds, resolveReviewQuestion } from './srs.js';
 
 let currentDay = null;
 let currentMod = null;
@@ -749,7 +750,7 @@ function renderQuestion() {
   const pct = Math.round((state.currentQ / currentDay.questions.length) * 100);
   const restoredState = hydratedLessonProgress?.currentQ === state.currentQ ? hydratedLessonProgress.questionState : null;
 
-  DOM.dayTag.textContent        = `MOD_${currentMod.id}`;
+  DOM.dayTag.textContent        = currentMod ? `MOD_${currentMod.id}` : 'REVIEW';
   DOM.titleSm.textContent       = currentDay.title;
   DOM.progressCount.textContent = `${state.currentQ + 1}/${currentDay.questions.length}`;
   DOM.progressFill.style.width  = pct + '%';
@@ -1073,6 +1074,7 @@ function recordAnswer(correct, q, skipped = false) {
   state.totalAnswered++;
   if (!skipped && correct) state.totalCorrect++;
   if (skipped) _sessionSkips++;
+  recordReviewOutcome(q._reviewId || makeReviewId(currentDay.id, state.currentQ), correct);
   Audio.playTone(correct);
   if (navigator.vibrate && !window._soundMuted) navigator.vibrate(correct ? 50 : [50, 30, 50]);
   
@@ -1138,9 +1140,31 @@ function _buildTomorrowCard(pct, sessionCount, streak, nextDay, nextMod, day) {
   </div>`;
 }
 
+function finishReviewSession(pct) {
+  document.getElementById('score-trophy').textContent = pct >= 80 ? '🏆' : pct >= 50 ? '⭐' : '📖';
+  document.getElementById('score-title').textContent = 'REVIEW_SESSION — COMPLETE';
+  document.getElementById('score-sub').textContent = `${state.totalAnswered} item${state.totalAnswered !== 1 ? 's' : ''} reviewed.`;
+  document.getElementById('score-big').textContent = pct + '%';
+  document.getElementById('sc-correct').textContent = state.totalCorrect;
+  document.getElementById('sc-wrong').textContent = state.totalAnswered - state.totalCorrect;
+  document.getElementById('sc-total').textContent = state.totalAnswered;
+  document.querySelector('.score-actions').innerHTML =
+    `<button class="btn-primary" onclick="window.exitLesson()">⌂ HOME</button>`;
+
+  showScreen('score');
+  if (pct >= 70 && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    Effects.launchConfetti();
+  }
+}
+
 function finishLesson() {
   const pct = state.totalAnswered > 0 ? Math.round((state.totalCorrect / state.totalAnswered) * 100) : 0;
   clearLessonProgress();
+
+  if (currentDay.isReview) {
+    finishReviewSession(pct);
+    return;
+  }
 
   if (!state.completedDays.includes(currentDay.id)) {
     state.completedDays.push(currentDay.id);
@@ -1269,6 +1293,33 @@ function finishLesson() {
   }
 }
 
+function startReviewSession() {
+  const items = getDueReviewIds(10)
+    .map(id => ({ id, resolved: resolveReviewQuestion(id) }))
+    .filter(({ resolved }) => resolved);
+
+  if (items.length === 0) {
+    window.location.href = '/';
+    return;
+  }
+
+  currentMod = null;
+  currentDay = {
+    id: 'review-session',
+    title: 'REVIEW SESSION',
+    icon: '🔁',
+    isReview: true,
+    questions: items.map(({ id, resolved }) => ({ ...resolved.question, _reviewId: id }))
+  };
+
+  state.currentQ = 0;
+  state.totalAnswered = 0;
+  state.totalCorrect = 0;
+
+  showScreen('lesson');
+  renderQuestion();
+}
+
 function init() {
   injectGlobals();
   Theme.init();
@@ -1294,6 +1345,12 @@ function init() {
   if (streakEl) streakEl.textContent = state.streak;
 
   const urlParams = new URLSearchParams(window.location.search);
+
+  if (urlParams.get('review') === '1') {
+    startReviewSession();
+    return;
+  }
+
   const modId = parseInt(urlParams.get('mod'));
   const dayId = urlParams.get('day');
 
