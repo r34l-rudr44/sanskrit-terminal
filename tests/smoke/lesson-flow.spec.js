@@ -9,18 +9,13 @@ test.beforeEach(async ({ page }) => {
   });
 });
 
-test('home loads and a module can be expanded', async ({ page }) => {
+test('home loads and shows hero, stats and widgets area', async ({ page }) => {
   await page.goto('/');
 
   await expect(page.locator('#screen-home')).toBeVisible();
   await expect(page.locator('.hero-title')).toContainText('NAMASTE');
-  await expect(page.locator('.module-entry-title').first()).toContainText('TOOLKIT');
-
-  const firstModuleHeader = page.locator('.module-entry').filter({ hasText: 'TOOLKIT' }).locator('.module-entry-hdr');
-  await firstModuleHeader.click();
-
-  await expect(page.locator('.module-body.open').first()).toBeVisible();
-  await expect(page.locator('.module-days-grid .mod-day-card').first()).toBeVisible();
+  await expect(page.locator('.hero-btn')).toBeVisible();
+  await expect(page.locator('.stats-row')).toBeVisible();
 });
 
 test('lesson renders, answers advance, and progress survives refresh', async ({ page }) => {
@@ -122,20 +117,12 @@ test('mobile explore dropdown matches the trigger width and opens correctly', as
   expect(Math.abs(ddBox.width - btnBox.width)).toBeLessThanOrEqual(2);
 });
 
-test('desktop sidebar toggle persists collapsed state across refresh', async ({ page }) => {
-  await page.setViewportSize({ width: 1280, height: 900 });
-  await page.goto('/');
+test('path.html: module accordion expands to show lesson cards', async ({ page }) => {
+  await page.goto('/path.html');
 
-  const sidebar = page.locator('#sidebar');
-  const toggle = page.locator('#hamburger-btn');
+  const firstModuleHeader = page.locator('.module-entry').filter({ hasText: 'TOOLKIT' }).locator('.module-entry-hdr');
+  await firstModuleHeader.click();
 
-  await expect(sidebar).not.toHaveClass(/collapsed/);
-  await toggle.click();
-  await expect(sidebar).toHaveClass(/collapsed/);
-
-  await page.reload();
-
-  await expect(sidebar).toHaveClass(/collapsed/);
-  await toggle.click();
-  await expect(sidebar).not.toHaveClass(/collapsed/);
+  await expect(page.locator('.module-body.open').first()).toBeVisible();
+  await expect(page.locator('.module-days-grid .mod-day-card').first()).toBeVisible();
 });

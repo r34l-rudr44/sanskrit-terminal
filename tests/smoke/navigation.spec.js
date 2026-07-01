@@ -84,3 +84,25 @@ test('Retry from score screen restarts lesson from Q1', async ({ page }) => {
   await page.getByRole('button', { name: /BEGIN LESSON/i }).click();
   await expect(page.locator('#progress-count')).toHaveText('1/7');
 });
+
+// ── Static pages ──────────────────────────────────────────────────────────────
+
+test('path.html loads without JS error', async ({ page }) => {
+  const errors = [];
+  page.on('pageerror', err => errors.push(err.message));
+
+  await page.goto('/path.html');
+  await expect(page.locator('body')).toBeVisible();
+
+  expect(errors, `JS errors on path.html: ${errors.join(', ')}`).toHaveLength(0);
+});
+
+test('progress.html loads without JS error', async ({ page }) => {
+  const errors = [];
+  page.on('pageerror', err => errors.push(err.message));
+
+  await page.goto('/progress.html');
+  await expect(page.locator('body')).toBeVisible();
+
+  expect(errors, `JS errors on progress.html: ${errors.join(', ')}`).toHaveLength(0);
+});

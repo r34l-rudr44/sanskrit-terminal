@@ -25,13 +25,12 @@ test.beforeEach(async ({ page }) => {
   });
 });
 
-test('Completed day shows .completed class on home module card', async ({ page }) => {
+test('Completed day shows .completed class on path.html module card', async ({ page }) => {
   await page.evaluate(() => {
     localStorage.setItem('sk_completed_v2', JSON.stringify(['1-1']));
   });
-  await page.goto('/');
+  await page.goto('/path.html');
 
-  // Expand Module 1
   const modHeader = page.locator('.module-entry').filter({ hasText: 'TOOLKIT' }).locator('.module-entry-hdr');
   await modHeader.click();
   await expect(page.locator('.module-body.open').first()).toBeVisible();
@@ -97,4 +96,29 @@ test('Streak increments when completing first lesson of the day', async ({ page 
 
   const streak = await page.evaluate(() => parseInt(localStorage.getItem('sk_streak'), 10));
   expect(streak).toBe(4);
+});
+
+// ── progress.html page ────────────────────────────────────────────────────────
+
+test('progress.html: stat cards render after completing a lesson', async ({ page }) => {
+  await finishLesson(page, 1, '1-1', 7);
+
+  await page.goto('/progress.html');
+  await expect(page.locator('#stat-days')).toBeVisible();
+  await expect(page.locator('#stat-questions')).toBeVisible();
+  await expect(page.locator('#stat-accuracy')).toBeVisible();
+  await expect(page.locator('#stat-quest-streak')).toBeVisible();
+});
+
+test('progress.html: achievements grid renders all achievement cards', async ({ page }) => {
+  await page.goto('/progress.html');
+
+  await expect(page.locator('#achievements-grid')).toBeVisible();
+  await expect(page.locator('#achievements-grid .ach-modal-item').first()).toBeVisible();
+});
+
+test('progress.html: daily quest card renders', async ({ page }) => {
+  await page.goto('/progress.html');
+
+  await expect(page.locator('#quest-section .quest-card')).toBeVisible();
 });
