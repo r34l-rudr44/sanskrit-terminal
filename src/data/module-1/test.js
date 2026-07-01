@@ -24,7 +24,7 @@ export const briefing = {
 };
 
 export const questions = [
-  {type:"mcq",question:"सा means:",options:["He — वह (पु.)","She — वह (स्त्री.)","It — वो","You — तुम"],answer:"She — वह (स्त्री.)",explanation:"सा = She (वह). The feminine third-person pronoun."},
+  {type:"mcq",question:"सा means:",options:["He — वह (पुं)","She — वह (स्त्री.)","It — वो","You — तुम"],answer:"She — वह (स्त्री.)",explanation:"सा = She (वह). The feminine third-person pronoun."},
   {type:"mcq",question:"गच्छसि is used with which pronoun?",options:["सः (He — वह)","सा (She — वह)","अहम् (I — मैं)","त्वम् (You — तुम)"],answer:"त्वम् (You — तुम)",explanation:"त्वम् गच्छसि = You go (तुम जाते हो). गच्छसि is always second-person, paired with त्वम्."},
   {type:"match",question:"Match pronoun to verb",pairs:[{left:"अहम् (I — मैं)",right:"गच्छामि"},{left:"त्वम् (You — तुम)",right:"गच्छसि"},{left:"सः (He — वह)",right:"गच्छति"}],explanation:"Three persons of गम्: first — I (मैं→गच्छामि), second — You (तुम→गच्छसि), third — He/She (वह→गच्छति)."},
   {type:"mcq",question:"अत्र means:",options:["Where? — कहाँ","There — वहाँ","Here — यहाँ","Everywhere — सब स्थान पर"],answer:"Here — यहाँ",explanation:"अत्र = Here (यहाँ). तत्र = There (वहाँ), कुत्र = Where? (कहाँ)."},

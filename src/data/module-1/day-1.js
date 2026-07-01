@@ -26,7 +26,7 @@ export const briefing = {
 export const questions = [
   {type:"mcq",question:"What does सः mean?",options:["He — वह","She — वह (स्त्री.)","It — वो","You — तुम"],answer:"He — वह",explanation:"सः = He (वह). The masculine third-person pronoun."},
   {type:"mcq",question:"Which Sanskrit word means 'I — मैं'?",options:["सः","सा","त्वम्","अहम्"],answer:"अहम्",explanation:"अहम् = I (मैं). Also written अहं. First-person singular."},
-  {type:"mcq",question:"तत् refers to:",options:["He — वह (पु.)","She — वह (स्त्री.)","It — वो","You — तुम"],answer:"It — वो",explanation:"तत् = It (वो). The neuter pronoun, used for things that are neither masculine nor feminine."},
+  {type:"mcq",question:"तत् refers to:",options:["He — वह (पुं)","She — वह (स्त्री.)","It — वो","You — तुम"],answer:"It — वो",explanation:"तत् = It (वो). The neuter pronoun, used for things that are neither masculine nor feminine."},
   {type:"match",question:"Match the Sanskrit pronouns to their meanings",pairs:[{left:"सः",right:"He — वह"},{left:"सा",right:"She — वह"},{left:"तत्",right:"It — वो"},{left:"अहम्",right:"I — मैं"},{left:"त्वम्",right:"You — तुम"}],explanation:"सः = He (वह), सा = She (वह), तत् = It (वो), अहम् = I (मैं), त्वम् = You (तुम)."},
   {type:"mcq",question:"त्वम् translates to:",options:["I — मैं","He — वह","She — वह","You — तुम"],answer:"You — तुम",explanation:"त्वम् = You (तुम). Second-person singular. Also written त्वं."},
   {type:"mcq",question:"Which pronoun is feminine?",options:["सः","तत्","त्वम्","सा"],answer:"सा",explanation:"सा = She (वह स्त्री.). सः is masculine — He (वह), तत् is neuter — It (वो)."},
