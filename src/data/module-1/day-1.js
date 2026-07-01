@@ -13,9 +13,9 @@ export const metadata = {
 export const briefing = {
   pre: {
     title: "Pronouns — सर्वनामानि",
-    lead: "Sanskrit has three persons and three genders. These five pronouns are your entry point to every sentence.",
+    lead: "Sanskrit has three persons and three genders. Here are five common pronouns.<br><span class=\"devanagari\">संस्कृतमें हिन्दीके समान ही तीन पुरुष हैं किन्तु हिन्दीसे एक अतिरिक्त अर्थात् तीन लिङ्ग हैं। अभी इन पाँच सर्वनामोंको अर्थ आत्मसात करें।</span>",
     sections: [
-      { type:"table", label:"PRONOUNS // सर्वनामानि", cols:["Devanagari","Meaning","Hindi"],
+      { type:"table", label:"PRONOUNS सर्वनामानि", cols:["Devanagari","Meaning","Hindi"],
         rows:[["सः","He","वह (पु.)"],["सा","She","वह (स्त्री.)"],["तत्","It","वो"],["त्वम्","You","तुम"],["अहम्","I","मैं"]] },
       { type:"grammar", label:"GENDER_NOTE", text:"<strong>सः</strong> is masculine, <strong>सा</strong> is feminine, <strong>तत्</strong> is neuter. <strong>त्वम्</strong> and <strong>अहम्</strong> refer to persons and cover all genders. Alternate spellings: त्वं, अहं." }
     ]
