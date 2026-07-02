@@ -127,7 +127,7 @@ See [`docs/adding-modules-and-lessons.md`](docs/adding-modules-and-lessons.md) f
 **Quick summary:**
 
 1. Create `src/data/module-N/day-1.js` (copy a template).
-2. Export `meta`, `briefing`, and `questions` from the file.
+2. Export `id`, `title`, `icon`, `metadata`, `briefing`, and `questions` from the file.
 3. Import and register the lesson in `src/data/index.js`.
 4. Run `npm run validate:lessons` to check structure.
 5. Run `npm run test:smoke` to confirm nothing is broken.
