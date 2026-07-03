@@ -31,7 +31,7 @@ export function renderReviewQueue(streakStatus) {
   const container = document.getElementById('home-widgets');
   if (!container) return;
 
-  const scores = JSON.parse(localStorage.getItem('sk_lesson_scores') || '{}');
+  const scores = (() => { try { return JSON.parse(localStorage.getItem('sk_lesson_scores') || '{}'); } catch { return {}; } })();
 
   const candidates = [];
   for (const mod of MODULES) {
@@ -64,7 +64,7 @@ export function renderReviewQueue(streakStatus) {
             <div class="review-item-title">${escapeHtml(day.title)}</div>
             <div class="review-item-score">SCORE: ${score}%</div>
           </div>
-          <button class="review-item-btn btn-primary" onclick="window.startLesson(${modId},'${day.id}')">► RETRY</button>
+          <button class="review-item-btn btn-primary" onclick="window.startLesson(${modId}, ${JSON.stringify(day.id).replace(/"/g, '&quot;')})">► RETRY</button>
         </div>
       `).join('')}
     </div>

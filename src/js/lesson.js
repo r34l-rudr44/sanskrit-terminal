@@ -1,5 +1,5 @@
 import { MODULES, getModule, getDay } from '../data/index.js';
-import { state } from './state.js';
+import { state, registerStreakDay } from './state.js';
 import { Theme, Prefs, Audio, Effects, escapeHtml, debounce } from './utils.js';
 import { injectGlobals } from './components.js';
 import { checkAndGrantAchievements, showAchievementToasts, showAchievementsModal } from './achievements.js';
@@ -1141,6 +1141,8 @@ function _buildTomorrowCard(pct, sessionCount, streak, nextDay, nextMod, day) {
 }
 
 function finishReviewSession(pct) {
+  // Completing due SRS reviews counts as daily activity — extend the streak like a lesson does.
+  registerStreakDay();
   document.getElementById('score-trophy').textContent = pct >= 80 ? '🏆' : pct >= 50 ? '⭐' : '📖';
   document.getElementById('score-title').textContent = 'REVIEW_SESSION — COMPLETE';
   document.getElementById('score-sub').textContent = `${state.totalAnswered} item${state.totalAnswered !== 1 ? 's' : ''} reviewed.`;
@@ -1166,25 +1168,28 @@ function finishLesson() {
     return;
   }
 
-  if (!state.completedDays.includes(currentDay.id)) {
+  // A replay of an already-completed day must not re-inflate lifetime totals / session count.
+  const alreadyCompleted = state.completedDays.includes(currentDay.id);
+  // A failed module test is not a completion — keep it out of completedDays (one source of truth).
+  const passesCompletionGate = !currentDay.isTest || pct >= 60;
+
+  if (passesCompletionGate && !alreadyCompleted) {
     state.completedDays.push(currentDay.id);
     localStorage.setItem('sk_completed_v2', JSON.stringify(state.completedDays));
   }
 
-  const today = new Date().toDateString();
-  if (state.lastDate !== today) {
-    state.streak++; state.lastDate = today;
-    localStorage.setItem('sk_last_date', today);
-    localStorage.setItem('sk_streak', state.streak);
+  // Centralized, continuity-aware streak update (resets on a missed day regardless of entry page).
+  registerStreakDay();
+
+  let sessionCount = parseInt(localStorage.getItem('sk_session_count') || '0');
+  if (!alreadyCompleted) {
+    state.totalQuestions += state.totalAnswered;
+    state.totalCorrectAll += state.totalCorrect;
+    localStorage.setItem('sk_total_q', state.totalQuestions);
+    localStorage.setItem('sk_total_c', state.totalCorrectAll);
+    sessionCount += 1;
+    localStorage.setItem('sk_session_count', sessionCount);
   }
-
-  state.totalQuestions += state.totalAnswered;
-  state.totalCorrectAll += state.totalCorrect;
-  localStorage.setItem('sk_total_q', state.totalQuestions);
-  localStorage.setItem('sk_total_c', state.totalCorrectAll);
-
-  const sessionCount = parseInt(localStorage.getItem('sk_session_count') || '0') + 1;
-  localStorage.setItem('sk_session_count', sessionCount);
   localStorage.setItem('sk_last_session_score', pct);
 
   const lessonScores = (() => { try { return JSON.parse(localStorage.getItem('sk_lesson_scores') || '{}'); } catch { return {}; } })();
@@ -1276,6 +1281,9 @@ function finishLesson() {
   const newAchs = checkAndGrantAchievements(state, { pct, lessonCompleted: true, allLessonsComplete });
   showAchievementToasts(newAchs);
 
+  // Ensure today's quest record exists before crediting it — a test finished without loading
+  // home/progress that day would otherwise have no record and the completion would be lost.
+  getDailyQuest();
   const completedQuest = checkDailyQuest({ lessonCompleted: true, pct, sessionCorrect: state.totalCorrect, skipped: _sessionSkips });
   if (completedQuest) {
     setTimeout(() => {

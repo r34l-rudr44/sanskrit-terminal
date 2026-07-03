@@ -1,6 +1,7 @@
 import { injectGlobals } from './components.js';
 import { ACHIEVEMENTS } from './achievements.js';
 import { getDailyQuest } from './quests.js';
+import { completedLessonCount } from './state.js';
 
 injectGlobals();
 
@@ -26,7 +27,7 @@ const statQS = document.getElementById('stat-quest-streak');
 
 if (completed.length > 0) {
   statDays.closest('.stat-card').classList.remove('stat-card--empty');
-  statDays.textContent = completed.length;
+  statDays.textContent = completedLessonCount();
 }
 if (totalQ > 0) {
   statQ.closest('.stat-card').classList.remove('stat-card--empty');

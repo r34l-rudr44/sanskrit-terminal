@@ -1,15 +1,9 @@
 import { MODULES, getModule } from '../data/index.js';
-import { state, expandedMods, checkStreak } from './state.js';
+import { state, expandedMods, checkStreak, completedLessonCount, completedLessonIds } from './state.js';
 import { Theme, Prefs, escapeHtml } from './utils.js';
 import { injectGlobals } from './components.js';
 import { maybeShowStreakReminder } from './notifications.js';
 import { renderReviewQueue, renderDueReviewWidget } from './review.js';
-
-// Precomputed map from dayId → isTest for O(1) lookup in updateStats/isDayLocked
-const dayIsTestMap = new Map();
-for (const mod of MODULES) {
-  for (const day of mod.days) dayIsTestMap.set(day.id, day.isTest);
-}
 
 export function isDayLocked(modId, dayId) {
   const mod = getModule(modId);
@@ -129,7 +123,7 @@ export function renderHomeModules() {
 export function updateStats() {
   const el = (id) => document.getElementById(id);
   if (!el('stat-days')) return;
-  const days = state.completedDays.filter(id => !dayIsTestMap.get(id)).length;
+  const days = completedLessonCount();
   const hasData = days > 0 || state.totalQuestions > 0;
   const cards = document.querySelectorAll('.stat-card');
   cards.forEach(c => c.classList.toggle('stat-card--empty', !hasData));
@@ -141,9 +135,10 @@ export function updateStats() {
     : '—';
   el('stat-accuracy').textContent = acc;
 
-  const completedSet = new Set(state.completedDays);
   const totalModules = MODULES.length;
-  const completedModules = MODULES.filter(m => m.days.some(d => d.isTest && completedSet.has(d.id))).length;
+  // A module counts as complete only when its test was passed (authoritative sk_mod_tests gate) —
+  // the same source the MODULE_x_CLEARED achievement uses, so the two never disagree.
+  const completedModules = MODULES.filter(m => state.completedModuleTests.includes(m.id)).length;
   const curriculumPct = totalModules > 0 ? Math.round((completedModules / totalModules) * 100) : 0;
   const cbWrap = el('curriculum-bar-wrap');
   const cbFill = el('cb-fill');
@@ -245,7 +240,7 @@ function updateHeroState(streakStatus) {
   const heroTagEl  = document.querySelector('.hero-tag');
   if (!heroBtnEl || !heroTagEl) return;
 
-  const completedLessons = state.completedDays.filter(id => !dayIsTestMap.get(id));
+  const completedLessons = completedLessonIds();
   if (completedLessons.length === 0) {
     heroTagEl.textContent = '> SESSION_01 // READY TO BEGIN';
     heroBtnEl.textContent = '▶ START LEARNING';
@@ -257,7 +252,7 @@ function updateHeroState(streakStatus) {
   const sessionCount = parseInt(localStorage.getItem('sk_session_count') || '0');
   const lastScore = parseInt(localStorage.getItem('sk_last_session_score') || '0');
   const gapDays = lastSeen && lastSeen !== today
-    ? Math.max(1, Math.round((Date.now() - new Date(lastSeen).getTime()) / 86400000))
+    ? Math.max(1, Math.round((new Date(today).getTime() - new Date(lastSeen).getTime()) / 86400000))
     : 0;
 
   // Find next uncompleted non-test day

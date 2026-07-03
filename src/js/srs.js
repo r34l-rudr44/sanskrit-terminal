@@ -4,11 +4,26 @@ const REVIEW_KEY = 'sk_review_items';
 const DAY_MS = 86400000;
 
 function epochDay(ts = Date.now()) {
-  return Math.floor(ts / DAY_MS);
+  // Local-day index (shift by the local UTC offset) so "due today" flips at local midnight,
+  // consistent with the streak/quest day used everywhere else in the app.
+  const offsetMs = new Date(ts).getTimezoneOffset() * 60000;
+  return Math.floor((ts - offsetMs) / DAY_MS);
 }
 
 function loadItems() {
-  try { return JSON.parse(localStorage.getItem(REVIEW_KEY) || '{}'); } catch { return {}; }
+  let items;
+  try { items = JSON.parse(localStorage.getItem(REVIEW_KEY) || '{}'); } catch { return {}; }
+  if (!items || typeof items !== 'object') return {};
+  // Coerce any corrupt/legacy entry so NaN can't propagate and silently drop an item from rotation.
+  for (const key of Object.keys(items)) {
+    const it = items[key];
+    if (!it || typeof it !== 'object') { delete items[key]; continue; }
+    if (!Number.isFinite(it.ef))       it.ef = 2.5;
+    if (!Number.isFinite(it.interval)) it.interval = 0;
+    if (!Number.isFinite(it.reps))     it.reps = 0;
+    if (!Number.isFinite(it.due))      it.due = epochDay();
+  }
+  return items;
 }
 
 function saveItems(items) {

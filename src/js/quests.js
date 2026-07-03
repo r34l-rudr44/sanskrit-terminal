@@ -13,7 +13,7 @@ export function getDailyQuest() {
   if (saved && saved.date === today) {
     return { quest: QUESTS.find(q => q.id === saved.questId) || QUESTS[0], data: saved };
   }
-  const dateHash = today.split('').reduce((acc, c) => acc + c.charCodeAt(0), 0);
+  const dateHash = today.split('').reduce((acc, c) => (acc * 31 + c.charCodeAt(0)) >>> 0, 0);
   const quest = QUESTS[dateHash % QUESTS.length];
   const data = { date: today, questId: quest.id, completed: false };
   localStorage.setItem('sk_daily_quest', JSON.stringify(data));

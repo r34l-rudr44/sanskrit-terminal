@@ -17,7 +17,9 @@ function fail(message) {
   errors.push(message);
 }
 
-const XSS_PATTERN = /<script|onerror\s*=|onclick\s*=|onload\s*=|javascript\s*:/i;
+// Broad allow-by-omission is dangerous; catch dangerous tags, ANY inline event handler, and the
+// common attribute vectors rather than a short hand-picked list.
+const XSS_PATTERN = /<\s*(?:script|iframe|object|embed|base|link|meta|form|style)\b|\son[a-z]+\s*=|javascript\s*:|srcdoc\s*=|formaction\s*=/i;
 
 function isNonEmptyString(value) {
   return typeof value === 'string' && value.trim().length > 0;
@@ -88,6 +90,11 @@ function validateQuestion(question, label) {
   if (!isNonEmptyString(question.explanation)) fail(`${label}.explanation must be a non-empty string`);
   else hasNoXss(question.explanation, `${label}.explanation`);
 
+  // Uniformly scan every free-text field an author can supply (some are injected raw at render).
+  ['hint', 'translation', 'answer'].forEach(f => {
+    if (typeof question[f] === 'string') hasNoXss(question[f], `${label}.${f}`);
+  });
+
   switch (question.type) {
     case 'mcq': {
       if (!ensureArray(question.options, `${label}.options`)) break;
@@ -100,6 +107,8 @@ function validateQuestion(question, label) {
         if (!ensureArray(question.optionsDevanagari, `${label}.optionsDevanagari`)) break;
         if (question.optionsDevanagari.length !== question.options.length) {
           fail(`${label}.optionsDevanagari must match options length`);
+        } else {
+          question.optionsDevanagari.forEach((opt, i) => hasNoXss(opt, `${label}.optionsDevanagari[${i}]`));
         }
       }
       break;
@@ -112,6 +121,7 @@ function validateQuestion(question, label) {
       if (!ensureArray(question.sentenceParts, `${label}.sentenceParts`)) break;
       if (question.sentenceParts.length !== 2) fail(`${label}.sentenceParts must contain exactly two strings`);
       if (!question.sentenceParts.every(part => typeof part === 'string')) fail(`${label}.sentenceParts must contain only strings`);
+      else question.sentenceParts.forEach((part, i) => hasNoXss(part, `${label}.sentenceParts[${i}]`));
       if (!isNonEmptyString(question.answer)) fail(`${label}.answer must be a non-empty string`);
       break;
     }
@@ -124,7 +134,9 @@ function validateQuestion(question, label) {
           return;
         }
         if (!isNonEmptyString(pair.left)) fail(`${label}.pairs[${idx}].left must be a non-empty string`);
+        else hasNoXss(pair.left, `${label}.pairs[${idx}].left`);
         if (!isNonEmptyString(pair.right)) fail(`${label}.pairs[${idx}].right must be a non-empty string`);
+        else hasNoXss(pair.right, `${label}.pairs[${idx}].right`);
       });
       break;
     }
@@ -132,8 +144,11 @@ function validateQuestion(question, label) {
       if (!ensureArray(question.tiles, `${label}.tiles`)) break;
       if (question.tiles.length === 0) fail(`${label}.tiles must not be empty`);
       if (!question.tiles.every(isNonEmptyString)) fail(`${label}.tiles must contain only non-empty strings`);
+      else question.tiles.forEach((t, i) => hasNoXss(t, `${label}.tiles[${i}]`));
       if (question.distractors && !question.distractors.every(isNonEmptyString)) {
         fail(`${label}.distractors must contain only non-empty strings`);
+      } else if (Array.isArray(question.distractors)) {
+        question.distractors.forEach((d, i) => hasNoXss(d, `${label}.distractors[${i}]`));
       }
       if (!isNonEmptyString(question.answer)) fail(`${label}.answer must be a non-empty string`);
       break;
@@ -159,10 +174,13 @@ function collectDataFiles(dir) {
 function validateLessonModule(mod, fileLabel) {
   if (!isNonEmptyString(mod.id)) fail(`${fileLabel}: export const id must be a non-empty string`);
   if (!isNonEmptyString(mod.title)) fail(`${fileLabel}: export const title must be a non-empty string`);
+  else hasNoXss(mod.title, `${fileLabel}: title`);
   if (!isNonEmptyString(mod.icon)) fail(`${fileLabel}: export const icon must be a non-empty string`);
+  else hasNoXss(mod.icon, `${fileLabel}: icon`);
   if (!mod.metadata || typeof mod.metadata !== 'object') fail(`${fileLabel}: export const metadata must be an object`);
   if (!mod.briefing || typeof mod.briefing !== 'object') fail(`${fileLabel}: export const briefing must be an object`);
   if (!Array.isArray(mod.questions)) fail(`${fileLabel}: export const questions must be an array`);
+  else if (mod.questions.length === 0) fail(`${fileLabel}: export const questions must not be empty`);
 
   if (mod.metadata) {
     if (!isNonEmptyString(mod.metadata.difficulty)) fail(`${fileLabel}: metadata.difficulty must be a non-empty string`);
@@ -183,7 +201,9 @@ function validateLessonModule(mod, fileLabel) {
   if (mod.briefing?.pre) {
     const pre = mod.briefing.pre;
     if (!isNonEmptyString(pre.title)) fail(`${fileLabel}: briefing.pre.title must be a non-empty string`);
+    else hasNoXss(pre.title, `${fileLabel}: briefing.pre.title`);
     if (!isNonEmptyString(pre.lead)) fail(`${fileLabel}: briefing.pre.lead must be a non-empty string`);
+    else hasNoXss(pre.lead, `${fileLabel}: briefing.pre.lead`);
     if (!ensureArray(pre.sections, `${fileLabel}: briefing.pre.sections`)) return;
     pre.sections.forEach((section, idx) => validateBriefingSection(section, `${fileLabel}: briefing.pre.sections[${idx}]`));
   }
