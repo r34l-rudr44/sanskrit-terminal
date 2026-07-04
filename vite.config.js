@@ -14,6 +14,8 @@ export default defineConfig({
       injectRegister: false,
       manifest: false,
       workbox: {
+        skipWaiting: true,
+        clientsClaim: true,
         navigateFallback: null,
         globPatterns: ['**/*.{js,css,html,svg,png,ico,webmanifest}'],
         runtimeCaching: [
