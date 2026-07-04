@@ -1,3 +1,4 @@
+import './pwa.js';
 import { injectGlobals } from './components.js';
 import { ACHIEVEMENTS } from './achievements.js';
 import { getDailyQuest } from './quests.js';

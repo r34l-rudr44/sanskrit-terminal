@@ -1,3 +1,4 @@
+import './pwa.js';
 import { MODULES, getModule, getDay } from '../data/index.js';
 import { state, registerStreakDay } from './state.js';
 import { Theme, Prefs, Audio, Effects, escapeHtml, debounce } from './utils.js';

@@ -1,3 +1,4 @@
+import './pwa.js';
 import { MODULES, getModule } from '../data/index.js';
 import { state, expandedMods, checkStreak, completedLessonCount, completedLessonIds } from './state.js';
 import { Theme, Prefs, escapeHtml } from './utils.js';

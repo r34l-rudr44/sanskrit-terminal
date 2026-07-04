@@ -11,6 +11,7 @@ export default defineConfig({
   plugins: [
     VitePWA({
       registerType: 'autoUpdate',
+      injectRegister: false,
       manifest: false,
       workbox: {
         navigateFallback: null,
