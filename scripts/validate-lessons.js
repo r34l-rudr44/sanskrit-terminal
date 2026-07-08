@@ -91,7 +91,7 @@ function validateQuestion(question, label) {
   else hasNoXss(question.explanation, `${label}.explanation`);
 
   // Uniformly scan every free-text field an author can supply (some are injected raw at render).
-  ['hint', 'translation', 'answer'].forEach(f => {
+  ['hint', 'translation', 'answer', 'instruction'].forEach(f => {
     if (typeof question[f] === 'string') hasNoXss(question[f], `${label}.${f}`);
   });
 

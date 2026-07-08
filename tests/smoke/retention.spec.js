@@ -61,7 +61,7 @@ test('Review queue appears on home when a completed lesson has score below 80', 
 test('Completing a lesson question schedules it for spaced recall', async ({ page }) => {
   await page.goto('/lesson.html?mod=1&day=1-1');
   await page.getByRole('button', { name: /BEGIN LESSON/i }).click();
-  await page.locator('.option-btn').nth(0).click(); // "He — वह", the correct answer
+  await page.locator('.option-btn').nth(0).click(); // "He वह (पुं)", the correct answer
 
   const item = await page.evaluate(() => JSON.parse(localStorage.getItem('sk_review_items') || '{}')['1-1::0']);
   expect(item).toBeTruthy();
@@ -84,7 +84,7 @@ test('Spaced-recall widget surfaces a due item and answering it advances the sch
   await page.getByRole('button', { name: /START REVIEW/i }).click();
   await expect(page).toHaveURL(/review=1/);
 
-  await page.locator('.option-btn').nth(0).click(); // "He — वह", the correct answer
+  await page.locator('.option-btn').nth(0).click(); // "He वह (पुं)", the correct answer
   await page.getByRole('button', { name: /CONTINUE/i }).click();
 
   await expect(page.locator('#screen-score')).toHaveClass(/active/);
@@ -104,7 +104,7 @@ test('Reviewing an item incorrectly resets its schedule to due tomorrow', async 
   });
   await page.goto('/lesson.html?review=1');
 
-  await page.locator('.option-btn').nth(1).click(); // "She — वह (स्त्री.)", the wrong answer
+  await page.locator('.option-btn').nth(1).click(); // "She वह (स्त्री)", the wrong answer
   await page.getByRole('button', { name: /CONTINUE/i }).click();
 
   const item = await page.evaluate(() => JSON.parse(localStorage.getItem('sk_review_items'))['1-1::0']);
