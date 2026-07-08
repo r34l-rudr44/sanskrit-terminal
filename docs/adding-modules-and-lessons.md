@@ -266,6 +266,7 @@ Required fields:
 Optional:
 
 - `optionsDevanagari`
+- `instruction` — a short secondary line (e.g. a Hindi/Sanskrit instruction) rendered under `question`
 
 Rules:
 

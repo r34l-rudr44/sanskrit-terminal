@@ -839,7 +839,8 @@ function buildQuestion(q) {
       const dev = q.optionsDevanagari ? `<span class="devanagari">${escapeHtml(q.optionsDevanagari[i])}</span>` : '';
       return `<button class="option-btn" onclick="window.answerMCQ(this, ${i})">${escapeHtml(opt)}${dev}</button>`;
     }).join('');
-    return `${badge}${qText}<div class="options-grid">${opts}</div>`;
+    const instr = q.instruction ? `<div class="q-hint">${escapeHtml(q.instruction)}</div>` : '';
+    return `${badge}${qText}${instr}<div class="options-grid">${opts}</div>`;
   }
 
   if (q.type === 'translation') {

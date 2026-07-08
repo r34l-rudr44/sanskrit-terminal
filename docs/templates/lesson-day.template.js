@@ -52,6 +52,7 @@ export const questions = [
   {
     type: "mcq",
     question: "What does रामः mean?",
+    instruction: "रामः शब्दका अनुवाद करें।", // optional: short Hindi/Sanskrit line under the prompt
     options: ["Forest", "Rama", "Water", "Fire"],
     optionsDevanagari: ["वनम्", "रामः", "जल", "अग्नि"],
     answer: "Rama",

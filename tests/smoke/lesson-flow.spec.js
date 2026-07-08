@@ -25,7 +25,7 @@ test('lesson renders, answers advance, and progress survives refresh', async ({ 
   await expect(page.locator('#screen-lesson')).toHaveClass(/active/);
   await expect(page.locator('#progress-count')).toHaveText(/1\/7/);
 
-  await page.getByRole('button', { name: /He — वह/ }).click();
+  await page.getByRole('button', { name: /He वह/ }).click();
   await expect(page.locator('#feedback-banner')).toHaveClass(/active/);
   await page.getByRole('button', { name: /CONTINUE/i }).click();
 
@@ -35,7 +35,7 @@ test('lesson renders, answers advance, and progress survives refresh', async ({ 
 
   await expect(page.locator('#screen-lesson')).toHaveClass(/active/);
   await expect(page.locator('#progress-count')).toHaveText(/2\/7/);
-  await expect(page.locator('.q-text')).toContainText("I — मैं");
+  await expect(page.locator('.q-text')).toContainText("Which Sanskrit word means 'I'");
 });
 
 test('module test can be completed end-to-end', async ({ page }) => {

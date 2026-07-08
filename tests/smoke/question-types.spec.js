@@ -24,7 +24,7 @@ test('MCQ: correct answer shows correct feedback', async ({ page }) => {
   await page.goto('/lesson.html?mod=1&day=1-1');
   await page.getByRole('button', { name: /BEGIN LESSON/i }).click();
 
-  await page.getByRole('button', { name: /He — वह/ }).click();
+  await page.getByRole('button', { name: /He वह/ }).click();
   await expect(page.locator('#feedback-banner')).toHaveClass(/correct-fb/);
 });
 
@@ -32,9 +32,9 @@ test('MCQ: wrong answer shows wrong feedback and reveals correct option', async 
   await page.goto('/lesson.html?mod=1&day=1-1');
   await page.getByRole('button', { name: /BEGIN LESSON/i }).click();
 
-  await page.getByRole('button', { name: /She — वह/ }).click(); // wrong
+  await page.getByRole('button', { name: /She वह/ }).click(); // wrong
   await expect(page.locator('#feedback-banner')).toHaveClass(/wrong-fb/);
-  await expect(page.locator('.option-btn.correct')).toContainText('He — वह');
+  await expect(page.locator('.option-btn.correct')).toContainText('He वह');
 });
 
 test('MCQ: renders four option buttons', async ({ page }) => {
