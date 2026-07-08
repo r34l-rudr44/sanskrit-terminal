@@ -299,7 +299,7 @@ The app uses a terminal / CLI voice throughout:
 | CTA | `▶ START LESSON_01` |
 | Progress label | `CURRICULUM_PROGRESS` |
 | Sidebar label | `MODULE_DIRECTORY` |
-| Section header | `LEARNING_PATH` |
+| Section header | `LESSONS` |
 | System prefix | `// ` (comments style) |
 | Question prefix | `> ` (prompt style), colored `--cyan` |
 | Stat labels | All-caps with underscores: `LESSONS_DONE`, `Q_ANSWERED`, `ACCURACY` |
