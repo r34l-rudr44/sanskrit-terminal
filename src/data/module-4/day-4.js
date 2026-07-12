@@ -1,6 +1,6 @@
 export const id = "4-4";
 export const title = "Semi-vowel Shift — यण सन्धि";
-export const icon = "↩️";
+export const icon = "hook-arrow";
 
 export const metadata = {
   difficulty: "intermediate",

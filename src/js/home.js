@@ -2,6 +2,7 @@ import './pwa.js';
 import { MODULES, getModule } from '../data/index.js';
 import { state, expandedMods, checkStreak, completedLessonCount, completedLessonIds } from './state.js';
 import { Theme, Prefs, escapeHtml } from './utils.js';
+import { iconSvg } from './icons.js';
 import { injectGlobals } from './components.js';
 import { maybeShowStreakReminder } from './notifications.js';
 import { renderReviewQueue, renderDueReviewWidget } from './review.js';
@@ -45,7 +46,7 @@ export function renderHomeModules() {
     hdr.className = 'module-entry-hdr' + (isOpen ? ' open' : '');
     hdr.dataset.mod = mod.id;
     hdr.innerHTML = `
-      <div class="module-entry-icon">${escapeHtml(mod.icon)}</div>
+      <div class="module-entry-icon">${iconSvg(mod.icon)}</div>
       <div class="module-entry-info">
         <div class="module-entry-id">MODULE_${String(mod.id).padStart(2,'0')}</div>
         <div class="module-entry-title">${escapeHtml(mod.title)}</div>
@@ -92,12 +93,12 @@ export function renderHomeModules() {
         + (locked ? ' locked'    : '')
         + (day.isTest ? ' is-test' : '');
       const label = day.isTest ? 'MODULE TEST' : `UNIT ${idx + 1}`;
-      const badge = done ? '✓' : (locked ? '🔒' : '');
+      const badge = done ? '✓' : (locked ? iconSvg('lock') : '');
       card.innerHTML = `
-        <div class="mod-day-card-icon">${escapeHtml(day.icon)}</div>
+        <div class="mod-day-card-icon">${iconSvg(day.icon)}</div>
         <div class="mod-day-card-title">${escapeHtml(day.title)}</div>
         <div class="mod-day-card-meta">${escapeHtml(label)}</div>
-        ${badge ? `<div class="mod-day-card-badge">${escapeHtml(badge)}</div>` : ''}`;
+        ${badge ? `<div class="mod-day-card-badge">${badge}</div>` : ''}`;
       if (locked) {
         const remaining = mod.days.filter(d => !d.isTest && !completedSet.has(d.id)).length;
         card.dataset.tooltip = `Complete ${remaining} lesson${remaining !== 1 ? 's' : ''} to unlock`;
@@ -169,7 +170,7 @@ export function renderSidebar() {
     const hdr = document.createElement('button');
     hdr.className = 'mod-section-hdr' + (isExpanded ? ' open' : '');
     hdr.dataset.mod = mod.id;
-    hdr.innerHTML = `<span class="mod-icon">${escapeHtml(mod.icon)}</span>
+    hdr.innerHTML = `<span class="mod-icon">${iconSvg(mod.icon)}</span>
       <span style="flex:1;font-size:12px;letter-spacing:1.5px;">MOD_${mod.id} — ${escapeHtml(mod.title)}</span>
       ${modDone ? '<span style="color:var(--ok);font-size:13px;">✓</span>' : ''}
       <span class="mod-arrow">▶</span>`;
@@ -200,7 +201,7 @@ export function renderSidebar() {
         + (done   ? ' completed' : '')
         + (day.isTest ? ' test-day' : '')
         + (locked ? ' locked'    : '');
-      btn.innerHTML = `<div class="day-icon">${locked ? '🔒' : escapeHtml(day.icon)}</div>
+      btn.innerHTML = `<div class="day-icon">${locked ? iconSvg('lock') : iconSvg(day.icon)}</div>
         <div class="day-info">
           <div class="day-name">${escapeHtml(dayNum)}</div>
           <div class="day-meta">${escapeHtml(day.title)}</div>

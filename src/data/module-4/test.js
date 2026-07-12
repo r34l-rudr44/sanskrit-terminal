@@ -1,6 +1,6 @@
 export const id = "4-T";
 export const title = "Final Test";
-export const icon = "📝";
+export const icon = "test";
 export const isTest = true;
 
 export const metadata = {

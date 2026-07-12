@@ -1,5 +1,6 @@
 import { confirmClearCache } from './state.js';
 import { Theme, Prefs, debounce } from './utils.js';
+import { iconSvg } from './icons.js';
 
 export function injectGlobals() {
   const streak = parseInt(localStorage.getItem('sk_streak'), 10) || 0;
@@ -14,7 +15,7 @@ export function injectGlobals() {
   </a>
   <div class="topbar-right">
     <div class="streak-badge" tabindex="0"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 12 16" class="streak-flame" aria-hidden="true" fill="currentColor"><path fill-rule="evenodd" d="M6 0C3.5 3 1 7 1 11c0 3.5 2.2 5.5 5 5.5s5-2 5-5.5C11 7 8.5 3 6 0ZM6 6C4.5 9 3.5 11 3.5 13c0 1.5 1.1 2.5 2.5 2.5s2.5-1 2.5-2.5C8.5 11 7.5 9 6 6Z"/></svg><span id="streak-count">${streak}</span>×</div>
-<button class="icon-btn" id="sound-toggle-btn" onclick="window.toggleSound && window.toggleSound()">🔊</button>
+<button class="icon-btn" id="sound-toggle-btn" onclick="window.toggleSound && window.toggleSound()">${iconSvg('sound-on')}</button>
     <button class="prefs-btn" onclick="window.openPrefs && window.openPrefs()">⚙ <span class="prefs-label">PREFS</span></button>
   </div>`;
 
@@ -47,7 +48,7 @@ export function injectGlobals() {
         <div class="pref-section-title">DATA_MGMT</div>
         <div class="danger-zone-row">
           <span class="danger-desc">Permanently erase streak, progress &amp; all stats.</span>
-          <button class="btn-danger" onclick="window.openDeleteOverlay()">🗑 DELETE</button>
+          <button class="btn-danger" onclick="window.openDeleteOverlay()">${iconSvg('trash')} DELETE</button>
         </div>
       </div>
     </div>
@@ -62,7 +63,7 @@ export function injectGlobals() {
       <div class="delete-box-titlebar-dots"><div class="delete-box-dot"></div><div class="delete-box-dot"></div><div class="delete-box-dot"></div></div>
     </div>
     <div class="delete-box-body">
-      <span class="delete-box-icon">🗑</span>
+      <span class="delete-box-icon">${iconSvg('trash')}</span>
       <div class="delete-box-title">WIPE ALL DATA?</div>
       <div class="delete-box-sub">This will permanently erase your streak, progress, and all stats.<br><strong>This action cannot be undone.</strong></div>
       <span class="delete-box-prompt">Type DELETE to confirm, then press ENTER</span>
@@ -451,7 +452,7 @@ export function injectGlobals() {
     const btn = document.getElementById('sound-toggle-btn');
     if (btn) {
       btn.classList.toggle('muted', window._soundMuted);
-      btn.textContent = window._soundMuted ? '🔇' : '🔊';
+      btn.innerHTML = iconSvg(window._soundMuted ? 'sound-off' : 'sound-on');
       localStorage.setItem('sk_sound', window._soundMuted ? 'muted' : 'on');
     }
   };

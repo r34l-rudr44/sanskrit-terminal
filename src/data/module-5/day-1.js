@@ -1,6 +1,6 @@
 export const id = "5-1";
 export const title = "How Often? — आवृत्तिवाचक शब्द";
-export const icon = "🔁";
+export const icon = "repeat";
 
 export const metadata = {
   difficulty: "intermediate",

@@ -1,6 +1,6 @@
 export const id = "5-2";
 export const title = "The 7 Questions — सप्तककाराः";
-export const icon = "❓";
+export const icon = "question";
 
 export const metadata = {
   difficulty: "intermediate",

@@ -1,6 +1,6 @@
 export const id = "2-1";
 export const title = "Places — गन्तव्यानि";
-export const icon = "🏘️";
+export const icon = "houses";
 
 export const metadata = {
   difficulty: "beginner",

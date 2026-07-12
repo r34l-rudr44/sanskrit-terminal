@@ -1,6 +1,6 @@
 export const id = "3-2";
 export const title = "When & Then — यदा...तदा";
-export const icon = "⏳";
+export const icon = "hourglass";
 
 export const metadata = {
   difficulty: "beginner",

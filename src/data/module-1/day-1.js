@@ -1,6 +1,6 @@
 export const id = "1-1";
 export const title = "Pronouns";
-export const icon = "👤";
+export const icon = "person";
 
 export const metadata = {
   difficulty: "beginner",

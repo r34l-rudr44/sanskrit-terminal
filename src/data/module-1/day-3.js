@@ -1,6 +1,6 @@
 export const id = "1-3";
 export const title = "Where? — स्थानवाचक शब्द";
-export const icon = "📍";
+export const icon = "pin";
 
 export const metadata = {
   difficulty: "beginner",

@@ -1,6 +1,6 @@
 export const id = "3-4";
 export const title = "Future Tense — भविष्यत्काल";
-export const icon = "🔮";
+export const icon = "crystal-ball";
 
 export const metadata = {
   difficulty: "beginner",

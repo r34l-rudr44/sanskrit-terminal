@@ -1,6 +1,6 @@
 export const id = "3-1";
 export const title = "Lesson Title";
-export const icon = "📘";
+export const icon = "book"; // key into ICONS in src/js/icons.js — see docs/adding-modules-and-lessons.md
 export const metadata = {
   difficulty: "beginner",
   estimatedMinutes: 8,

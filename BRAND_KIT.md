@@ -13,15 +13,15 @@ Everything in this file is derived from live source files. When in doubt, treat 
 | Product name | **SANSKRIT.EXE** |
 | Internal alias | Magical Lantern |
 | Status badge | BETA |
-| Logo icon | 🪔 (diya / oil lamp — illumination, knowledge) |
+| Logo icon | diya / oil lamp mark (illumination, knowledge) — rendered as an inline SVG in `.logo-icon` (`src/js/components.js`); the `diya` icon key in `src/js/icons.js` reuses the same motif for module/achievement badges |
 | Primary tagline | *"Learn Sanskrit Daily"* |
 | Sanskrit motto | *"वाग्देव्यै नमः"* (Salutation to the Goddess of Speech) |
 | Mission | *"An interactive daily Sanskrit learning app with guided lessons, module-based practice, and progress tracking."* |
 
 **Logo assembly** (rendered in the topbar):
 ```
-[ 🪔 ] SANSKRIT.EXE [BETA]
-        वाग्देव्यै नमः
+[ SVG ] SANSKRIT.EXE [BETA]
+         वाग्देव्यै नमः
 ```
 - Box: 40×40 px, `--border-brand` (2px solid `--brand`), background `--surface`
 - Title: `VT323` font, 22 px, color `--brand`, `letter-spacing: 2px`, `text-shadow: 0 0 12px var(--brand)`
