@@ -1,6 +1,7 @@
 import fs from 'fs';
 import path from 'path';
 import { fileURLToPath, pathToFileURL } from 'url';
+import { ICON_KEYS } from '../src/js/icons.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -176,7 +177,7 @@ function validateLessonModule(mod, fileLabel) {
   if (!isNonEmptyString(mod.title)) fail(`${fileLabel}: export const title must be a non-empty string`);
   else hasNoXss(mod.title, `${fileLabel}: title`);
   if (!isNonEmptyString(mod.icon)) fail(`${fileLabel}: export const icon must be a non-empty string`);
-  else hasNoXss(mod.icon, `${fileLabel}: icon`);
+  else if (!ICON_KEYS.has(mod.icon)) fail(`${fileLabel}: icon "${mod.icon}" is not a key in ICONS (src/js/icons.js)`);
   if (!mod.metadata || typeof mod.metadata !== 'object') fail(`${fileLabel}: export const metadata must be an object`);
   if (!mod.briefing || typeof mod.briefing !== 'object') fail(`${fileLabel}: export const briefing must be an object`);
   if (!Array.isArray(mod.questions)) fail(`${fileLabel}: export const questions must be an array`);
@@ -256,6 +257,7 @@ async function main() {
     if (!isNonEmptyString(mod.title)) fail(`${prefix}.title must be a non-empty string`);
     if (!isNonEmptyString(mod.subtitle)) fail(`${prefix}.subtitle must be a non-empty string`);
     if (!isNonEmptyString(mod.icon)) fail(`${prefix}.icon must be a non-empty string`);
+    else if (!ICON_KEYS.has(mod.icon)) fail(`${prefix}.icon "${mod.icon}" is not a key in ICONS (src/js/icons.js)`);
     if (!isNonEmptyString(mod.description)) fail(`${prefix}.description must be a non-empty string`);
     if (!ensureArray(mod.days, `${prefix}.days`)) return;
     if (mod.days.length === 0) fail(`${prefix}.days must not be empty`);

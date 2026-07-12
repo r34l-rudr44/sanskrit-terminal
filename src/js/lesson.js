@@ -9,6 +9,8 @@ import { requestNotifPermission } from './notifications.js';
 import { makeReviewId, recordReviewOutcome, getDueReviewIds, resolveReviewQuestion } from './srs.js';
 import { iconSvg } from './icons.js';
 
+const trophyIcon = pct => pct >= 80 ? 'trophy' : pct >= 50 ? 'star' : 'book';
+
 let currentDay = null;
 let currentMod = null;
 const LESSON_PROGRESS_KEY = 'sk_lesson_progress';
@@ -1146,7 +1148,7 @@ function _buildTomorrowCard(pct, sessionCount, streak, nextDay, nextMod, day) {
 function finishReviewSession(pct) {
   // Completing due SRS reviews counts as daily activity — extend the streak like a lesson does.
   registerStreakDay();
-  document.getElementById('score-trophy').innerHTML = iconSvg(pct >= 80 ? 'trophy' : pct >= 50 ? 'star' : 'book');
+  document.getElementById('score-trophy').innerHTML = iconSvg(trophyIcon(pct));
   document.getElementById('score-title').textContent = 'REVIEW_SESSION — COMPLETE';
   document.getElementById('score-sub').textContent = `${state.totalAnswered} item${state.totalAnswered !== 1 ? 's' : ''} reviewed.`;
   document.getElementById('score-big').textContent = pct + '%';
@@ -1229,8 +1231,7 @@ function finishLesson() {
       Effects.launchConfetti(pct >= 60 ? 100 : 40);
     }
   } else {
-    const trophy = pct >= 80 ? 'trophy' : pct >= 50 ? 'star' : 'book';
-    document.getElementById('score-trophy').innerHTML = iconSvg(trophy);
+    document.getElementById('score-trophy').innerHTML = iconSvg(trophyIcon(pct));
 
     const dayLabel = escapeHtml(currentDay.title || currentDay.id);
     const title = pct >= 80 ? `${dayLabel} — MASTERED` : pct >= 50 ? `${dayLabel} — COMPLETE` : `${dayLabel} — REVIEW NEEDED`;
