@@ -60,7 +60,7 @@ export function renderReviewQueue(streakStatus) {
     <div class="review-widget-list">
       ${top.map(({ modId, day, score }) => `
         <div class="review-item">
-          <span class="review-item-icon">${iconSvg(day.icon) || iconSvg('book')}</span>
+          <span class="review-item-icon">${iconSvg(day.icon, 'book')}</span>
           <div class="review-item-body">
             <div class="review-item-title">${escapeHtml(day.title)}</div>
             <div class="review-item-score">SCORE: ${score}%</div>

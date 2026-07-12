@@ -59,7 +59,9 @@ const ICONS = {
   trash:     svg('<path d="M4 7h16M9 7V4h6v3M6 7l1 13a1 1 0 0 0 1 .9h8a1 1 0 0 0 1-1L18 7"/><line x1="10" y1="11" x2="10" y2="17"/><line x1="14" y1="11" x2="14" y2="17"/>'),
 };
 
-/** Returns the SVG markup for an icon key, or an empty string if the key is unknown. */
-export function iconSvg(key) {
-  return ICONS[key] || '';
+/** Returns the SVG markup for an icon key, falling back to `fallbackKey` (default: none, i.e. '') if unknown. */
+export function iconSvg(key, fallbackKey) {
+  return ICONS[key] || ICONS[fallbackKey] || '';
 }
+
+export const ICON_KEYS = new Set(Object.keys(ICONS));
