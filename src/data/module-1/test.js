@@ -17,7 +17,7 @@ export const briefing = {
     lead: "You've covered pronouns, गम् verb, location words, negation, and कः questions. This test brings it all together.",
     sections: [
       { type:"block", text:"This review covers <strong>pronouns</strong>, <strong>गम् verb forms</strong>, and <strong>location words</strong>. Take your time. Good luck — शुभकामना!" },
-      { type:"grammar", label:"TEST_RULES", text:"Answer each question carefully. Skips count as wrong. Score <strong>60%+</strong> to unlock your certificate." }
+      { type:"grammar", label:"TEST RULES", text:"Answer each question carefully. Skips count as wrong. Score <strong>60%+</strong> to unlock your certificate." }
     ]
   },
   mid: []

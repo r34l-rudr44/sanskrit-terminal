@@ -17,7 +17,7 @@ export const briefing = {
     lead: "You've learned 6 destination nouns, how to ask where someone goes with किम्/कुत्र/कः, and how to negate with न. This test brings it all together.",
     sections: [
       { type:"block", text:"Questions cover <strong>place words</strong>, <strong>question patterns</strong>, and <strong>negation with destinations</strong>. Take your time." },
-      { type:"grammar", label:"TEST_RULES", text:"Answer each question carefully. Score <strong>60%+</strong> to earn your Module 2 certificate." }
+      { type:"grammar", label:"TEST RULES", text:"Answer each question carefully. Score <strong>60%+</strong> to earn your Module 2 certificate." }
     ]
   },
   mid: []

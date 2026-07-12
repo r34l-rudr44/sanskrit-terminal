@@ -15,9 +15,9 @@ export const briefing = {
     title: "The Verb गम् — To Go",
     lead: "गम् means 'to go'. Its present-tense forms change with the person — I, You, or He/She, as given in the chart below.<br><span class=\"devanagari\">गम् धातुका जानेके अर्थमें प्रयोग किया जाता है। वचन, पुरुष एवं लकारके अनुसार इसके रूप वर्णित हैं। इसके लट् लकार एकवचन रूप अँग्रेजी हिन्दी अर्थ सहित निम्नलिखित है। लट् लकार वर्तमानकालका द्योतक है।</span>",
     sections: [
-      { type:"table", label:"गमॢँ गतौ", cols:["Form","Used with","English","Hindi"],
+      { type:"table", label:"VERB FORMS गमॢँ गतौ", cols:["Form","Used with","English","Hindi"],
         rows:[["गच्छामि","अहम्","I go","मैं जाता हूँ"],["गच्छसि","त्वम्","You go","तुम जाते हो"],["गच्छति","सः / सा","He/She goes","वह जाता/जाती है"]] },
-      { type:"table", label:"Sentences वाक्यानि।", cols:["Sanskrit","Hindi","English"],
+      { type:"table", label:"SENTENCES वाक्यानि", cols:["Sanskrit","Hindi","English"],
         rows:[["अहं गच्छामि।","मैं जाता हूँ।","I go."],["त्वं गच्छसि।","तुम जाते हो।","You go."],["सः गच्छति।","वह जाता है।","He goes."],["सा गच्छति।","वह जाती है।","She goes."]] },
       { type:"grammar", label:"विवेचना।", text:"Word order in Sanskrit is <strong>flexible</strong>. सः गच्छति and गच्छति सः both mean the same thing. Meaning is carried by each word's form, not its position in the sentence.<br><span class=\"devanagari\">संस्कृतमें शब्दोंका क्रम लचीला होता है। सः गच्छति और गच्छति सः दोनोंका अर्थ एक ही है। अर्थ वाक्यमें शब्दके स्थानसे नहीं बल्कि उसके रूपसे स्पष्ट होता है।</span>" }
     ]
