@@ -2,6 +2,7 @@ import { state } from './state.js';
 import { MODULES } from '../data/index.js';
 import { escapeHtml } from './utils.js';
 import { getDueReviewCount } from './srs.js';
+import { iconSvg } from './icons.js';
 
 export function renderDueReviewWidget(streakStatus) {
   if (streakStatus === 'at_risk' && state.streak >= 2) return;
@@ -59,7 +60,7 @@ export function renderReviewQueue(streakStatus) {
     <div class="review-widget-list">
       ${top.map(({ modId, day, score }) => `
         <div class="review-item">
-          <span class="review-item-icon">${day.icon || '📖'}</span>
+          <span class="review-item-icon">${iconSvg(day.icon) || iconSvg('book')}</span>
           <div class="review-item-body">
             <div class="review-item-title">${escapeHtml(day.title)}</div>
             <div class="review-item-score">SCORE: ${score}%</div>

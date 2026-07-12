@@ -52,7 +52,7 @@ test('Sound: toggle mutes audio and persists across reload', async ({ page }) =>
   expect(muted).toBe('muted');
 
   await page.reload();
-  await expect(page.locator('#sound-toggle-btn')).toHaveText('🔇');
+  await expect(page.locator('#sound-toggle-btn')).toHaveClass(/muted/);
 });
 
 // ── Delete data ───────────────────────────────────────────────────────────────
@@ -64,7 +64,7 @@ test('Delete data: typing DELETE and confirming clears all progress', async ({ p
   });
 
   await openPrefs(page);
-  await page.locator('.btn-danger').click(); // "🗑 DELETE" button
+  await page.locator('.btn-danger').click(); // DELETE button
 
   await expect(page.locator('#delete-overlay')).toHaveClass(/active/);
   await page.locator('#delete-type-input').fill('DELETE');

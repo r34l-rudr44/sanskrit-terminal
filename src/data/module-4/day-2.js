@@ -1,6 +1,6 @@
 export const id = "4-2";
 export const title = "Vowel Upgrade — गुण सन्धि";
-export const icon = "✨";
+export const icon = "sparkle";
 
 export const metadata = {
   difficulty: "beginner",

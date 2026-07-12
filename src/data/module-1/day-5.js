@@ -1,6 +1,6 @@
 export const id = "1-5";
 export const title = "Who? — कः";
-export const icon = "❓";
+export const icon = "question";
 
 export const metadata = {
   difficulty: "beginner",

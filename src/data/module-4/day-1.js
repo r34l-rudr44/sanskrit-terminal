@@ -1,6 +1,6 @@
 export const id = "4-1";
 export const title = "Long Vowel Fusion — दीर्घ सन्धि";
-export const icon = "🔗";
+export const icon = "link";
 
 export const metadata = {
   difficulty: "beginner",

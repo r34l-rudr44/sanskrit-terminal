@@ -1,6 +1,6 @@
 export const id = "3-3";
 export const title = "Time of Day — दिनकालः";
-export const icon = "🌅";
+export const icon = "sunrise";
 
 export const metadata = {
   difficulty: "beginner",

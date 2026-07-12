@@ -1,4 +1,5 @@
 import { MODULES } from '../data/index.js';
+import { iconSvg } from './icons.js';
 
 const _testIds = new Set(MODULES.flatMap(m => m.days.filter(d => d.isTest).map(d => d.id)));
 const _totalNonTest = MODULES.reduce((acc, m) => acc + m.days.filter(d => !d.isTest).length, 0);
@@ -7,61 +8,61 @@ const _nonTestDone = s => s.completedDays.filter(id => !_testIds.has(id)).length
 
 export const ACHIEVEMENTS = [
   {
-    id: 'first_blood',    rarity: 'common',    icon: '⚡', title: 'BOOT_SEQUENCE',
+    id: 'first_blood',    rarity: 'common',    icon: 'bolt', title: 'BOOT_SEQUENCE',
     desc: 'Complete your first lesson',
     check: s      => s.completedDays.length >= 1,
     hint:  s      => `${s.completedDays.length} / 1 lesson`,
   },
   {
-    id: 'quick_learner',  rarity: 'common',    icon: '📖', title: 'LESSONS_BEGUN',
+    id: 'quick_learner',  rarity: 'common',    icon: 'book', title: 'LESSONS_BEGUN',
     desc: 'Complete 3 lessons',
     check: s      => _nonTestDone(s) >= 3,
     hint:  s      => `${_nonTestDone(s)} / 3 lessons`,
   },
   {
-    id: 'halfway',        rarity: 'common',    icon: '🌗', title: 'MIDPOINT_REACHED',
+    id: 'halfway',        rarity: 'common',    icon: 'half-moon', title: 'MIDPOINT_REACHED',
     desc: 'Complete half the curriculum',
     check: s      => _nonTestDone(s) >= 11,
     hint:  s      => `${_nonTestDone(s)} / 11 lessons`,
   },
   {
-    id: 'perfect_score',  rarity: 'rare',      icon: '🎯', title: 'PRECISION_STRIKE',
+    id: 'perfect_score',  rarity: 'rare',      icon: 'target', title: 'PRECISION_STRIKE',
     desc: 'Score 100% on any lesson',
     check: (s, ctx) => ctx.pct === 100,
     hint:  ()     => 'Score 100% on any lesson',
   },
   {
-    id: 'streak_3',       rarity: 'common',    icon: '🔥', title: 'FLAME_PROTOCOL',
+    id: 'streak_3',       rarity: 'common',    icon: 'flame', title: 'FLAME_PROTOCOL',
     desc: '3-day streak achieved',
     check: s      => s.streak >= 3,
     hint:  s      => `${s.streak} / 3 days`,
   },
   {
-    id: 'streak_7',       rarity: 'rare',      icon: '💥', title: 'WEEK_COMPILE',
+    id: 'streak_7',       rarity: 'rare',      icon: 'burst', title: 'WEEK_COMPILE',
     desc: '7-day streak achieved',
     check: s      => s.streak >= 7,
     hint:  s      => `${s.streak} / 7 days`,
   },
   {
-    id: 'quest_streak_7', rarity: 'rare',      icon: '⭐', title: 'QUEST_VETERAN',
+    id: 'quest_streak_7', rarity: 'rare',      icon: 'star', title: 'QUEST_VETERAN',
     desc: 'Complete 7 daily quests',
     check: ()     => parseInt(localStorage.getItem('sk_quest_streak') || '0') >= 7,
     hint:  ()     => `${parseInt(localStorage.getItem('sk_quest_streak') || '0')} / 7 quests`,
   },
   {
-    id: 'century',        rarity: 'rare',      icon: '💯', title: 'CENTUM_ANSWERED',
+    id: 'century',        rarity: 'rare',      icon: 'hundred', title: 'CENTUM_ANSWERED',
     desc: 'Answer 100 questions',
     check: s      => s.totalQuestions >= 100,
     hint:  s      => `${s.totalQuestions} / 100 answered`,
   },
   {
-    id: 'questions_500',  rarity: 'rare',      icon: '📊', title: 'FIVE_HUNDRED_DEEP',
+    id: 'questions_500',  rarity: 'rare',      icon: 'bar-chart', title: 'FIVE_HUNDRED_DEEP',
     desc: 'Answer 500 questions',
     check: s      => s.totalQuestions >= 500,
     hint:  s      => `${s.totalQuestions} / 500 answered`,
   },
   {
-    id: 'questions_1000', rarity: 'legendary', icon: '🔮', title: 'KILO_QUERIES',
+    id: 'questions_1000', rarity: 'legendary', icon: 'crystal-ball', title: 'KILO_QUERIES',
     desc: 'Answer 1000 questions',
     check: s      => s.totalQuestions >= 1000,
     hint:  s      => `${s.totalQuestions} / 1000 answered`,
@@ -75,43 +76,43 @@ export const ACHIEVEMENTS = [
                        : `${s.totalQuestions} / 50 questions`,
   },
   {
-    id: 'module_1',       rarity: 'common',    icon: '🪔', title: 'MODULE_1_CLEARED',
+    id: 'module_1',       rarity: 'common',    icon: 'diya', title: 'MODULE_1_CLEARED',
     desc: 'Complete Module 1',
     check: s      => s.completedModuleTests.includes(1),
     hint:  ()     => 'Pass the Module 1 test',
   },
   {
-    id: 'module_2',       rarity: 'rare',      icon: '📜', title: 'MODULE_2_CLEARED',
+    id: 'module_2',       rarity: 'rare',      icon: 'scroll', title: 'MODULE_2_CLEARED',
     desc: 'Complete Module 2',
     check: s      => s.completedModuleTests.includes(2),
     hint:  ()     => 'Pass the Module 2 test',
   },
   {
-    id: 'module_3',       rarity: 'rare',      icon: '🔱', title: 'SANDHI_CLEARED',
+    id: 'module_3',       rarity: 'rare',      icon: 'trident', title: 'SANDHI_CLEARED',
     desc: 'Complete Module 3',
     check: s      => s.completedModuleTests.includes(3),
     hint:  ()     => 'Pass the Module 3 test',
   },
   {
-    id: 'module_4',       rarity: 'legendary', icon: '🕉️', title: 'VIBHAKTI_CLEARED',
+    id: 'module_4',       rarity: 'legendary', icon: 'om', title: 'VIBHAKTI_CLEARED',
     desc: 'Complete Module 4',
     check: s      => s.completedModuleTests.includes(4),
     hint:  ()     => 'Pass the Module 4 test',
   },
   {
-    id: 'module_5',       rarity: 'legendary', icon: '🌺', title: 'SAMAPTI',
+    id: 'module_5',       rarity: 'legendary', icon: 'flower', title: 'SAMAPTI',
     desc: 'Complete Module 5',
     check: s      => s.completedModuleTests.includes(5),
     hint:  ()     => 'Pass the Module 5 test',
   },
   {
-    id: 'streak_30',      rarity: 'legendary', icon: '🏛️', title: 'PANINI_PROTOCOL',
+    id: 'streak_30',      rarity: 'legendary', icon: 'temple', title: 'PANINI_PROTOCOL',
     desc: '30-day streak achieved',
     check: s      => s.streak >= 30,
     hint:  s      => `${s.streak} / 30 days`,
   },
   {
-    id: 'all_lessons',    rarity: 'legendary', icon: '🎓', title: 'FULL_COMPILE',
+    id: 'all_lessons',    rarity: 'legendary', icon: 'graduation-cap', title: 'FULL_COMPILE',
     desc: 'Complete all lessons',
     check: s      => _nonTestDone(s) >= _totalNonTest,
     hint:  s      => `${_nonTestDone(s)} / ${_totalNonTest} lessons`,
@@ -145,7 +146,7 @@ function _readHintState() {
 function _achItemHTML(a, done, hintState) {
   const hintText = !done && a.hint ? a.hint(hintState) : null;
   return `<div class="ach-modal-item ach-modal-item--${a.rarity}${done ? ' ach-modal-item--earned' : ''}">
-    <span class="ach-modal-icon">${a.icon}</span>
+    <span class="ach-modal-icon">${iconSvg(a.icon)}</span>
     <div class="ach-modal-info">
       <div class="ach-modal-title">${a.title}</div>
       <div class="ach-modal-desc">${a.desc}</div>
@@ -198,7 +199,7 @@ export function showAchievementToasts(achievements) {
     setTimeout(() => {
       const toast = document.createElement('div');
       toast.className = 'achievement-toast';
-      toast.innerHTML = `<span class="ach-toast-icon">${ach.icon}</span>
+      toast.innerHTML = `<span class="ach-toast-icon">${iconSvg(ach.icon)}</span>
         <div class="ach-toast-body">
           <div class="ach-toast-label">ACHIEVEMENT_UNLOCKED</div>
           <div class="ach-toast-title">${ach.title}</div>

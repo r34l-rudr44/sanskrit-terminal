@@ -1,6 +1,6 @@
 export const id = "1-2";
 export const title = "Going — गम् धातु";
-export const icon = "🚶";
+export const icon = "walk";
 
 export const metadata = {
   difficulty: "beginner",

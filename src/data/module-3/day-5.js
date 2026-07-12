@@ -1,6 +1,6 @@
 export const id = "3-5";
 export const title = "If & Just As — यदि...तर्हि · यथा...तथा";
-export const icon = "⚖️";
+export const icon = "scale";
 
 export const metadata = {
   difficulty: "beginner",

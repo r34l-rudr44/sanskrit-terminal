@@ -1,6 +1,6 @@
 export const id = "2-3";
 export const title = "Negation + Places — नकारः";
-export const icon = "🚫";
+export const icon = "no-entry";
 
 export const metadata = {
   difficulty: "beginner",

@@ -1,6 +1,6 @@
 export const id = "2-2";
 export const title = "Questions + Places";
-export const icon = "🗺️";
+export const icon = "map";
 
 export const metadata = {
   difficulty: "beginner",

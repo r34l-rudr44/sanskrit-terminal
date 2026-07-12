@@ -1,6 +1,6 @@
 export const id = "4-5";
 export const title = "Vowel Dissolution — अयादि सन्धि";
-export const icon = "🌊";
+export const icon = "wave";
 
 export const metadata = {
   difficulty: "intermediate",

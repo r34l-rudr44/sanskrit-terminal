@@ -7,6 +7,7 @@ import { checkAndGrantAchievements, showAchievementToasts, showAchievementsModal
 import { checkDailyQuest, getDailyQuest } from './quests.js';
 import { requestNotifPermission } from './notifications.js';
 import { makeReviewId, recordReviewOutcome, getDueReviewIds, resolveReviewQuestion } from './srs.js';
+import { iconSvg } from './icons.js';
 
 let currentDay = null;
 let currentMod = null;
@@ -511,7 +512,7 @@ function showBriefing() {
   const qCount = currentDay.questions.length;
   const estMins = Math.max(1, Math.ceil(qCount * 0.5));
   card.innerHTML = `
-    <div class="briefing-header"><div class="briefing-icon">${currentDay.icon}</div><div class="briefing-title">${escapeHtml(data.title)}</div><div class="briefing-tag">${escapeHtml(tag)}</div></div>
+    <div class="briefing-header"><div class="briefing-icon">${iconSvg(currentDay.icon)}</div><div class="briefing-title">${escapeHtml(data.title)}</div><div class="briefing-tag">${escapeHtml(tag)}</div></div>
     <div class="briefing-body"><div class="briefing-lead">${data.lead}</div>${sectionsHTML}</div>
     <div class="briefing-footer"><span class="briefing-footer-note">${currentDay.isTest ? 'prepare yourself' : 'read before continuing'} · ${qCount} QUESTIONS · ~${estMins} MIN</span>
     <button class="btn-primary" onclick="window.showLesson()">${currentDay.isTest ? '► BEGIN TEST' : 'BEGIN LESSON →'}</button></div>
@@ -1145,7 +1146,7 @@ function _buildTomorrowCard(pct, sessionCount, streak, nextDay, nextMod, day) {
 function finishReviewSession(pct) {
   // Completing due SRS reviews counts as daily activity — extend the streak like a lesson does.
   registerStreakDay();
-  document.getElementById('score-trophy').textContent = pct >= 80 ? '🏆' : pct >= 50 ? '⭐' : '📖';
+  document.getElementById('score-trophy').innerHTML = iconSvg(pct >= 80 ? 'trophy' : pct >= 50 ? 'star' : 'book');
   document.getElementById('score-title').textContent = 'REVIEW_SESSION — COMPLETE';
   document.getElementById('score-sub').textContent = `${state.totalAnswered} item${state.totalAnswered !== 1 ? 's' : ''} reviewed.`;
   document.getElementById('score-big').textContent = pct + '%';
@@ -1203,7 +1204,7 @@ function finishLesson() {
       state.completedModuleTests.push(currentMod.id);
       localStorage.setItem('sk_mod_tests', JSON.stringify(state.completedModuleTests));
     }
-    document.getElementById('cert-badge').textContent = currentMod.icon;
+    document.getElementById('cert-badge').innerHTML = iconSvg(currentMod.icon);
     document.getElementById('cert-module-id').textContent = `MODULE_${currentMod.id}`;
     document.getElementById('cert-module-title').textContent = currentMod.title;
     document.getElementById('cert-module-sub').textContent = currentMod.subtitle;
@@ -1228,8 +1229,8 @@ function finishLesson() {
       Effects.launchConfetti(pct >= 60 ? 100 : 40);
     }
   } else {
-    const trophy = pct >= 80 ? '🏆' : pct >= 50 ? '⭐' : '📖';
-    document.getElementById('score-trophy').textContent = trophy;
+    const trophy = pct >= 80 ? 'trophy' : pct >= 50 ? 'star' : 'book';
+    document.getElementById('score-trophy').innerHTML = iconSvg(trophy);
 
     const dayLabel = escapeHtml(currentDay.title || currentDay.id);
     const title = pct >= 80 ? `${dayLabel} — MASTERED` : pct >= 50 ? `${dayLabel} — COMPLETE` : `${dayLabel} — REVIEW NEEDED`;
@@ -1317,7 +1318,7 @@ function startReviewSession() {
   currentDay = {
     id: 'review-session',
     title: 'REVIEW SESSION',
-    icon: '🔁',
+    icon: 'repeat',
     isReview: true,
     questions: items.map(({ id, resolved }) => ({ ...resolved.question, _reviewId: id }))
   };

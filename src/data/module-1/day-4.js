@@ -1,6 +1,6 @@
 export const id = "1-4";
 export const title = "No & Not — नकार";
-export const icon = "🚫";
+export const icon = "no-entry";
 
 export const metadata = {
   difficulty: "beginner",

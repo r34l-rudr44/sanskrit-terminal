@@ -1,6 +1,6 @@
 export const id = "3-1";
 export const title = "When? — कालवाचक शब्द";
-export const icon = "🕐";
+export const icon = "clock";
 
 export const metadata = {
   difficulty: "beginner",

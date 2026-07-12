@@ -1,6 +1,6 @@
 export const id = "3-T";
 export const title = "Final Test";
-export const icon = "📝";
+export const icon = "test"; // key into ICONS in src/js/icons.js — see docs/adding-modules-and-lessons.md
 export const isTest = true;
 export const metadata = {
   difficulty: "beginner",

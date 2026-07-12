@@ -1,6 +1,6 @@
 export const id = "2-P1";
 export const title = "Practice 1 — अभ्यासः १";
-export const icon = "🎯";
+export const icon = "target";
 
 export const metadata = {
   difficulty: "beginner",

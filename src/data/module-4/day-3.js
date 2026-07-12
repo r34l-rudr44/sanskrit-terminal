@@ -1,6 +1,6 @@
 export const id = "4-3";
 export const title = "Peak Vowels — वृद्धि सन्धि";
-export const icon = "⬆️";
+export const icon = "arrow-up";
 
 export const metadata = {
   difficulty: "beginner",

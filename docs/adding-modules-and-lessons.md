@@ -52,7 +52,7 @@ Each day file should export:
 
 - `id`
 - `title`
-- `icon`
+- `icon` — a key into the `ICONS` map in `src/js/icons.js` (not an emoji; the app renders every icon as an inline SVG). Reuse an existing key or add a new monochrome line-icon entry there.
 - `metadata`
 - `briefing`
 - `questions`
@@ -62,7 +62,7 @@ Example template:
 ```js
 export const id = "3-1";
 export const title = "Sample Lesson Title";
-export const icon = "📘";
+export const icon = "book"; // key into ICONS in src/js/icons.js
 export const metadata = {
   difficulty: "beginner",
   estimatedMinutes: 8,
@@ -133,7 +133,7 @@ Example:
 ```js
 export const id = "3-T";
 export const title = "Final Test";
-export const icon = "📝";
+export const icon = "test"; // key into ICONS in src/js/icons.js
 export const isTest = true;
 export const metadata = {
   difficulty: "beginner",
@@ -181,7 +181,7 @@ import * as m3test from './module-3/test.js';
   id: 3,
   title: "NEW MODULE TITLE",
   subtitle: "Short subtitle",
-  icon: "📘",
+  icon: "book",
   description: "One-sentence summary of what the learner will study.",
   days: [m3d1, m3d2, m3test]
 }
@@ -521,7 +521,7 @@ When converting raw curriculum notes into app data, use this order:
 1. Extract the lesson goal.
 2. Choose the module and day number.
 3. Pick a short learner-facing title.
-4. Pick one icon.
+4. Pick one icon key from `src/js/icons.js` (or add a new monochrome line-icon there).
 5. Write a `briefing.pre.lead`.
 6. Turn the source material into 1 to 3 briefing sections:
    - vocabulary table
