@@ -490,7 +490,7 @@ function renderSection(s) {
       }).join('');
       return `<tr>${tds}</tr>`;
     }).join('');
-    return `<div style="margin-bottom:14px"><div class="brief-grammar-title" style="margin-bottom:8px">${escapeHtml(s.label)}</div><div style="overflow-x:auto"><table class="brief-table"><thead><tr>${ths}</tr></thead><tbody>${trs}</tbody></table></div></div>`;
+    return `<div class="brief-table-wrap"><span class="brief-grammar-title">${escapeHtml(s.label)}</span><div class="brief-table-scroll"><table class="brief-table"><thead><tr>${ths}</tr></thead><tbody>${trs}</tbody></table></div></div>`;
   }
   if (s.type === 'grammar') return `<div class="brief-grammar"><span class="brief-grammar-title">${escapeHtml(s.label)}</span><p>${s.text}</p></div>`;
   if (s.type === 'block')   return `<div class="brief-block">${s.text}</div>`;
