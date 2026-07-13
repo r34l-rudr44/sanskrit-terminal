@@ -149,7 +149,7 @@ export function updateStats() {
   if (cbWrap) {
     if (cbFill) cbFill.style.width = curriculumPct + '%';
     if (cbPct)  cbPct.textContent  = curriculumPct + '%';
-    if (cbDetail) cbDetail.textContent = `// ${completedModules}/${totalModules} modules completed`;
+    if (cbDetail) cbDetail.textContent = `${completedModules}/${totalModules} modules completed`;
     if (cbFill) cbFill.classList.toggle('cb-fill--complete', curriculumPct === 100);
   }
 }
@@ -244,7 +244,7 @@ function updateHeroState(streakStatus) {
 
   const completedLessons = completedLessonIds();
   if (completedLessons.length === 0) {
-    heroTagEl.textContent = '> SESSION_01 // READY TO BEGIN';
+    heroTagEl.textContent = '> SESSION_01 — READY TO BEGIN';
     heroBtnEl.textContent = '▶ START LEARNING';
     return;
   }
@@ -257,7 +257,6 @@ function updateHeroState(streakStatus) {
     ? Math.max(1, Math.round((new Date(today).getTime() - new Date(lastSeen).getTime()) / 86400000))
     : 0;
 
-  // Find next uncompleted non-test day
   let nextDay = null;
   for (const mod of MODULES) {
     for (const day of mod.days) {
@@ -279,11 +278,11 @@ function updateHeroState(streakStatus) {
   if (sessionCount === 0) return;
 
   if (gapDays === 0) {
-    heroTagEl.textContent = `> TERMINAL_ACTIVE // SESSION_${sessionCount}`;
+    heroTagEl.textContent = `> TERMINAL_ACTIVE — SESSION_${sessionCount}`;
   } else if (gapDays >= 7) {
-    heroTagEl.textContent = `> COLD_BOOT // RESTARTING_PROCESS`;
+    heroTagEl.textContent = `> COLD_BOOT — RESTARTING_PROCESS`;
   } else if (gapDays >= 2) {
-    heroTagEl.textContent = `> RECONNECTING... LESSONS_WAITING`;
+    heroTagEl.textContent = `> RECONNECTING... — LESSONS_WAITING`;
   }
 }
 
@@ -297,7 +296,7 @@ function renderStreakWarning(streakStatus) {
   banner.innerHTML = `<span class="swb-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 12 16" class="streak-flame" aria-hidden="true" fill="currentColor"><path fill-rule="evenodd" d="M6 0C3.5 3 1 7 1 11c0 3.5 2.2 5.5 5 5.5s5-2 5-5.5C11 7 8.5 3 6 0ZM6 6C4.5 9 3.5 11 3.5 13c0 1.5 1.1 2.5 2.5 2.5s2.5-1 2.5-2.5C8.5 11 7.5 9 6 6Z"/></svg></span>
     <div class="swb-body">
       <div class="swb-title">SAVE_STREAK — ${state.streak} days</div>
-      <div class="swb-sub">// Complete a lesson today!</div>
+      <div class="swb-sub">Complete a lesson today!</div>
     </div>
     <button class="swb-btn btn-primary" onclick="window.startFirstLesson()">► LESSON NOW</button>`;
   statsRow.insertAdjacentElement('afterend', banner);
