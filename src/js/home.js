@@ -282,7 +282,7 @@ function updateHeroState(streakStatus) {
   } else if (gapDays >= 7) {
     heroTagEl.textContent = `> COLD_BOOT // RESTARTING_PROCESS`;
   } else if (gapDays >= 2) {
-    heroTagEl.textContent = `> RECONNECTING... // LESSONS_WAITING`;
+    heroTagEl.textContent = `> RECONNECTING... LESSONS_WAITING`;
   }
 }
 
