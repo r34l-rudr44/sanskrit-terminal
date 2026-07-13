@@ -20,7 +20,6 @@ const hintState = {
   completedModuleTests: (() => { try { return JSON.parse(localStorage.getItem('sk_mod_tests') || '[]'); } catch { return []; } })(),
 };
 
-// Stats
 const statDays = document.getElementById('stat-days');
 const statQ = document.getElementById('stat-questions');
 const statAcc = document.getElementById('stat-accuracy');
@@ -41,7 +40,6 @@ if (questStreak > 0) {
   statQS.textContent = questStreak;
 }
 
-// Daily quest
 const { quest, data } = getDailyQuest();
 const questSection = document.getElementById('quest-section');
 const isDone = data.completed;
@@ -55,7 +53,6 @@ questSection.innerHTML = `
     </div>
   </div>`;
 
-// Achievements grid
 const achCount = document.getElementById('ach-count');
 achCount.textContent = `${earned.size} / ${ACHIEVEMENTS.length} UNLOCKED`;
 

@@ -257,7 +257,6 @@ function updateHeroState(streakStatus) {
     ? Math.max(1, Math.round((new Date(today).getTime() - new Date(lastSeen).getTime()) / 86400000))
     : 0;
 
-  // Find next uncompleted non-test day
   let nextDay = null;
   for (const mod of MODULES) {
     for (const day of mod.days) {

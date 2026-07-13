@@ -482,7 +482,6 @@ function isAcceptedTypedAnswer(inputValue, question) {
   return false;
 }
 
-// Briefing logic
 function renderSection(s) {
   if (s.type === 'table') {
     const ths = s.cols.map(c => `<th>${escapeHtml(c)}</th>`).join('');
@@ -530,7 +529,6 @@ function showBriefing() {
   saveLessonProgress('briefing');
 }
 
-// Lesson logic
 window.showLesson = function() {
   showScreen('lesson');
   renderQuestion();
@@ -1250,7 +1248,6 @@ function finishLesson() {
     document.getElementById('sc-wrong').textContent = state.totalAnswered - state.totalCorrect;
     document.getElementById('sc-total').textContent = state.totalAnswered;
 
-    // Next lesson CTA
     let nextMod = null, nextDay = null;
     for (const mod of MODULES) {
       for (const day of mod.days) {
