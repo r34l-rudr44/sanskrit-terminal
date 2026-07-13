@@ -925,7 +925,7 @@ body.vk-mobile-open #screen-lesson{padding-bottom:310px;}
 /* Learning path page */
 .path-page{max-width:900px;margin:0 auto;padding:24px 20px 80px;}
 .path-header{display:flex;align-items:center;gap:16px;margin-bottom:20px;}
-.path-back{font-size:12px;letter-spacing:1.5px;color:var(--text-2);text-decoration:none;border:var(--border-dim);padding:4px 10px;transition:all .1s;}
+.path-back{display:inline-flex;align-items:center;gap:4px;font-size:12px;letter-spacing:1.5px;color:var(--text-2);text-decoration:none;border:var(--border-dim);padding:4px 10px;transition:all .1s;}
 .path-back:hover{color:var(--brand);border-color:var(--brand-dim);}
 .path-header .section-title{margin-bottom:0;flex:1;}
 .path-header .section-title::before{content:none;}
