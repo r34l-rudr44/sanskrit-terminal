@@ -87,9 +87,9 @@ function closeKeyboard() {
 function renderKeyboardHint() {
   return isMobileKeyboardMode()
     ? (getMobileInputMode() === 'custom'
-        ? '// tap the answer field to type with the Sanskrit keyboard'
-        : '// use your phone keyboard or switch to Sanskrit keys')
-    : '// press ENTER or tap SUBMIT';
+        ? 'tap the answer field to type with the Sanskrit keyboard'
+        : 'use your phone keyboard or switch to Sanskrit keys')
+    : 'press ENTER or tap SUBMIT';
 }
 
 function renderInputModeAttrs() {
@@ -482,7 +482,6 @@ function isAcceptedTypedAnswer(inputValue, question) {
   return false;
 }
 
-// Briefing logic
 function renderSection(s) {
   if (s.type === 'table') {
     const ths = s.cols.map(c => `<th>${escapeHtml(c)}</th>`).join('');
@@ -506,7 +505,7 @@ function showBriefing() {
   if (!data) { showLesson(); return; }
   
   const mount = document.getElementById('briefing-mount');
-  const tag = currentDay.isTest ? `MODULE_${currentMod.id} // TEST` : `MODULE_${currentMod.id} — DAY`;
+  const tag = currentDay.isTest ? `MODULE_${currentMod.id} — TEST` : `MODULE_${currentMod.id} — DAY`;
   
   const sectionsHTML = data.sections.map(renderSection).join('');
   const card = document.createElement('div');
@@ -530,7 +529,6 @@ function showBriefing() {
   saveLessonProgress('briefing');
 }
 
-// Lesson logic
 window.showLesson = function() {
   showScreen('lesson');
   renderQuestion();
@@ -875,7 +873,7 @@ function buildQuestion(q) {
   if (q.type === 'wordtiles') {
     const tileHTML = state.wtTiles.map((t, i) => `<button class="wt-tile" id="wt-tile-${i}" onclick="window.wtTileClick(${i})">${escapeHtml(t.word)}</button>`).join('');
     return `${badge}${qText}<div id="wt-tray" class="wt-tray"><span id="wt-placeholder" class="wt-placeholder">tap words to build your answer</span></div>
-      <div class="wt-bank-label">WORD_BANK<span class="wt-bank-hint">// tap words to build sentence</span></div><hr class="wt-divider"><div class="wt-bank" id="wt-bank">${tileHTML}</div>`;
+      <div class="wt-bank-label">WORD_BANK<span class="wt-bank-hint">tap words to build sentence</span></div><hr class="wt-divider"><div class="wt-bank" id="wt-bank">${tileHTML}</div>`;
   }
   return '';
 }
@@ -1111,19 +1109,19 @@ function _buildTomorrowCard(pct, sessionCount, streak, nextDay, nextMod, day) {
   let title, body;
   if (sessionCount === 1) {
     title = 'PROCESS_COMPLETE';
-    body = '// Session 1 logged. Return tomorrow to build your streak. Your brain consolidates language during sleep.';
+    body = 'Session 1 logged. Return tomorrow to build your streak. Your brain consolidates language during sleep.';
   } else if (streak >= 2) {
     title = `SAVE_STREAK — ${streak} days`;
-    body = `// Return tomorrow to reach ${streak + 1}×. Consistency compounds.`;
+    body = `Return tomorrow to reach ${streak + 1}×. Consistency compounds.`;
   } else if (streak === 0 && sessionCount > 1) {
     title = 'STREAK_RESET';
-    body = '// But your vocabulary is still in RAM. Come back tomorrow to restart the chain.';
+    body = 'But your vocabulary is still in RAM. Come back tomorrow to restart the chain.';
   } else {
     title = 'SESSION_LOGGED';
-    body = '// Return tomorrow to continue building your streak.';
+    body = 'Return tomorrow to continue building your streak.';
   }
   if (pct >= 80) {
-    body = `// ${escapeHtml(day.title)} archived at ${pct}% mastery. ${body.slice(3)}`;
+    body = `${escapeHtml(day.title)} archived at ${pct}% mastery. ${body}`;
     title = 'MASTERY_LOGGED';
   }
   const notifAsked = localStorage.getItem('sk_notif_asked');
@@ -1135,7 +1133,7 @@ function _buildTomorrowCard(pct, sessionCount, streak, nextDay, nextMod, day) {
   const questStatus = `<div class="quest-status${questDone ? ' quest-status--done' : ''}">
     <span class="quest-status-label">◉ QUEST</span>
     <span class="quest-status-title">${escapeHtml(quest.title)}</span>
-    <span class="quest-status-state">${questDone ? '✓' : '// in progress'}</span>
+    <span class="quest-status-state">${questDone ? '✓' : 'in progress'}</span>
   </div>`;
   return `<div class="score-tomorrow-card">
     <div class="stc-title">${escapeHtml(title)}</div>
@@ -1250,7 +1248,6 @@ function finishLesson() {
     document.getElementById('sc-wrong').textContent = state.totalAnswered - state.totalCorrect;
     document.getElementById('sc-total').textContent = state.totalAnswered;
 
-    // Next lesson CTA
     let nextMod = null, nextDay = null;
     for (const mod of MODULES) {
       for (const day of mod.days) {

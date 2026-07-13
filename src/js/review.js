@@ -18,7 +18,7 @@ export function renderDueReviewWidget(streakStatus) {
   widget.innerHTML = `
     <div class="review-widget-hdr">
       <span class="review-widget-title">SPACED_RECALL</span>
-      <span class="review-widget-sub">// ${dueCount} item${dueCount !== 1 ? 's' : ''} due today</span>
+      <span class="review-widget-sub">${dueCount} item${dueCount !== 1 ? 's' : ''} due today</span>
     </div>
     <button class="srs-start-btn btn-primary" onclick="window.location.href='/lesson.html?review=1'">► START REVIEW (${dueCount})</button>
   `;
@@ -55,7 +55,7 @@ export function renderReviewQueue(streakStatus) {
   widget.innerHTML = `
     <div class="review-widget-hdr">
       <span class="review-widget-title">REVIEW_QUEUE</span>
-      <span class="review-widget-sub">// ${top.length} lesson${top.length !== 1 ? 's' : ''} need reinforcement</span>
+      <span class="review-widget-sub">${top.length} lesson${top.length !== 1 ? 's' : ''} need reinforcement</span>
     </div>
     <div class="review-widget-list">
       ${top.map(({ modId, day, score }) => `

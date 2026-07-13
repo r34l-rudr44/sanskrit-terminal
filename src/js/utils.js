@@ -73,10 +73,10 @@ export const Theme = (() => {
 
 export const Prefs = (() => {
   const SCRIPT_MAP = {
-    deva:   {placeholder:'देवनागरी में टाइप करें…', hint:'// type in Devanagari script (e.g. रामः)'},
-    iast:   {placeholder:'Type in IAST…',            hint:'// IAST — e.g. rāmaḥ vanam gacchati'},
-    itrans: {placeholder:'Type in ITRANS…',          hint:'// ITRANS — e.g. raamaH vanam gacchati'},
-    hk:     {placeholder:'Type in Harvard-Kyoto…',   hint:'// HK — e.g. rAmaH vanam gacchati'}
+    deva:   {placeholder:'देवनागरी में टाइप करें…', hint:'type in Devanagari script (e.g. रामः)'},
+    iast:   {placeholder:'Type in IAST…',            hint:'IAST — e.g. rāmaḥ vanam gacchati'},
+    itrans: {placeholder:'Type in ITRANS…',          hint:'ITRANS — e.g. raamaH vanam gacchati'},
+    hk:     {placeholder:'Type in Harvard-Kyoto…',   hint:'HK — e.g. rAmaH vanam gacchati'}
   };
   const TAGLINE = {
     deva:   'वाग्देव्यै नमः',

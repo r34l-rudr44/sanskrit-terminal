@@ -223,7 +223,6 @@ export function injectGlobals() {
   `;
   document.body.insertAdjacentHTML('beforeend', html);
 
-  // Setup globals
   window.openPrefs = () => {
     document.getElementById('prefs-modal').classList.add('open');
     Prefs.updateUI();
@@ -344,7 +343,6 @@ export function injectGlobals() {
     setTimeout(() => document.getElementById('cookie-bar').classList.add('visible'), 2500);
   }
 
-  // PWA Install
   let _installPrompt = null;
   window.addEventListener('beforeinstallprompt', (e) => {
     e.preventDefault();
@@ -390,7 +388,6 @@ export function injectGlobals() {
     if (deleteOverlay?.classList.contains('active')) { window.closeDeleteOverlay(); return; }
   });
 
-  // Handle Boot Sequence for Home Only
   const isHomePage = window.location.pathname === '/' || window.location.pathname === '/index.html';
   if (isHomePage) {
     if (!localStorage.getItem('sk_booted')) {
@@ -446,7 +443,6 @@ export function injectGlobals() {
     }
   }
 
-  // Sound Toggle Global
   window.toggleSound = () => {
     window._soundMuted = !window._soundMuted;
     const btn = document.getElementById('sound-toggle-btn');
